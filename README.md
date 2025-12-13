@@ -539,8 +539,8 @@
     // ═══════════════════════════════════════════════════════════════
 
     // SUPABASE CONFIG
-    const SUPABASE_URL = 'https://zgnceundsigimwujwrzu.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnbmNldW5kc2lnaW13dWp3cnp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ5OTA5MzQsImV4cCI6MjA4MDU2NjkzNH0.Vdl9J8D_kkmxhPq1QwU33g__b1_AGNF';
+    var SUPABASE_URL = 'https://zgnceundsigimwujwrzu.supabase.co';
+    var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpnbmNldW5kc2lnaW13dWp3cnp1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ5OTA5MzQsImV4cCI6MjA4MDU2NjkzNH0.Vdl9J8D_kkmxhPq1QwU33g__b1_AGNF';
 
     // Global data storage
     let allOrders = [];
