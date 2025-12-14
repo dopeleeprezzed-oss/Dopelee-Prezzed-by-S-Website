@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dopelee Prezzed by S™ | Luxury Legacy Keepsakes</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -16,16 +20,16 @@
         ======================================== */
         :root {
             /* Desktop Hero Spacing */
-            --hero-padding-top: 30px;        /* Top space above logo */
-            --hero-padding-bottom: 45px;     /* Bottom space below buttons */
-            --logo-margin-bottom: 0.4rem;    /* Space below logo */
-            --title-margin-bottom: 0.2rem;   /* Space below headline */
-            --tagline-margin-bottom: 1.2rem; /* Space below tagline */
-            --cta-margin-top: 1.2rem;        /* Space above buttons */
+            --hero-padding-top: 20px;        /* Top space above logo */
+            --hero-padding-bottom: 30px;     /* Bottom space below buttons */
+            --logo-margin-bottom: 0.3rem;    /* Space below logo */
+            --title-margin-bottom: 0.15rem;  /* Space below headline */
+            --tagline-margin-bottom: 0.8rem; /* Space below tagline */
+            --cta-margin-top: 0.8rem;        /* Space above buttons */
             
             /* Mobile Hero Spacing */
-            --hero-mobile-padding-top: 20px;
-            --hero-mobile-padding-bottom: 35px;
+            --hero-mobile-padding-top: 15px;
+            --hero-mobile-padding-bottom: 25px;
         }
         /* ======================================== */
 
@@ -76,24 +80,14 @@
             }
         }
 
-        /* Floating Sparkles */
-        .sparkle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #d3fb1b;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #d3fb1b, 0 0 20px #0ff0b8;
-            animation: sparkle 3s infinite;
-            pointer-events: none;
+        @keyframes subtleFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
         }
-
-        .sparkle:nth-child(1) { left: 10%; animation-delay: 0s; }
-        .sparkle:nth-child(2) { left: 20%; animation-delay: 0.5s; background: #0ff0b8; }
-        .sparkle:nth-child(3) { left: 30%; animation-delay: 1s; }
-        .sparkle:nth-child(4) { left: 70%; animation-delay: 1.5s; background: #0ff0b8; }
-        .sparkle:nth-child(5) { left: 80%; animation-delay: 2s; }
-        .sparkle:nth-child(6) { left: 90%; animation-delay: 2.5s; background: #0ff0b8; }
 
         @keyframes tickerScroll {
             0% { transform: translateX(0); }
@@ -141,8 +135,10 @@
             background-size: 400% 400%;
             animation: gradientShift 8s ease infinite;
             padding: 20px 0;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
@@ -184,16 +180,116 @@
             opacity: 0.7;
         }
 
+        /* Shopping Cart Icon */
+        .cart-icon {
+            position: relative;
+            font-size: 24px;
+            cursor: pointer;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 700;
+        }
+
+        .cart-count {
+            background: #ff0000;
+            color: #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #000;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-8px);
+        }
+
+        /* Add padding to body for fixed nav */
+        body {
+            padding-top: 70px;
+        }
+
         /* Hero Section */
         .hero {
-            background: linear-gradient(135deg, #0a95a8 0%, #0ff0b8 25%, #3461fa 50%, #0a95a8 75%, #0ff0b8 100%);
+            background: #000;
             background-size: 200% 200%;
-            animation: gradientShift 8s ease infinite;
             padding: var(--hero-padding-top) 20px var(--hero-padding-bottom);
             text-align: center;
             position: relative;
             overflow: hidden;
         }
+
+        /* Floating Colored Bubbles */
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: bubbleRise 8s infinite ease-in-out;
+            pointer-events: none;
+            box-shadow: 0 0 30px currentColor, 0 0 60px currentColor, inset 0 0 20px rgba(255, 255, 255, 0.3);
+            filter: blur(1px);
+        }
+
+        @keyframes bubbleRise {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+                box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+            }
+            10% {
+                opacity: 0.6;
+                box-shadow: 0 0 40px currentColor, 0 0 80px currentColor;
+            }
+            50% {
+                box-shadow: 0 0 50px currentColor, 0 0 100px currentColor;
+            }
+            90% {
+                opacity: 0.3;
+                box-shadow: 0 0 30px currentColor, 0 0 60px currentColor;
+            }
+            100% {
+                transform: translateY(-100px) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .bubble:nth-child(1) { left: 10%; width: 40px; height: 40px; background: #0ff0b8; animation-delay: 0s; animation-duration: 10s; }
+        .bubble:nth-child(2) { left: 25%; width: 60px; height: 60px; background: #d3fb1b; animation-delay: 2s; animation-duration: 12s; }
+        .bubble:nth-child(3) { left: 45%; width: 50px; height: 50px; background: #fd26fd; animation-delay: 1s; animation-duration: 11s; }
+        .bubble:nth-child(4) { left: 65%; width: 35px; height: 35px; background: #3461fa; animation-delay: 3s; animation-duration: 9s; }
+        .bubble:nth-child(5) { left: 80%; width: 55px; height: 55px; background: #0a95a8; animation-delay: 4s; animation-duration: 13s; }
+        .bubble:nth-child(6) { left: 15%; width: 45px; height: 45px; background: #0ff0b8; animation-delay: 5s; animation-duration: 10s; }
+        .bubble:nth-child(7) { left: 70%; width: 40px; height: 40px; background: #d3fb1b; animation-delay: 2.5s; animation-duration: 11.5s; }
+        .bubble:nth-child(8) { left: 35%; width: 50px; height: 50px; background: #fd26fd; animation-delay: 6s; animation-duration: 12s; }
 
         .hero::before {
             content: '';
@@ -224,26 +320,28 @@
         }
 
         .hero h1 {
-            color: #000;
-            font-size: 3rem;
-            font-weight: 900;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 300;
             margin-bottom: var(--title-margin-bottom);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(255, 255, 255, 0.3);
+            text-transform: none;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 20px rgba(15, 240, 184, 0.5);
             position: relative;
             z-index: 2;
             animation: fadeInUp 1.2s ease;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.5;
         }
 
         .tagline {
-            color: #000;
+            color: #0ff0b8;
             font-size: 1.3rem;
             opacity: 0.9;
             font-weight: 600;
             font-style: italic;
             letter-spacing: 1px;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 15px rgba(211, 251, 27, 0.4);
             position: relative;
             z-index: 2;
             animation: fadeInUp 1.4s ease;
@@ -264,13 +362,13 @@
 
         .cta-primary {
             padding: 16px 40px;
-            background: linear-gradient(135deg, #d3fb1b, #0ff0b8);
+            background: linear-gradient(135deg, #0a95a8, #0ff0b8, #3461fa, #d3fb1b);
             color: #000;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 700;
             font-size: 1rem;
-            box-shadow: 0 8px 30px rgba(211, 251, 27, 0.4);
+            box-shadow: 0 8px 30px rgba(15, 240, 184, 0.4);
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
@@ -278,25 +376,27 @@
 
         .cta-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(211, 251, 27, 0.6);
+            box-shadow: 0 12px 40px rgba(15, 240, 184, 0.6);
+            background: linear-gradient(135deg, #3461fa, #0ff0b8, #0a95a8, #d3fb1b);
         }
 
         .cta-secondary {
             padding: 16px 40px;
             background: transparent;
-            color: #000;
+            color: #fff;
             text-decoration: none;
             border-radius: 50px;
             font-weight: 700;
             font-size: 1rem;
-            border: 2px solid #000;
+            border: 2px solid #fff;
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
         .cta-secondary:hover {
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.1);
             transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(15, 240, 184, 0.3);
         }
 
         .video-container {
@@ -789,16 +889,47 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 1.8rem; line-height: 1.2; }
+            /* Hamburger Menu */
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                gap: 30px;
+                transition: left 0.3s ease;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links a {
+                font-size: 20px;
+                font-weight: 700;
+                color: #fff !important;
+                text-shadow: none !important;
+            }
+
+            /* Hero adjustments */
+            .hero h1 { 
+                font-size: 1.6rem; 
+                line-height: 1.3; 
+                padding: 0 10px;
+            }
             .vip-hero h1 { font-size: 2rem; }
             .tagline { font-size: 1rem; }
-            .nav-links { gap: 12px; }
-            .nav-links a { font-size: 13px; }
-            .products-grid { grid-template-columns: 1fr; }
-            .service-cards { grid-template-columns: 1fr; }
-            .use-case-grid { grid-template-columns: 1fr; }
-            .steps { grid-template-columns: 1fr; }
-            .page-header h1 { font-size: 2rem; }
             .logo-container img { max-width: 200px; }
             
             /* Tighter hero on mobile - uses variables */
@@ -819,9 +950,55 @@
                 font-size: 0.95rem;
             }
             
+            /* 2-COLUMN PRODUCT GRID FOR MOBILE */
+            .products-grid { 
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .product-card {
+                font-size: 0.85rem;
+            }
+
+            .product-image {
+                height: 180px;
+            }
+
+            .product-content {
+                padding: 15px;
+            }
+
+            .product-content h3 {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+
+            .product-content p {
+                font-size: 0.8rem;
+                min-height: auto;
+                margin-bottom: 12px;
+                line-height: 1.3;
+            }
+
+            .btn-block {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
+
+            /* Other mobile adjustments */
+            .service-cards { grid-template-columns: 1fr; }
+            .use-case-grid { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 2rem; }
+            
             /* Mobile ticker */
             .ticker p {
                 font-size: 0.85rem;
+            }
+
+            /* Hide control panel on mobile */
+            #heroControls {
+                display: none !important;
             }
         }
     </style>
@@ -836,13 +1013,26 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo-nav" onclick="showPage('home')">DOPELEE PREZZED™</div>
-            <ul class="nav-links">
-                <li><a onclick="showPage('home')">Home</a></li>
-                <li><a onclick="showPage('products')">Legacy Lounge Collection</a></li>
-                <li><a onclick="showPage('vip')">VIP Experiences</a></li>
-                <li><a onclick="showPage('partner')">Partner With Us</a></li>
-                <li><a onclick="scrollToContact()">Contact</a></li>
+            <div class="logo-nav" onclick="showPage('home')">Dopelee Prezzed By S™</div>
+            
+            <!-- Shopping Cart Icon -->
+            <div class="cart-icon" onclick="toggleCart()" style="display: none;">
+                🛒 <span id="cartCount" class="cart-count">0</span>
+            </div>
+            
+            <!-- Hamburger Menu -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <ul class="nav-links" id="navMenu">
+                <li><a onclick="showPage('home'); closeMenu();">Home</a></li>
+                <li><a onclick="showPage('products'); closeMenu();">Legacy Lounge Collection</a></li>
+                <li><a onclick="showPage('vip'); closeMenu();">VIP Experiences</a></li>
+                <li><a onclick="showPage('partner'); closeMenu();">Partner With Us</a></li>
+                <li><a onclick="scrollToContact(); closeMenu();">Contact</a></li>
             </ul>
         </div>
     </nav>
@@ -853,24 +1043,26 @@
     <div id="home" class="page active">
         <!-- Hero Section -->
         <section class="hero">
-            <!-- Floating Sparkles -->
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
-            <div class="sparkle"></div>
+            <!-- Floating Colored Bubbles -->
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
             
             <div class="logo-container">
                 <img src="https://25zppb-bv.myshopify.com/cdn/shop/files/dopelee_prezzed_logo.png?v=1755138398&width=450" alt="Dopelee Logo">
             </div>
-            <h1>Handcrafted Pieces That Preserve What Matters Most.</h1>
+            <h1>Preserving what matters most</h1>
             <p class="tagline">Luxury • Legacy • Keepsakes</p>
             
             <!-- Hero CTA Buttons -->
             <div class="hero-cta">
                 <a href="#" onclick="showPage('products'); return false;" class="cta-primary">Shop Legacy Collection</a>
-                <a href="https://tr.ee/U07ytK" target="_blank" class="cta-secondary">🎵 Our Legacy Song</a>
+                <a href="https://youtu.be/Fq1KurRRbVc" target="_blank" class="cta-secondary">🎵 Our Legacy Song</a>
             </div>
         </section>
 
@@ -878,7 +1070,7 @@
         <section class="about">
             <h2>About Us</h2>
             
-            <!-- VIDEO MOVED HERE -->
+            <!-- STORY VIDEO -->
             <div class="video-container" style="max-width: 700px; margin: 0 auto 40px;">
                 <iframe src="https://www.youtube.com/embed/BBil4qK5gck" 
                         title="YouTube video player"
@@ -1267,7 +1459,7 @@
                 Join our growing network of partners and start earning passive income while serving 
                 your community with meaningful memorial keepsakes. Apply today and we'll be in touch within 48 hours!
             </p>
-            <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/partnership.html" target="_blank" class="btn">Apply Now</a>
+            <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/partnership.html" target="_blank" class="btn">Join Now</a>
         </section>
 
         <!-- Footer -->
@@ -1369,6 +1561,24 @@
             navigator.clipboard.writeText(cssText).then(() => {
                 alert('✅ CSS values copied! Paste into your :root section.');
             });
+        }
+        
+        // ========================================
+        // HAMBURGER MENU
+        // ========================================
+        
+        function toggleMenu() {
+            const menu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+        
+        function closeMenu() {
+            const menu = document.getElementById('navMenu');
+            const hamburger = document.querySelector('.hamburger');
+            menu.classList.remove('active');
+            hamburger.classList.remove('active');
         }
         
         // ========================================
