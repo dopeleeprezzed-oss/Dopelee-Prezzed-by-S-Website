@@ -3,7 +3,927 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dop<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dopelee Prezzed by S™ | Luxury Legacy Keepsakes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e8e8ec;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ANIMATIONS */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 30px rgba(211, 251, 27, 0.6)) drop-shadow(0 0 60px rgba(15, 240, 184, 0.4)); }
+            50% { filter: drop-shadow(0 0 50px rgba(253, 38, 253, 0.8)) drop-shadow(0 0 80px rgba(52, 97, 250, 0.6)); }
+        }
+
+        /* PAGE TRANSITIONS */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #0a95a8, #3461fa, #fd26fd, #d3fb1b, #0ff0b8, #0a95a8);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-nav {
+            font-size: 24px;
+            font-weight: 800;
+            color: #000;
+            text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: opacity 0.3s;
+            cursor: pointer;
+            text-shadow: 0 1px 3px rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-links a:hover {
+            opacity: 0.7;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0a95a8, #3461fa, #fd26fd, #d3fb1b, #0ff0b8, #0a95a8);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: gradientShift 15s linear infinite;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .logo-container img {
+            animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
+            border-radius: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            max-width: 220px;
+            height: auto;
+        }
+
+        .hero h1 {
+            color: #000;
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .tagline {
+            color: #000;
+            font-size: 1.3rem;
+            opacity: 0.9;
+            font-weight: 600;
+            font-style: italic;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-container {
+            max-width: 800px;
+            margin: 40px auto 0;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 450px;
+            border-radius: 12px;
+        }
+
+        /* About Section */
+        .about {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+            font-weight: 800;
+        }
+
+        .about p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #b8bac0;
+            margin-bottom: 20px;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 20px;
+            background: #121319;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+
+        .service-cards {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #1a1b24 0%, #0a0a0a 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #2a2a2a;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(211, 251, 27, 0.3);
+            border-color: #d3fb1b;
+        }
+
+        .service-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            color: #d3fb1b;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .service-card p {
+            color: #b8bac0;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(211, 251, 27, 0.4);
+        }
+
+        .btn-secondary {
+            background: #3461fa;
+            color: #fff;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Contact Section */
+        .contact {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 60px 40px;
+            background: #121319;
+            border-radius: 20px;
+            border: 2px solid #2a2a2a;
+        }
+
+        .contact h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+            font-weight: 800;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            color: #b8bac0;
+            margin: 10px 0;
+        }
+
+        .contact-info a {
+            color: #d3fb1b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            color: #3461fa;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #d3fb1b;
+        }
+
+        /* Products Page */
+        .page-header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #121319 100%);
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #b8bac0;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .products-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, #1a1b24 0%, #0a0a0a 100%);
+            border-radius: 20px;
+            border: 2px solid #2a2a2a;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(211, 251, 27, 0.3);
+            border-color: #d3fb1b;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #0a95a8 0%, #1a1b24 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            border-bottom: 2px solid #2a2a2a;
+        }
+
+        .product-content {
+            padding: 30px;
+        }
+
+        .product-content h3 {
+            font-size: 1.4rem;
+            color: #d3fb1b;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .product-content p {
+            color: #b8bac0;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            min-height: 60px;
+        }
+
+        /* Partner Page */
+        .partnership-video {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .video-wrapper {
+            background: #1a1b24;
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #d3fb1b;
+            box-shadow: 0 10px 40px rgba(211, 251, 27, 0.2);
+        }
+
+        .video-wrapper h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #d3fb1b;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+
+        .video-wrapper iframe {
+            width: 100%;
+            height: 450px;
+            border-radius: 12px;
+        }
+
+        .how-it-works {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 60px;
+            font-weight: 800;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .step {
+            background: linear-gradient(135deg, #1a1b24 0%, #0a0a0a 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #2a2a2a;
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .step:hover {
+            transform: translateY(-5px);
+            border-color: #d3fb1b;
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .step h3 {
+            font-size: 1.4rem;
+            color: #d3fb1b;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .step p {
+            color: #b8bac0;
+            line-height: 1.6;
+        }
+
+        .partner-cta {
+            background: linear-gradient(135deg, #121319 0%, #1a1b24 100%);
+            padding: 80px 20px;
+            margin-top: 80px;
+            text-align: center;
+        }
+
+        .partner-cta h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .partner-cta p {
+            font-size: 1.1rem;
+            color: #b8bac0;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        footer p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .tagline { font-size: 1rem; }
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 14px; }
+            .products-grid { grid-template-columns: 1fr; }
+            .service-cards { grid-template-columns: 1fr; }
+            .steps { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 2rem; }
+            .logo-container img { max-width: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo-nav" onclick="showPage('home')">Dopelee Prezzed by S™</div>
+            <ul class="nav-links">
+                <li><a onclick="showPage('home')">Home</a></li>
+                <li><a onclick="showPage('Legacy Lounge Collection')">Legacy Lounge Collection</a></li>
+                <li><a onclick="showPage('partner')">Partner With Us</a></li>
+                <li><a onclick="scrollToContact()">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- PAGE 1: HOME -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="logo-container">
+                <img src="https://25zppb-bv.myshopify.com/cdn/shop/files/dopelee_prezzed_logo.png?v=1755138398&width=450" alt="Dopelee Logo">
+            </div>
+            <h1>DOPELEE PREZZED BY S™</h1>
+            <p class="tagline">Timelessly Crafted</p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/BBil4qK5gck" 
+                        title="YouTube video player"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about">
+            <h2>About Us</h2>
+            <p>
+                At Dopelee Prezzed by S™, we believe every memory deserves to be honored with elegance and care. 
+                We create luxury memorial keepsakes and custom gifts that celebrate life, legacy, and the moments that matter most. 
+                From handcrafted photo slates to premium engraved pieces, each item is timelessly crafted with love and precision.
+            </p>
+            <p>
+                Whether you're honoring a loved one, celebrating a milestone, or partnering with us to serve your community, 
+                we're here to help you create something meaningful that lasts forever.
+            </p>
+        </section>
+
+        <!-- Services Section -->
+        <section class="services">
+            <h2>How We Serve You</h2>
+            <div class="service-cards">
+                
+                <!-- Legacy Lounge Collection -->
+                <div class="service-card" onclick="showPage('Legacy Lounge Collection')">
+                    <div class="service-icon">💎</div>
+                    <h3> Legacy Lounge Collection </h3>
+                    <p>
+                        Luxury memorial keepsakes for pets and loved ones. Shop our handcrafted photo slates, 
+                        wood displays, glass keepsakes, metal ornaments, and custom photo books.
+                    </p>
+                    <button class="btn">Shop Now</button>
+                </div>
+
+                <!-- VIP Bulk Gifts -->
+                <div class="service-card">
+                    <div class="service-icon">🎁</div>
+                    <h3>VIP Bulk Gifts</h3>
+                    <p>
+                        Custom keepsakes for weddings, corporate events, schools, and special occasions. 
+                        We create personalized bulk orders tailored to your vision.
+                    </p>
+                    <button class="btn btn-secondary" onclick="alert('VIP Form Link - Add your Google Form URL here!')">Request Custom Quote</button>
+                </div>
+
+                <!-- Partner With Us -->
+                <div class="service-card" onclick="showPage('partner')">
+                    <div class="service-icon">🤝</div>
+                    <h3>Partner With Us</h3>
+                    <p>
+                        Host The Legacy Lounge™ display at your location. Earn 10% commission on every order 
+                        with zero cost, zero effort, and full support from our team.
+                    </p>
+                    <button class="btn">Learn More</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact" id="contact-section">
+            <h2>Get In Touch</h2>
+            <div class="contact-info">
+                <p><strong>Email:</strong> <a href="mailto:info@dopeleeprezzedbysllc.com">info@dopeleeprezzedbysllc.com</a></p>
+                <p><strong>Phone:</strong> <a href="tel:8165301520">816-530-1520</a></p>
+                <p><strong>Website:</strong> <a href="https://www.dopeleeprezzedbys.com" target="_blank">www.dopeleeprezzedbys.com</a></p>
+            </div>
+            <div class="social-links">
+                <a href="https://www.facebook.com/dopeleeprezzedbys" target="_blank">Facebook</a>
+                <span style="color: #666;">|</span>
+                <a href="https://www.instagram.com/dopeleeprezzedbys" target="_blank">Instagram</a>
+                <span style="color: #666;">|</span>
+                <a href="https://www.pinterest.com/dopeleeprezzedbys" target="_blank">Pinterest</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Dopelee Prezzed by S LLC</p>
+            <p>Creating legacy pieces with love and precision</p>
+        </footer>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- PAGE 2: Legacy Lounge Collection  (PRODUCTS) -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="Legacy Lounge Collection" class="page">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Legacy Lounge Collection</h1>
+            <p>
+        
+        <!-- DELIVERY NOTICE -->
+        <div style="max-width: 600px; margin: 30px auto 0; padding: 20px 30px; background: linear-gradient(135deg, rgba(211, 251, 27, 0.1), rgba(10, 149, 168, 0.1)); border: 2px solid #d3fb1b; border-radius: 15px;">
+            <p style="margin: 0; font-size: 1rem; color: #d3fb1b; font-weight: 700; text-align: center;">
+                ⏱️ <strong>Handcrafted memorial keepsakes that honor your loved ones with elegance and care.
+                    Each piece is timelessly crafted to preserve precious memories forever:</strong> 
+                    Please allow 2-3 weeks for delivery 🖤
+            </p>
+        </div>
+    </section>
+
+        <!-- Products Grid -->
+        <section class="products-section">
+            <div class="products-grid">
+
+                <!-- Photo LookBook -->
+                <div class="product-card">
+                    <div class="product-image" style="background: none; padding: 0; overflow: hidden;">
+                    <img src="photo-book.png" alt="Photo Book" style="width: 100%; height: 100%; object-fit: cover;"> </div>
+                    <div class="product-content">
+                        <h3>Custom Photo LookBook</h3>
+                        <p>A beautifully designed photo book that tells your story in vivid detail and lasting quality.</p>
+                        <a href="https://square.link/u/romQrFWM" target="_blank" class="btn btn-block">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Wood Keepsake -->
+                <div class="product-card">
+                   <div class="product-image" style="background: none; padding: 0; overflow: hidden;">
+                   <img src="wood-keepsake.png" alt="Wood Keepsake" style="width: 100%; height: 100%; object-fit: cover;"> </div>
+                    <div class="product-content">
+                        <h3>Hand-Crafted Wood Keepsake</h3>
+                        <p>Premium wood display crafted with precision, perfect for honoring cherished memories.</p>
+                        <a href="https://square.link/u/Q8tlvfqJ" target="_blank" class="btn btn-block">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Slate Keepsake -->
+                <div class="product-card">
+                    <div class="product-image" style="background: none; padding: 0; overflow: hidden;">
+                    <img src="slate-keepsake.png" alt="Slate Keepsake" style="width: 100%; height: 100%; object-fit: cover;"> </div>
+                    <div class="product-content">
+                        <h3>Custom Slate Keepsake</h3>
+                        <p>Timeless memories etched in stone. A durable and elegant tribute that lasts forever.</p>
+                        <a href="https://square.link/u/UExU25pC" target="_blank" class="btn btn-block">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Metal Ornaments -->
+                <div class="product-card">
+                    <div class="product-image" style="background: none; padding: 0; overflow: hidden;">
+                    <img src="metal-ornament.png" alt="Metal Ornaments" style="width: 100%; height: 100%; object-fit: cover;"> </div>
+                    <div class="product-content">
+                        <h3>Hand-Crafted Metal Ornaments</h3>
+                        <p>Delicate metal ornaments engraved with love, perfect for remembering special moments.</p>
+                        <a href="https://square.link/u/JKv8S7VW" target="_blank" class="btn btn-block">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Glass Display -->
+                <div class="product-card">
+                    <div class="product-image" style="background: none; padding: 0; overflow: hidden;">
+                    <img src="glass-display.png" alt="Glass Display" style="width: 100%; height: 100%; object-fit: cover;"> </div>
+                    <div class="product-content">
+                        <h3>Glass Display Keepsake (6x8)</h3>
+                        <p>Elegant glass display with stand, featuring your cherished photo in stunning clarity.</p>
+                        <a href="https://square.link/u/h7S2dSmq" target="_blank" class="btn btn-block">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- Legacy Archive Upgrade -->
+                <div class="product-card">
+                    <div class="product-image" style="background: none; padding: 0; overflow: hidden;">
+                    <img src="Legacy Archive Upgrade.png" alt="Legacy Archive" style="width: 100%; height: 100%; object-fit: cover;"> </div>
+                    <div class="product-content">
+                        <h3>Legacy Archive Upgrade</h3>
+                        <p>Transform your keepsakes into living memories with our premium digital archive service.</p>
+                        <a href="https://square.link/u/uBvKtldH" target="_blank" class="btn btn-block">Order Now</a>
+                    </div>
+                </div>
+
+                <!-- VIP Swag Bag Gifts -->
+                <div class="product-card">
+                    <div class="product-image">🎁</div>
+                    <div class="product-content">
+                        <h3>VIP Swag Bag Gifts</h3>
+                        <p>Custom branded gift bags for events, weddings, and special occasions. Request a quote!</p>
+                        <button class="btn btn-secondary btn-block" onclick="alert('VIP Form Link - Add your Google Form URL here!')">Request Quote</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Partner CTA Section -->
+        <section class="partner-cta">
+            <h2>Bring The Legacy Lounge™ to Your Location</h2>
+            <p>
+                Host The Legacy Lounge™ display at your business and earn 10% commission on every order. 
+                Zero cost, zero effort, and full support from our team. Serve your community with 
+                meaningful keepsakes while generating passive income.
+            </p>
+            <button class="btn" onclick="showPage('partner')">Become a Partner</button>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Dopelee Prezzed by S LLC</p>
+            <p>Creating legacy pieces with love and precision</p>
+        </footer>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- PAGE 3: PARTNER WITH US -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="partner" class="page">
+        <!-- Page Header -->
+        <section class="page-header">
+            <h1>Partner With Us</h1>
+            <p>
+                Host The Legacy Lounge™ display at your location and earn 10% commission on every order. 
+                Zero cost, zero effort, and full support from our team. Serve your community with meaningful 
+                keepsakes while generating passive income.
+            </p>
+        </section>
+
+        <!-- Partnership Video -->
+        <section class="partnership-video">
+            <div class="video-wrapper">
+                <h2>🎥 See How The Legacy Lounge™ Works</h2>
+                <iframe src="https://drive.google.com/file/d/1l68Z2V7XOujwNQI2nsaegpyQxHq9r0Rv/preview" 
+                        frameborder="0" 
+                        allow="autoplay" 
+                        allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="how-it-works">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>We Deliver</h3>
+                    <p>We provide a beautifully designed Legacy Lounge™ display, complete with QR codes and all materials.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>You Display</h3>
+                    <p>Place the display in your location. It only needs a corner and an outlet—simple and elegant.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Customers Order</h3>
+                    <p>Families scan the QR code, customize their keepsake, and place orders directly from their phone.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>We Fulfill</h3>
+                    <p>We handle crafting, packaging, and shipping. Your customers receive their keepsakes at home.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>You Earn</h3>
+                    <p>You receive 10% commission on every order placed at your location, paid monthly.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="partner-cta">
+            <h2>Ready to Partner With Us?</h2>
+            <p>
+                Join our growing network of partners and start earning passive income while serving 
+                your community with meaningful memorial keepsakes. Apply today and we'll be in touch within 48 hours!
+            </p>
+            <button class="btn" onclick="alert('Partnership Form Link - Add your Google Form URL here!')">Apply Now</button>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Dopelee Prezzed by S LLC</p>
+            <p>Creating legacy pieces with love and precision</p>
+        </footer>
+    </div>
+
+    <!-- JAVASCRIPT FOR PAGE NAVIGATION -->
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToContact() {
+            // Show home page first
+            showPage('home');
+            
+            // Wait for page to show, then scroll to contact
+            setTimeout(() => {
+                document.getElementById('contact-section').scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+            }, 300);
+        }
+    </script>
+
+</body>
+</html>elee Prezzed by S™ | Luxury Legacy Keepsakes</title>
     <style>
         * {
             margin: 0;
