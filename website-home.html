@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dopelee Prezzed by S™ | Luxury Legacy Keepsakes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #e8e8ec;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(90deg, #0a95a8 0%, #d3fb1b 25%, #fd26fd 60%, #3461fa 100%);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #0a0a0a 0%, #121319 100%);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 24px;
+            color: #d3fb1b;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        .video-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #1a1b24;
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #2a2a2a;
+        }
+
+        .video-placeholder {
+            background: #0a0a0a;
+            padding: 100px 20px;
+            border-radius: 12px;
+            border: 2px dashed #d3fb1b;
+            color: #d3fb1b;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        /* About Section */
+        .about {
+            max-width: 900px;
+            margin: 80px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .about h2 {
+            font-size: 36px;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 30px;
+        }
+
+        .about p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #b8bac0;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 20px;
+            background: #121319;
+        }
+
+        .services h2 {
+            text-align: center;
+            font-size: 36px;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 60px;
+        }
+
+        .service-cards {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, #1a1b24 0%, #0a0a0a 100%);
+            padding: 40px;
+            border-radius: 20px;
+            border: 2px solid #2a2a2a;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(211, 251, 27, 0.3);
+            border-color: #d3fb1b;
+        }
+
+        .service-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 24px;
+            color: #d3fb1b;
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: #b8bac0;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b);
+            color: #0a0a0a;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(211, 251, 27, 0.4);
+        }
+
+        .btn-secondary {
+            background: #3461fa;
+            color: #fff;
+        }
+
+        /* Contact Section */
+        .contact {
+            max-width: 800px;
+            margin: 80px auto;
+            padding: 60px 40px;
+            background: #121319;
+            border-radius: 20px;
+            border: 2px solid #2a2a2a;
+        }
+
+        .contact h2 {
+            text-align: center;
+            font-size: 36px;
+            background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 40px;
+        }
+
+        .contact-info {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .contact-info p {
+            font-size: 18px;
+            color: #b8bac0;
+            margin: 10px 0;
+        }
+
+        .contact-info a {
+            color: #d3fb1b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .social-links a {
+            color: #3461fa;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #d3fb1b;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        footer p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .tagline {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .service-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Dopelee Prezzed by S™</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#legacy-lounge">Legacy Lounge</a></li>
+                <li><a href="#partner">Partner With Us</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Dopelee Prezzed by S™</h1>
+        <p class="tagline">Timelessly Crafted</p>
+        <div class="video-container">
+            <iframe src="https://drive.google.com/file/d/1tQb5VeKmqd1lH7EuzqD1gJCPp6N2uSuA/preview" 
+                    width="100%" 
+                    height="450" 
+                    frameborder="0" 
+                    allow="autoplay" 
+                    allowfullscreen
+                    style="border-radius: 12px;">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <h2>About Us</h2>
+        <p>
+            At Dopelee Prezzed by S™, we believe every memory deserves to be honored with elegance and care. 
+            We create luxury memorial keepsakes and custom gifts that celebrate life, legacy, and the moments that matter most. 
+            From handcrafted photo slates to premium engraved pieces, each item is timelessly crafted with love and precision.
+        </p>
+        <p style="margin-top: 20px;">
+            Whether you're honoring a loved one, celebrating a milestone, or partnering with us to serve your community, 
+            we're here to help you create something meaningful that lasts forever.
+        </p>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services">
+        <h2>How We Serve You</h2>
+        <div class="service-cards">
+            
+            <!-- Legacy Lounge -->
+            <div class="service-card">
+                <div class="service-icon">💎</div>
+                <h3>Legacy Lounge</h3>
+                <p>
+                    Luxury memorial keepsakes for pets and loved ones. Shop our handcrafted photo slates, 
+                    wood displays, glass keepsakes, metal ornaments, and custom photo books.
+                </p>
+                <a href="#legacy-lounge" class="btn">Shop Now</a>
+            </div>
+
+            <!-- VIP Bulk Gifts -->
+            <div class="service-card">
+                <div class="service-icon">🎁</div>
+                <h3>VIP Bulk Gifts</h3>
+                <p>
+                    Custom keepsakes for weddings, corporate events, schools, and special occasions. 
+                    We create personalized bulk orders tailored to your vision.
+                </p>
+                <button class="btn btn-secondary" onclick="alert('Link to your Google Form will go here!')">Request Custom Quote</button>
+            </div>
+
+            <!-- Partner With Us -->
+            <div class="service-card">
+                <div class="service-icon">🤝</div>
+                <h3>Partner With Us</h3>
+                <p>
+                    Host a Legacy Lounge display at your location. Earn 10% commission on every order 
+                    with zero cost, zero effort, and full support from our team.
+                </p>
+                <a href="#partner" class="btn">Learn More</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <h2>Get In Touch</h2>
+        <div class="contact-info">
+            <p><strong>Email:</strong> <a href="mailto:info@dopeleeprezzedbys.com">info@dopeleeprezzedbys.com</a></p>
+            <p><strong>Phone:</strong> <a href="tel:8165301520">816-530-1520</a></p>
+            <p><strong>Website:</strong> <a href="https://www.dopeleeprezzedbys.com" target="_blank">www.dopeleeprezzedbys.com</a></p>
+        </div>
+        <div class="social-links">
+            <a href="https://www.facebook.com/dopeleeprezzedbys" target="_blank">Facebook</a>
+            <span style="color: #666;">|</span>
+            <a href="https://www.instagram.com/dopeleeprezzedbys" target="_blank">Instagram</a>
+            <span style="color: #666;">|</span>
+            <a href="https://www.pinterest.com/dopeleeprezzedbys" target="_blank">Pinterest</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Dopelee Prezzed by S LLC</p>
+        <p>Creating legacy pieces with love and precision</p>
+    </footer>
+
+</body>
+</html>
