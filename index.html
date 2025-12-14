@@ -36,6 +36,31 @@
             50% { filter: drop-shadow(0 0 50px rgba(253, 38, 253, 0.8)) drop-shadow(0 0 80px rgba(52, 97, 250, 0.6)); }
         }
 
+        @keyframes tickerScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Scrolling Ticker Banner */
+        .ticker {
+            background: #000;
+            color: #d3fb1b;
+            padding: 12px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            border-bottom: 2px solid #d3fb1b;
+        }
+
+        .ticker p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: tickerScroll 30s linear infinite;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
         /* PAGE TRANSITIONS */
         .page {
             display: none;
@@ -137,7 +162,7 @@
             background: rgba(0, 0, 0, 0.3);
             padding: 20px;
             backdrop-filter: blur(10px);
-            max-width: 220px;
+            max-width: 320px;
             height: auto;
         }
 
@@ -166,14 +191,15 @@
         }
 
         .video-container {
-            max-width: 800px;
+            max-width: 700px;
             margin: 40px auto 0;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 40px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 30px;
             border-radius: 20px;
             backdrop-filter: blur(10px);
             position: relative;
             z-index: 2;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
         }
 
         .video-container iframe {
@@ -672,10 +698,15 @@
 </head>
 <body>
 
+    <!-- Scrolling Ticker Banner -->
+    <div class="ticker">
+        <p>✨ Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available ✨</p>
+    </div>
+
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <div class="logo-nav" onclick="showPage('home')">Dopelee Prezzed by S™</div>
+            <div class="logo-nav" onclick="showPage('home')">DOPELEE PREZZED™</div>
             <ul class="nav-links">
                 <li><a onclick="showPage('home')">Home</a></li>
                 <li><a onclick="showPage('products')">Legacy Lounge Collection</a></li>
@@ -695,8 +726,8 @@
             <div class="logo-container">
                 <img src="https://25zppb-bv.myshopify.com/cdn/shop/files/dopelee_prezzed_logo.png?v=1755138398&width=450" alt="Dopelee Logo">
             </div>
-            <h1>DOPELEE PREZZED BY S™</h1>
-            <p class="tagline">Timelessly Crafted</p>
+            <h1>Handcrafted Pieces That Preserve What Matters Most.</h1>
+            <p class="tagline">Luxury • Legacy • Keepsakes</p>
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/BBil4qK5gck" 
                         title="YouTube video player"
@@ -782,7 +813,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>© 2025 Dopelee Prezzed by S LLC</p>
+            <p>© <span id="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
         </footer>
     </div>
@@ -897,7 +928,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>© 2025 Dopelee Prezzed by S LLC</p>
+            <p>© <span id="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
         </footer>
     </div>
@@ -1011,7 +1042,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>© 2025 Dopelee Prezzed by S LLC</p>
+            <p>© <span id="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
         </footer>
     </div>
@@ -1086,13 +1117,20 @@
 
         <!-- Footer -->
         <footer>
-            <p>© 2025 Dopelee Prezzed by S LLC</p>
+            <p>© <span id="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
         </footer>
     </div>
 
     <!-- JAVASCRIPT FOR PAGE NAVIGATION -->
     <script>
+        // Auto-update year in footer
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpans = document.querySelectorAll('#currentYear');
+            const currentYear = new Date().getFullYear();
+            yearSpans.forEach(span => span.textContent = currentYear);
+        });
+
         function showPage(pageId) {
             // Hide all pages
             const pages = document.querySelectorAll('.page');
