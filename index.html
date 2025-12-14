@@ -205,6 +205,188 @@
             font-weight: 800;
         }
 
+        /* Shopping Cart Sidebar */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: #fff;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.3);
+            z-index: 10001;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            padding: 20px;
+            background: linear-gradient(135deg, #0a95a8, #0ff0b8);
+            color: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 30px;
+            cursor: pointer;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #000;
+        }
+
+        .cart-item-price {
+            color: #0a95a8;
+            font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .qty-btn {
+            background: #0a95a8;
+            color: #fff;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .qty-btn:hover {
+            background: #0ff0b8;
+        }
+
+        .cart-item-qty {
+            font-weight: 700;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .remove-item {
+            background: #ff4444;
+            color: #fff;
+            border: none;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .remove-item:hover {
+            background: #cc0000;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+
+        .cart-footer {
+            padding: 20px;
+            border-top: 2px solid #eee;
+            background: #f9f9f9;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #0a95a8, #0ff0b8, #3461fa, #d3fb1b);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(15, 240, 184, 0.4);
+        }
+
+        .checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Cart Overlay */
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            display: none;
+        }
+
+        .cart-overlay.active {
+            display: block;
+        }
+
         /* Hamburger Menu */
         .hamburger {
             display: none;
@@ -678,6 +860,149 @@
             min-height: 60px;
         }
 
+        .product-content .price {
+            color: #0ff0b8;
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 15px 0;
+            min-height: auto;
+            text-shadow: 0 2px 10px rgba(15, 240, 184, 0.3);
+        }
+
+        /* ========================================
+           LUXURY BLACK & GOLD COLLECTION PAGE
+        ======================================== */
+        
+        .luxury-collection-header {
+            background: #000;
+            padding: 80px 20px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid #d4af37;
+        }
+
+        .luxury-shimmer {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #0ff0b8;
+            border-radius: 50%;
+            box-shadow: 0 0 30px #0ff0b8, 0 0 60px #0ff0b8;
+            animation: luxuryShimmer 4s infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes luxuryShimmer {
+            0%, 100% { opacity: 0; transform: translateY(0) scale(1); }
+            50% { opacity: 1; transform: translateY(-30px) scale(1.5); }
+        }
+
+        .luxury-shimmer:nth-child(1) { left: 20%; top: 30%; animation-delay: 0s; }
+        .luxury-shimmer:nth-child(2) { left: 50%; top: 20%; animation-delay: 1s; background: #3461fa; box-shadow: 0 0 30px #3461fa, 0 0 60px #3461fa; }
+        .luxury-shimmer:nth-child(3) { left: 70%; top: 40%; animation-delay: 2s; }
+        .luxury-shimmer:nth-child(4) { left: 85%; top: 25%; animation-delay: 1.5s; background: #3461fa; box-shadow: 0 0 30px #3461fa, 0 0 60px #3461fa; }
+
+        .luxury-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 400;
+            color: #d4af37;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .luxury-divider {
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4af37, transparent);
+            margin: 0 auto 20px;
+        }
+
+        .luxury-subtitle {
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .luxury-products-section {
+            background: #000;
+            padding: 60px 20px 80px;
+        }
+
+        #products .products-grid {
+            background: #000;
+        }
+
+        #products .product-card {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            border: 1px solid #d4af37;
+            transition: all 0.4s ease;
+        }
+
+        #products .product-card:hover {
+            border-color: #0ff0b8;
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.2), 0 0 30px rgba(15, 240, 184, 0.1);
+            transform: translateY(-8px);
+        }
+
+        #products .product-content h3 {
+            color: #d4af37;
+            font-family: 'Playfair Display', serif;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        #products .product-content p {
+            color: #b8b8b8;
+        }
+
+        /* Louis Vuitton Style Pricing */
+        #products .product-content .price {
+            color: #d4af37;
+            font-size: 1rem;
+            font-weight: 300;
+            margin: 20px 0;
+            text-shadow: none;
+            letter-spacing: 1px;
+        }
+
+        #products .btn-block {
+            background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d4af37);
+            color: #000;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border: none;
+        }
+
+        #products .btn-block:hover {
+            background: linear-gradient(135deg, #d4af37, #0ff0b8, #0a95a8);
+            box-shadow: 0 8px 25px rgba(15, 240, 184, 0.4), 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .luxury-delivery-notice {
+            max-width: 700px;
+            margin: 40px auto 0;
+            padding: 25px 40px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(15, 240, 184, 0.05));
+            border: 1px solid #d4af37;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .luxury-delivery-notice p {
+            margin: 0;
+            font-size: 1rem;
+            color: #d4af37;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
         /* VIP Page Styles */
         .vip-hero {
             background: linear-gradient(135deg, #fd26fd, #3461fa, #0a95a8, #d3fb1b);
@@ -1000,6 +1325,26 @@
             #heroControls {
                 display: none !important;
             }
+
+            /* Luxury page mobile */
+            .luxury-title {
+                font-size: 2rem;
+                letter-spacing: 2px;
+            }
+
+            .luxury-subtitle {
+                font-size: 0.95rem;
+                padding: 0 15px;
+            }
+
+            .luxury-delivery-notice {
+                padding: 20px 25px;
+                margin: 30px 15px 0;
+            }
+
+            .luxury-delivery-notice p {
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
@@ -1016,7 +1361,7 @@
             <div class="logo-nav" onclick="showPage('home')">Dopelee Prezzed By S™</div>
             
             <!-- Shopping Cart Icon -->
-            <div class="cart-icon" onclick="toggleCart()" style="display: none;">
+            <div class="cart-icon" onclick="toggleCart()">
                 🛒 <span id="cartCount" class="cart-count">0</span>
             </div>
             
@@ -1169,22 +1514,26 @@
     <!-- PAGE 2: LEGACY LOUNGE COLLECTION (PRODUCTS) -->
     <!-- ═══════════════════════════════════════════════════════════════ -->
     <div id="products" class="page">
-        <!-- Page Header -->
-        <section class="page-header">
-            <h1>Legacy Lounge Collection</h1>
-            <p>Handcrafted memorial keepsakes that honor your loved ones with elegance and care.
-            Each piece is timelessly crafted to preserve precious memories forever.</p>
+        <!-- Luxury Header -->
+        <section class="luxury-collection-header">
+            <!-- Shimmer particles -->
+            <div class="luxury-shimmer"></div>
+            <div class="luxury-shimmer"></div>
+            <div class="luxury-shimmer"></div>
+            <div class="luxury-shimmer"></div>
+            
+            <h1 class="luxury-title">Legacy Lounge Collection</h1>
+            <div class="luxury-divider"></div>
+            <p class="luxury-subtitle">Handcrafted memorial keepsakes that honor your loved ones with elegance and care</p>
         
-            <!-- DELIVERY NOTICE -->
-            <div style="max-width: 600px; margin: 30px auto 0; padding: 20px 30px; background: linear-gradient(135deg, rgba(211, 251, 27, 0.1), rgba(10, 149, 168, 0.1)); border: 2px solid #d3fb1b; border-radius: 15px;">
-                <p style="margin: 0; font-size: 1rem; color: #d3fb1b; font-weight: 700; text-align: center;">
-                    ⏱️ Please allow 2-3 weeks for delivery 🖤
-                </p>
+            <!-- Luxury Delivery Notice -->
+            <div class="luxury-delivery-notice">
+                <p><span style="font-size: 1.3rem;">⏱️</span> Please allow 2-3 weeks for delivery</p>
             </div>
         </section>
 
         <!-- Products Grid -->
-        <section class="products-section">
+        <section class="luxury-products-section">
             <div class="products-grid">
 
                 <!-- Photo LookBook -->
@@ -1195,7 +1544,8 @@
                     <div class="product-content">
                         <h3>Custom Photo LookBook</h3>
                         <p>A beautifully designed photo book that tells your story in vivid detail and lasting quality.</p>
-                        <a href="https://square.link/u/romQrFWM" target="_blank" class="btn btn-block">Order Now</a>
+                        <p class="price">Starting at $65.00</p>
+                        <button onclick="addToCart('photo-book', 'Custom Photo LookBook', 65.00, 'photo-book.png')" class="btn btn-block">Add to Cart</button>
                     </div>
                 </div>
 
@@ -1207,7 +1557,8 @@
                     <div class="product-content">
                         <h3>Hand-Crafted Wood Keepsake</h3>
                         <p>Premium wood display crafted with precision, perfect for honoring cherished memories.</p>
-                        <a href="https://square.link/u/Q8tlvfqJ" target="_blank" class="btn btn-block">Order Now</a>
+                        <p class="price">$65.00</p>
+                        <button onclick="addToCart('wood-keepsake', 'Hand-Crafted Wood Keepsake', 65.00, 'wood-keepsake.png')" class="btn btn-block">Add to Cart</button>
                     </div>
                 </div>
 
@@ -1219,7 +1570,8 @@
                     <div class="product-content">
                         <h3>Custom Slate Keepsake</h3>
                         <p>Timeless memories etched in stone. A durable and elegant tribute that lasts forever.</p>
-                        <a href="https://square.link/u/UExU25pC" target="_blank" class="btn btn-block">Order Now</a>
+                        <p class="price">Starting at $60.00</p>
+                        <button onclick="addToCart('slate-keepsake', 'Custom Slate Keepsake', 60.00, 'slate-keepsake.png')" class="btn btn-block">Add to Cart</button>
                     </div>
                 </div>
 
@@ -1231,7 +1583,8 @@
                     <div class="product-content">
                         <h3>Hand-Crafted Metal Ornaments</h3>
                         <p>Delicate metal ornaments engraved with love, perfect for remembering special moments.</p>
-                        <a href="https://square.link/u/JKv8S7VW" target="_blank" class="btn btn-block">Order Now</a>
+                        <p class="price">Starting at $25.00</p>
+                        <button onclick="addToCart('metal-ornament', 'Hand-Crafted Metal Ornaments', 25.00, 'metal-ornament.png')" class="btn btn-block">Add to Cart</button>
                     </div>
                 </div>
 
@@ -1243,7 +1596,8 @@
                     <div class="product-content">
                         <h3>Glass Display Keepsake (6x8)</h3>
                         <p>Elegant glass display with stand, featuring your cherished photo in stunning clarity.</p>
-                        <a href="https://square.link/u/h7S2dSmq" target="_blank" class="btn btn-block">Order Now</a>
+                        <p class="price">$55.00</p>
+                        <button onclick="addToCart('glass-display', 'Glass Display Keepsake (6x8)', 55.00, 'glass-display.png')" class="btn btn-block">Add to Cart</button>
                     </div>
                 </div>
 
@@ -1255,7 +1609,8 @@
                     <div class="product-content">
                         <h3>Legacy Archive Upgrade</h3>
                         <p>Transform your keepsakes into living memories with our premium digital archive service.</p>
-                        <a href="https://square.link/u/uBvKtldH" target="_blank" class="btn btn-block">Order Now</a>
+                        <p class="price">Starting at $45.00</p>
+                        <button onclick="addToCart('legacy-archive', 'Legacy Archive Upgrade', 45.00, 'Legacy Archive Upgrade.png')" class="btn btn-block">Add to Cart</button>
                     </div>
                 </div>
 
@@ -1270,7 +1625,7 @@
                 Zero cost, zero effort, and full support from our team. Serve your community with 
                 meaningful keepsakes while generating passive income.
             </p>
-            <button class="btn" onclick="showPage('partner')">Become a Partner</button>
+            <button class="btn" onclick="showPage('partner')" style="background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d4af37); color: #000; font-weight: 700;">Become a Partner</button>
         </section>
 
         <!-- Footer -->
@@ -1564,6 +1919,177 @@
         }
         
         // ========================================
+        // SHOPPING CART SYSTEM
+        // ========================================
+        
+        // Square API Configuration
+        const SQUARE_ACCESS_TOKEN = 'EAAAl-X4yg5nYY4EuxhDMCfkQiPSRdKZHehcLH_gAk6d-okAa0yzo_EF5YlCfmuy';
+        const SQUARE_LOCATION_ID = 'L4S84CCE1HN6X';
+        
+        // Cart storage
+        let cart = JSON.parse(localStorage.getItem('dopelee_cart')) || [];
+        
+        // Initialize cart on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            updateCartUI();
+        });
+        
+        // Toggle cart sidebar
+        function toggleCart() {
+            const sidebar = document.getElementById('cartSidebar');
+            const overlay = document.getElementById('cartOverlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+        
+        // Add item to cart
+        function addToCart(productId, name, price, image) {
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: productId,
+                    name: name,
+                    price: parseFloat(price),
+                    image: image,
+                    quantity: 1
+                });
+            }
+            
+            saveCart();
+            updateCartUI();
+            toggleCart(); // Open cart when item added
+        }
+        
+        // Update quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    saveCart();
+                    updateCartUI();
+                }
+            }
+        }
+        
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCart();
+            updateCartUI();
+        }
+        
+        // Save cart to localStorage
+        function saveCart() {
+            localStorage.setItem('dopelee_cart', JSON.stringify(cart));
+        }
+        
+        // Update cart UI
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItemsContainer = document.getElementById('cartItemsContainer');
+            const cartTotal = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            // Update count
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Update items display
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="cart-empty">
+                        <p style="font-size: 3rem; margin-bottom: 10px;">🛒</p>
+                        <p>Your cart is empty</p>
+                    </div>
+                `;
+                checkoutBtn.disabled = true;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                            <div class="cart-item-controls">
+                                <button class="qty-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                                <span class="cart-item-qty">${item.quantity}</span>
+                                <button class="qty-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+                                <button class="remove-item" onclick="removeFromCart('${item.id}')">Remove</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                checkoutBtn.disabled = false;
+            }
+            
+            // Update total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+        
+        // Proceed to Square Checkout
+        async function proceedToCheckout() {
+            if (cart.length === 0) return;
+            
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            checkoutBtn.textContent = 'Processing...';
+            checkoutBtn.disabled = true;
+            
+            try {
+                // Create line items for Square
+                const lineItems = cart.map(item => ({
+                    name: item.name,
+                    quantity: item.quantity.toString(),
+                    base_price_money: {
+                        amount: Math.round(item.price * 100), // Convert to cents
+                        currency: 'USD'
+                    }
+                }));
+                
+                // Create Square checkout
+                const response = await fetch('https://connect.squareup.com/v2/online-checkout/payment-links', {
+                    method: 'POST',
+                    headers: {
+                        'Square-Version': '2024-12-18',
+                        'Authorization': `Bearer ${SQUARE_ACCESS_TOKEN}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        idempotency_key: Date.now().toString(),
+                        order: {
+                            location_id: SQUARE_LOCATION_ID,
+                            line_items: lineItems
+                        },
+                        checkout_options: {
+                            redirect_url: window.location.origin + window.location.pathname,
+                            ask_for_shipping_address: true
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.payment_link && data.payment_link.url) {
+                    // Redirect to Square checkout
+                    window.location.href = data.payment_link.url;
+                } else {
+                    throw new Error('Failed to create checkout');
+                }
+            } catch (error) {
+                console.error('Checkout error:', error);
+                alert('Sorry, there was an error processing your checkout. Please try again or contact us at info@dopeleeprezzedbysllc.com');
+                checkoutBtn.textContent = 'Proceed to Checkout';
+                checkoutBtn.disabled = false;
+            }
+        }
+        
+        // ========================================
         // HAMBURGER MENU
         // ========================================
         
@@ -1632,6 +2158,34 @@
             }, 300);
         }
     </script>
+
+    <!-- Cart Overlay -->
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+    <!-- Shopping Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>🛒 Your Cart</h2>
+            <button class="close-cart" onclick="toggleCart()">×</button>
+        </div>
+        
+        <div class="cart-items" id="cartItemsContainer">
+            <div class="cart-empty">
+                <p style="font-size: 3rem; margin-bottom: 10px;">🛒</p>
+                <p>Your cart is empty</p>
+            </div>
+        </div>
+        
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cartTotal">$0.00</span>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn" onclick="proceedToCheckout()" disabled>
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
 
 </body>
 </html>
