@@ -36,6 +36,47 @@
             50% { filter: drop-shadow(0 0 50px rgba(253, 38, 253, 0.8)) drop-shadow(0 0 80px rgba(52, 97, 250, 0.6)); }
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: translateY(0) scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-100px) scale(1);
+            }
+        }
+
+        /* Floating Sparkles */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #d3fb1b;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #d3fb1b, 0 0 20px #0ff0b8;
+            animation: sparkle 3s infinite;
+            pointer-events: none;
+        }
+
+        .sparkle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .sparkle:nth-child(2) { left: 20%; animation-delay: 0.5s; background: #0ff0b8; }
+        .sparkle:nth-child(3) { left: 30%; animation-delay: 1s; }
+        .sparkle:nth-child(4) { left: 70%; animation-delay: 1.5s; background: #0ff0b8; }
+        .sparkle:nth-child(5) { left: 80%; animation-delay: 2s; }
+        .sparkle:nth-child(6) { left: 90%; animation-delay: 2.5s; background: #0ff0b8; }
+
         @keyframes tickerScroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
@@ -130,7 +171,7 @@
             background: linear-gradient(135deg, #0a95a8 0%, #0ff0b8 25%, #3461fa 50%, #0a95a8 75%, #0ff0b8 100%);
             background-size: 200% 200%;
             animation: gradientShift 8s ease infinite;
-            padding: 30px 20px 40px;
+            padding: 35px 20px 50px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -154,6 +195,7 @@
             margin-bottom: 0.5rem;
             position: relative;
             z-index: 2;
+            animation: fadeInUp 1s ease;
         }
         
         .logo-container img {
@@ -173,6 +215,7 @@
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(255, 255, 255, 0.3);
             position: relative;
             z-index: 2;
+            animation: fadeInUp 1.2s ease;
         }
 
         .tagline {
@@ -185,6 +228,57 @@
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
             position: relative;
             z-index: 2;
+            animation: fadeInUp 1.4s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Hero CTA Buttons */
+        .hero-cta {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1.6s ease;
+        }
+
+        .cta-primary {
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #d3fb1b, #0ff0b8);
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 8px 30px rgba(211, 251, 27, 0.4);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(211, 251, 27, 0.6);
+        }
+
+        .cta-secondary {
+            padding: 16px 40px;
+            background: transparent;
+            color: #000;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: 2px solid #000;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
         }
 
         .video-container {
@@ -677,9 +771,9 @@
 
         /* Responsive */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
-            .vip-hero h1 { font-size: 2.2rem; }
-            .tagline { font-size: 1rem; }
+            .hero h1 { font-size: 1.8rem; line-height: 1.2; }
+            .vip-hero h1 { font-size: 2rem; }
+            .tagline { font-size: 1rem; margin-bottom: 1.2rem; }
             .nav-links { gap: 12px; }
             .nav-links a { font-size: 13px; }
             .products-grid { grid-template-columns: 1fr; }
@@ -687,7 +781,31 @@
             .use-case-grid { grid-template-columns: 1fr; }
             .steps { grid-template-columns: 1fr; }
             .page-header h1 { font-size: 2rem; }
-            .logo-container img { max-width: 150px; }
+            .logo-container img { max-width: 200px; }
+            
+            /* Tighter hero on mobile */
+            .hero {
+                padding: 25px 15px 40px;
+            }
+            
+            /* Mobile CTA */
+            .hero-cta {
+                flex-direction: column;
+                gap: 12px;
+                margin-top: 1.2rem;
+            }
+            
+            .cta-primary, .cta-secondary {
+                width: 100%;
+                max-width: 280px;
+                padding: 14px 30px;
+                font-size: 0.95rem;
+            }
+            
+            /* Mobile ticker */
+            .ticker p {
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -718,11 +836,25 @@
     <div id="home" class="page active">
         <!-- Hero Section -->
         <section class="hero">
+            <!-- Floating Sparkles -->
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            
             <div class="logo-container">
                 <img src="https://25zppb-bv.myshopify.com/cdn/shop/files/dopelee_prezzed_logo.png?v=1755138398&width=450" alt="Dopelee Logo">
             </div>
             <h1>Handcrafted Pieces That Preserve What Matters Most.</h1>
             <p class="tagline">Luxury • Legacy • Keepsakes</p>
+            
+            <!-- Hero CTA Buttons -->
+            <div class="hero-cta">
+                <a href="#" onclick="showPage('products'); return false;" class="cta-primary">Shop Legacy Collection</a>
+                <a href="https://tr.ee/U07ytK" target="_blank" class="cta-secondary">🎵 Our Legacy Song</a>
+            </div>
         </section>
 
         <!-- About Section -->
@@ -800,6 +932,14 @@
                 <p><strong>Phone:</strong> <a href="tel:8165301520">816-530-1520</a></p>
                 <p><strong>Website:</strong> <a href="https://www.dopeleeprezzedbys.com" target="_blank">www.dopeleeprezzedbys.com</a></p>
             </div>
+            
+            <!-- Leave a Review Button -->
+            <div style="text-align: center; margin: 30px 0 20px;">
+                <a href="https://tr.ee/U07ytK" target="_blank" class="btn" style="display: inline-block; padding: 16px 40px; background: linear-gradient(135deg, #d3fb1b, #0ff0b8); color: #000; text-decoration: none; border-radius: 50px; font-weight: 700; font-size: 1rem; box-shadow: 0 8px 30px rgba(211, 251, 27, 0.4); transition: all 0.3s ease;">
+                    ⭐ Leave Us a Review
+                </a>
+            </div>
+            
             <div class="social-links">
                 <a href="https://www.facebook.com/dopeleeprezzedbys" target="_blank">Facebook</a>
                 <span style="color: #666;">|</span>
@@ -1150,6 +1290,22 @@
                 document.getElementById('contact-section').scrollIntoView({ 
                     behavior: 'smooth' 
                 });
+            }, 300);
+        }
+
+        function scrollToVideo() {
+            // Show home page first
+            showPage('home');
+            
+            // Wait for page to show, then scroll to video in About section
+            setTimeout(() => {
+                const videoSection = document.querySelector('.about .video-container');
+                if (videoSection) {
+                    videoSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
             }, 300);
         }
     </script>
