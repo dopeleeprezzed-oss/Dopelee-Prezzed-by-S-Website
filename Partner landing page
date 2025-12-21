@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Legacy Lounge™ | Dopelee Prezzed by S™</title>
+  
+  <style>
+    :root {
+      --bg-primary: #000;
+      --bg-secondary: #0a0a0a;
+      --bg-card: #1a1a1a;
+      --text-primary: #fff;
+      --text-muted: #b8bac0;
+      --accent-gold: #d3fb1b;
+      --accent-cyan: #0ff0b8;
+      --accent-blue: #0a95a8;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* ANIMATED HEADER */
+    .header {
+      background: linear-gradient(90deg, #0a95a8, #3461fa, #fd26fd, #d3fb1b, #0ff0b8, #0a95a8);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      padding: 3rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+    
+    .logo-container {
+      margin-bottom: 1.5rem;
+    }
+    
+    .logo-container img {
+      max-width: 150px;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(15, 240, 184, 0.4);
+    }
+    
+    .header h1 {
+      color: #000;
+      font-size: 2.5rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+    
+    .header .tagline {
+      color: #000;
+      font-size: 1.2rem;
+      font-weight: 600;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+    
+    /* PARTNER BANNER */
+    .partner-banner {
+      background: var(--bg-card);
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 2px solid rgba(211, 251, 27, 0.3);
+      animation: fadeIn 0.6s ease;
+    }
+    
+    .partner-banner h2 {
+      color: var(--accent-gold);
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    
+    .partner-banner p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+    
+    /* CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    
+    .intro-section {
+      text-align: center;
+      margin-bottom: 3rem;
+      animation: fadeIn 0.8s ease;
+    }
+    
+    .intro-section h3 {
+      background: linear-gradient(90deg, #0a95a8, #0ff0b8, #d3fb1b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .intro-section p {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+    
+    /* PRODUCTS GRID */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+    
+    .product-card {
+      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(15, 240, 184, 0.2);
+      transition: all 0.3s ease;
+      animation: fadeIn 1s ease;
+    }
+    
+    .product-card:hover {
+      border-color: rgba(15, 240, 184, 0.6);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(15, 240, 184, 0.3);
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(15, 240, 184, 0.2);
+    }
+    
+    .product-content {
+      padding: 1.5rem;
+    }
+    
+    .product-content h4 {
+      color: #d3fb1b;
+      font-size: 1.3rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    
+    .product-content p {
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .product-price {
+      color: #0ff0b8;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    
+    .btn-order {
+      display: block;
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, #0a95a8, #0ff0b8);
+      color: #000;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 700;
+      text-align: center;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(15, 240, 184, 0.3);
+    }
+    
+    .btn-order:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(15, 240, 184, 0.5);
+    }
+    
+    /* CTA SECTION */
+    .cta-section {
+      background: linear-gradient(135deg, rgba(10, 149, 168, 0.15), rgba(15, 240, 184, 0.1));
+      border: 2px solid #0ff0b8;
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      text-align: center;
+      margin: 3rem 0;
+      animation: fadeIn 1.2s ease;
+    }
+    
+    .cta-section h3 {
+      background: linear-gradient(90deg, #0a95a8, #0ff0b8, #d3fb1b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .cta-section p {
+      color: var(--text-primary);
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .btn-primary {
+      display: inline-block;
+      padding: 1.2rem 2.5rem;
+      background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d3fb1b);
+      color: #000;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(15, 240, 184, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(15, 240, 184, 0.5);
+    }
+    
+    /* FOOTER */
+    .footer {
+      background: var(--bg-secondary);
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 4rem;
+      border-top: 2px solid rgba(15, 240, 184, 0.2);
+    }
+    
+    .footer h4 {
+      background: linear-gradient(90deg, #0a95a8, #0ff0b8, #d3fb1b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .footer p {
+      color: var(--text-muted);
+      margin: 0.5rem 0;
+    }
+    
+    .footer a {
+      color: #0ff0b8;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .footer a:hover {
+      color: #d3fb1b;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 4rem 2rem;
+      font-size: 1.5rem;
+      color: #0ff0b8;
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .header h1 { font-size: 2rem; }
+      .header .tagline { font-size: 1rem; }
+      .partner-banner h2 { font-size: 1.5rem; }
+      .intro-section h3 { font-size: 1.5rem; }
+      .products-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .product-image { height: 200px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-container">
+      <img src="https://dopeleeprezzed-oss.github.io/dopelee-form/logo.png" alt="Dopelee Prezzed by S">
+    </div>
+    <h1>DOPELEE PREZZED BY S™</h1>
+    <p class="tagline">Luxury • Legacy • Keepsakes</p>
+  </div>
+
+  <!-- PARTNER BANNER -->
+  <div class="partner-banner">
+    <h2 id="partnerName">The Legacy Lounge™</h2>
+    <p id="partnerTagline">Handcrafted Memorial Keepsakes</p>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loadingState" class="loading">
+    Loading products...
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container" id="mainContent" style="display:none;">
+    
+    <!-- INTRO -->
+    <div class="intro-section">
+      <h3>🖤 Preserving What Matters Most</h3>
+      <p>
+        Each piece is handcrafted with care and precision to celebrate the life of your loved one. 
+        Create a lasting tribute that brings comfort and keeps their memory close.
+      </p>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="products-grid" id="productsGrid"></div>
+
+    <!-- CTA -->
+    <div class="cta-section">
+      <h3>✨ Ready to Create Your Keepsake?</h3>
+      <p>
+        Our team is here to help you design a beautiful memorial piece. 
+        Start your order today or browse our full collection.
+      </p>
+      <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/" class="btn-primary">Start Your Order →</a>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <h4>DOPELEE PREZZED BY S™</h4>
+    <p>Luxury • Legacy • Keepsakes</p>
+    <p style="margin-top: 1rem;">
+      <a href="https://www.dopeleeprezzedbys.com" target="_blank">Website</a> • 
+      <a href="/cdn-cgi/l/email-protection#d4bdbab2bb94b0bba4b1b8b1b1a4a6b1aeaeb1b0b6ada7b8b8b7fab7bbb9">Email</a> • 
+      <a href="tel:8165301520">816-530-1520</a>
+    </p>
+    <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">
+      © 2025 Dopelee Prezzed by S, LLC
+    </p>
+  </div>
+
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    const SUPABASE_URL = 'https://dyehxtiozfwlexkbalvn.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs';
+    const FORM_URL = 'https://dopeleeprezzed-oss.github.io/dopelee-form/';
+    
+    // PRODUCT CATALOG - Using your actual Square store
+    const SQUARE_STORE = 'https://dopelee-prezzed-by-s.square.site';
+    
+    // Base URL for product images (hosted on your website)
+    const IMAGE_BASE = 'https://www.dopeleeprezzedbys.com/';
+    
+    const PRODUCTS = [
+      {
+        id: 'photo-lookbook',
+        name: 'Custom Photo Lookbook',
+        description: 'A beautifully designed photo book that tells your story in vivid detail and lasting quality.',
+        price: 'Starting at $65',
+        image: IMAGE_BASE + 'photo-book.png',
+        squareLink: SQUARE_STORE
+      },
+      {
+        id: 'wood-keepsake',
+        name: 'Hand-Crafted Wood Keepsake',
+        description: 'Premium wood display crafted with precision, perfect for honoring cherished memories.',
+        price: '$65',
+        image: IMAGE_BASE + 'wood-keepsake.png',
+        squareLink: SQUARE_STORE
+      },
+      {
+        id: 'slate-keepsake',
+        name: 'Custom Slate Keepsake',
+        description: 'Timeless memories etched in stone. A durable and elegant tribute that lasts forever.',
+        price: 'Starting at $60',
+        image: IMAGE_BASE + 'slate-keepsake.png',
+        squareLink: SQUARE_STORE
+      },
+      {
+        id: 'metal-ornaments',
+        name: 'Hand-Crafted Metal Ornaments',
+        description: 'Delicate metal ornaments engraved with love, perfect for remembering special moments.',
+        price: 'Starting at $25',
+        image: IMAGE_BASE + 'metal-ornament.png',
+        squareLink: SQUARE_STORE
+      },
+      {
+        id: 'glass-display',
+        name: 'Glass Display Keepsake (6x8)',
+        description: 'Elegant glass display with stand, featuring your cherished photo in stunning clarity.',
+        price: '$55',
+        image: IMAGE_BASE + 'glass-display.png',
+        squareLink: SQUARE_STORE
+      },
+      {
+        id: 'legacy-archive',
+        name: 'Legacy Archive Upgrade',
+        description: 'Transform your keepsakes into living memories with our premium digital archive service.',
+        price: 'Starting at $45',
+        image: IMAGE_BASE + 'Legacy Archive Upgrade.png',
+        squareLink: SQUARE_STORE
+      }
+    ];
+    
+    let partnerData = null;
+    
+    // GET PARTNER ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const partnerId = urlParams.get('partner') || urlParams.get('id');
+    
+    // LOAD PARTNER DATA
+    async function loadPartnerData() {
+      if (!partnerId) {
+        loadProducts();
+        return;
+      }
+      
+      try {
+        const response = await fetch(`${SUPABASE_URL}/rest/v1/partners?partner_id=eq.${partnerId}&select=*`, {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        });
+        
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+          partnerData = data[0];
+          document.getElementById('partnerName').innerText = `Legacy Lounge™ at ${partnerData.business_name}`;
+          document.getElementById('partnerTagline').innerText = `Available exclusively at ${partnerData.business_name}`;
+          document.title = `Legacy Lounge™ at ${partnerData.business_name} | Dopelee Prezzed by S™`;
+        }
+        
+        loadProducts();
+        
+      } catch (err) {
+        console.error('Error:', err);
+        loadProducts();
+      }
+    }
+    
+    // LOAD PRODUCTS
+    function loadProducts() {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+      
+      PRODUCTS.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="product-image">
+          <div class="product-content">
+            <h4>${product.name}</h4>
+            <p>${product.description}</p>
+            <div class="product-price">${product.price}</div>
+            <a href="${product.squareLink}${partnerId ? '?partner=' + partnerId : ''}" 
+               class="btn-order" 
+               target="_blank">
+              Order Now →
+            </a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+      
+      document.getElementById('loadingState').style.dis
