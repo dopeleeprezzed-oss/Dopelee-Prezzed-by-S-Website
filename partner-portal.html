@@ -580,11 +580,11 @@ function renderDashboard(partner, orders) {
   });
   
   let html = `
-    <div class="card">
+    <div class="card" style="max-width:800px;margin:0 auto 30px;">
       <h2>👋 Welcome, ${partner.business_name}!</h2>
-      <p><strong>Contact Person:</strong> ${partner.contact_name || 'N/A'}</p>
-      <p><strong>Email:</strong> ${partner.contact_email || 'N/A'}</p>
-      <p><strong>Phone:</strong> ${partner.contact_phone || 'N/A'}</p>
+      <p><strong>Contact Person:</strong> K. Smith</p>
+      <p><strong>Email:</strong> Info@dopeleeprezzedbysllc.com</p>
+      <p><strong>Phone:</strong> 816-530-1520</p>
       <p><strong>Status:</strong> <span style="color:${isLive ? '#0ff0b8' : '#fd26fd'};font-weight:700">${status}</span></p>
     </div>
   `;
@@ -596,7 +596,7 @@ function renderDashboard(partner, orders) {
         <h2 style="color:#d3fb1b;margin-top:0">📅 Installation ${installScheduled ? 'Scheduled' : 'Pending'}</h2>
         ${installScheduled ? 
           `<p style="font-size:18px;margin:10px 0">Your installation is scheduled for:<br><strong style="color:#d3fb1b;font-size:24px">${new Date(installScheduled).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</strong></p>
-           <p style="margin-top:15px;color:#b8bac0;font-size:15px;">We'll bring everything needed for a professional setup. See you soon!</p>` :
+           <p style="margin-top:15px;color:#b8bac0;font-size:15px;">We'll bring everything needed for your setup. See you soon!</p>` :
           `<p style="margin:10px 0;font-size:16px;color:#b8bac0;">Your installation date will be confirmed via email within 24-48 hours.</p>
            <p style="margin-top:15px;">Questions? Call us at <a href="tel:8165301520" style="color:#d3fb1b;font-weight:700;text-decoration:none;">816-530-1520</a></p>`
         }
@@ -717,8 +717,8 @@ function renderDashboard(partner, orders) {
   }
   
   html += `
-    <a href="mailto:info@dopeleeprezzedbysllc.com" class="contact-btn">
-      💬 Contact Dopelee Support
+    <a href="mailto:Info@dopeleeprezzedbysllc.com" class="contact-btn">
+      💬 Contact K. Smith
     </a>
   `;
   
