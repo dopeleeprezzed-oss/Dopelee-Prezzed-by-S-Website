@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partner Portal | The Legacy Lounge™</title>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+  }
+
+  /* WEBSITE-STYLE HEADER - BLACK WITH BUBBLES */
+  .header {
+    background: #000;
+    padding: 2rem 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-top: 2px solid #d4af37;
+    border-bottom: 2px solid #d4af37;
+  }
+  
+  /* Blue Bling Background Effect */
+  .header::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: 
+      radial-gradient(circle at 25% 35%, rgba(15, 240, 184, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 75% 65%, rgba(10, 149, 168, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(15, 240, 184, 0.1) 0%, transparent 60%);
+    pointer-events: none;
+    animation: heroBling 5s ease-in-out infinite;
+  }
+  
+  @keyframes heroBling {
+    0%, 100% { opacity: 0.7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+  
+  /* Floating Colored Bubbles */
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: bubbleRise 8s infinite ease-in-out;
+    pointer-events: none;
+    box-shadow: 0 0 30px currentColor, 0 0 60px currentColor, inset 0 0 20px rgba(255, 255, 255, 0.3);
+    filter: blur(1px);
+  }
+  
+  @keyframes bubbleRise {
+    0% {
+      transform: translateY(100vh) scale(0);
+      opacity: 0;
+    }
+    10% {
+      opacity: 0.6;
+    }
+    90% {
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-100px) scale(1);
+      opacity: 0;
+    }
+  }
+  
+  .header .bubble:nth-child(1) { left: 10%; width: 40px; height: 40px; background: #0ff0b8; animation-delay: 0s; animation-duration: 10s; }
+  .header .bubble:nth-child(2) { left: 25%; width: 60px; height: 60px; background: #d3fb1b; animation-delay: 2s; animation-duration: 12s; }
+  .header .bubble:nth-child(3) { left: 45%; width: 50px; height: 50px; background: #fd26fd; animation-delay: 1s; animation-duration: 11s; }
+  .header .bubble:nth-child(4) { left: 65%; width: 35px; height: 35px; background: #3461fa; animation-delay: 3s; animation-duration: 9s; }
+  .header .bubble:nth-child(5) { left: 80%; width: 55px; height: 55px; background: #0a95a8; animation-delay: 4s; animation-duration: 13s; }
+  
+  @keyframes logoFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(5deg); }
+  }
+  
+  @keyframes logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 30px rgba(211, 251, 27, 0.6)) drop-shadow(0 0 60px rgba(15, 240, 184, 0.4)); }
+    50% { filter: drop-shadow(0 0 50px rgba(253, 38, 253, 0.8)) drop-shadow(0 0 80px rgba(52, 97, 250, 0.6)); }
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .logo-container img {
+    max-width: 80px;
+    height: auto;
+    border-radius: 12px;
+    animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 300;
+    color: #fff;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 20px rgba(15, 240, 184, 0.5);
+    position: relative;
+    z-index: 2;
+  }
+  
+  .header p {
+    margin: 8px 0 0;
+    font-size: 1rem;
+    color: #0ff0b8;
+    font-weight: 600;
+    font-style: italic;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 15px rgba(211, 251, 27, 0.4);
+    position: relative;
+    z-index: 2;
+  }
+
+  /* MAIN WRAPPER */
+  .container {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  /* DASHBOARD CARDS */
+  .card {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    border: 1px solid rgba(15, 240, 184, 0.2);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(15, 240, 184, 0.5);
+    box-shadow: 0 12px 40px rgba(15, 240, 184, 0.2);
+  }
+  
+  .card h2 {
+    margin: 0 0 20px;
+    font-size: 22px;
+    letter-spacing: .5px;
+    background: linear-gradient(90deg, #0a95a8, #0ff0b8, #d3fb1b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+  }
+  
+  .card p, .card span {
+    color: #b8bac0;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* STATS ROW */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .stat-box {
+    background: linear-gradient(135deg, rgba(10, 149, 168, 0.1), rgba(15, 240, 184, 0.05));
+    border: 1px solid rgba(15, 240, 184, 0.3);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    transition: all 0.3s;
+  }
+  
+  .stat-box:hover {
+    border-color: rgba(15, 240, 184, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(15, 240, 184, 0.2);
+  }
+  
+  .stat-box h3 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: #0ff0b8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  
+  .stat-box p {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #0ff0b8, #d3fb1b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* QR CODE SECTION */
+  .qr-box {
+    text-align: center;
+  }
+  
+  .qr-box img {
+    width: 220px;
+    height: 220px;
+    margin: 25px auto;
+    border-radius: 12px;
+    border: 3px solid #0ff0b8;
+    padding: 15px;
+    background: white;
+    box-shadow: 0 8px 30px rgba(15, 240, 184, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .qr-box img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 40px rgba(15, 240, 184, 0.5);
+  }
+  
+  .qr-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .qr-btn {
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #0a95a8, #0ff0b8);
+    color: #000;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-size: 15px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(15, 240, 184, 0.3);
+  }
+  
+  .qr-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 240, 184, 0.5);
+    background: linear-gradient(135deg, #0ff0b8, #d3fb1b);
+  }
+
+  /* INSTALLATION STATUS */
+  .install-status {
+    background: linear-gradient(135deg, rgba(211, 251, 27, 0.1), rgba(15, 240, 184, 0.1));
+    border: 2px solid #d3fb1b;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    margin: 30px 0;
+    box-shadow: 0 8px 30px rgba(211, 251, 27, 0.2);
+  }
+  
+  .install-status.pending {
+    border-color: #fd26fd;
+    background: linear-gradient(135deg, rgba(253, 38, 253, 0.1), rgba(52, 97, 250, 0.1));
+    box-shadow: 0 8px 30px rgba(253, 38, 253, 0.2);
+  }
+  
+  .install-status.complete {
+    border-color: #0ff0b8;
+    background: linear-gradient(135deg, rgba(15, 240, 184, 0.15), rgba(10, 149, 168, 0.1));
+    box-shadow: 0 8px 30px rgba(15, 240, 184, 0.3);
+  }
+  
+  .install-status h2 {
+    margin: 0 0 15px;
+    font-size: 24px;
+  }
+  
+  .schedule-btn {
+    display: inline-block;
+    padding: 16px 40px;
+    background: linear-gradient(135deg, #d3fb1b, #0ff0b8);
+    color: #000;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    margin-top: 20px;
+    transition: all 0.3s;
+    box-shadow: 0 6px 20px rgba(211, 251, 27, 0.3);
+  }
+  
+  .schedule-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(211, 251, 27, 0.5);
+  }
+
+  /* ORDERS TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  thead tr {
+    border-bottom: 2px solid #0ff0b8;
+  }
+  
+  th {
+    text-align: left;
+    padding: 12px;
+    color: #0ff0b8;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  tbody tr {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: background 0.3s;
+  }
+  
+  tbody tr:hover {
+    background: rgba(15, 240, 184, 0.05);
+  }
+  
+  td {
+    padding: 14px 12px;
+    color: #b8bac0;
+  }
+  
+  td:first-child {
+    color: #0ff0b8;
+    font-weight: 600;
+  }
+
+  /* CONTACT BUTTON */
+  .contact-btn {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto 0;
+    background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d3fb1b);
+    color: #000;
+    text-align: center;
+    padding: 18px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    transition: all 0.3s;
+    box-shadow: 0 6px 20px rgba(15, 240, 184, 0.3);
+  }
+  
+  .contact-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(15, 240, 184, 0.5);
+  }
+  
+  /* LOADING & ERROR */
+  .loading {
+    text-align: center;
+    padding: 80px 20px;
+    font-size: 18px;
+    color: #0ff0b8;
+  }
+  
+  .loading::before {
+    content: '⏳';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 20px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  
+  .error {
+    background: linear-gradient(135deg, rgba(253, 38, 253, 0.15), rgba(52, 97, 250, 0.1));
+    border: 2px solid #fd26fd;
+    color: #fd26fd;
+    padding: 40px;
+    border-radius: 16px;
+    text-align: center;
+    margin: 40px 0;
+    box-shadow: 0 8px 30px rgba(253, 38, 253, 0.3);
+  }
+  
+  .error h2 {
+    margin: 0 0 15px;
+    font-size: 28px;
+    color: #fd26fd;
+  }
+  
+  .error a {
+    color: #0ff0b8;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  
+  .error a:hover {
+    text-decoration: underline;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .header {
+      padding: 20px 15px;
+    }
+    
+    .header h1 {
+      font-size: 1.4rem;
+    }
+    
+    .logo-container img {
+      max-width: 60px !important;
+    }
+    
+    .header p {
+      font-size: 0.9rem;
+    }
+    
+    .container {
+      padding: 0 15px;
+    }
+    
+    .card {
+      padding: 20px;
+    }
+    
+    .stats-row {
+      grid-template-columns: 1fr;
+    }
+    
+    .qr-box img {
+      width: 180px;
+      height: 180px;
+    }
+    
+    table {
+      font-size: 13px;
+    }
+    
+    th, td {
+      padding: 8px 6px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <!-- Floating Bubbles -->
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  
+  <div class="logo-container">
+    <img src="https://dopeleeprezzed-oss.github.io/dopelee-form/logo.png" alt="The Legacy Lounge">
+    <h1>THE LEGACY LOUNGE™ PARTNER PORTAL</h1>
+  </div>
+  <p>Your Display • Your Earnings • Your Impact</p>
+</div>
+
+<div class="container" id="content">
+  <div class="loading">Loading your dashboard...</div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://dyehxtiozfwlexkbalvn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs';
+const LANDING_PAGE_BASE = 'https://www.dopeleeprezzedbys.com/partner-landing.html';
+
+const urlParams = new URLSearchParams(window.location.search);
+const partnerId = urlParams.get('partner');
+
+if (!partnerId) {
+  document.getElementById('content').innerHTML = `
+    <div class="error">
+      <h2>⚠️ Partner ID Missing</h2>
+      <p style="margin: 20px 0; font-size: 16px;">Please use the link provided in your welcome email.</p>
+      <p style="margin-top: 30px;">
+        Need help? Call K.Smith: <a href="tel:8165301520">816-530-1520</a>
+      </p>
+    </div>
+  `;
+} else {
+  loadPartnerDashboard();
+}
+
+async function loadPartnerDashboard() {
+  try {
+    const partnerResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/partners?partner_id=eq.${partnerId}&select=*`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      }
+    );
+    
+    const partnerData = await partnerResponse.json();
+    
+    if (!partnerData || partnerData.length === 0) {
+      showError('Partner not found. Please contact K.Smith at 816-530-1520');
+      return;
+    }
+    
+    const partner = partnerData[0];
+    
+    const ordersResponse = await fetch(
+      `${SUPABASE_URL}/rest/v1/orders?partner_id=eq.${partnerId}&select=*&order=created_at.desc&limit=20`,
+      {
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      }
+    );
+    
+    const orders = await ordersResponse.json() || [];
+    
+    renderDashboard(partner, orders);
+    
+  } catch (err) {
+    console.error('Error:', err);
+    showError('Error loading dashboard. Please try again or contact support at 816-530-1520');
+  }
+}
+
+function renderDashboard(partner, orders) {
+  const status = partner.status || 'Pending';
+  const installScheduled = partner.setup_scheduled_date || null;
+  const installComplete = partner.setup_completed_date || null;
+  const isLive = status === 'Active' || status === 'Live' || status === 'Scheduled';
+  
+  let totalEarned = 0;
+  let thisMonthOrders = 0;
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+  
+  orders.forEach(order => {
+    const orderTotal = parseFloat(order.order_total) || 0;
+    const commission = orderTotal * 0.10;
+    totalEarned += commission;
+    
+    const orderDate = new Date(order.created_at);
+    if (orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear) {
+      thisMonthOrders++;
+    }
+  });
+  
+  let html = `
+    <div class="card">
+      <h2>👋 Welcome, ${partner.business_name}!</h2>
+      <p><strong>Contact Person:</strong> ${partner.contact_name || 'N/A'}</p>
+      <p><strong>Email:</strong> ${partner.contact_email || 'N/A'}</p>
+      <p><strong>Phone:</strong> ${partner.contact_phone || 'N/A'}</p>
+      <p><strong>Status:</strong> <span style="color:${isLive ? '#0ff0b8' : '#fd26fd'};font-weight:700">${status}</span></p>
+    </div>
+  `;
+  
+  if (!installComplete) {
+    const statusClass = installScheduled ? 'install-status' : 'install-status pending';
+    html += `
+      <div class="${statusClass}">
+        <h2 style="color:#d3fb1b;margin-top:0">📅 Installation ${installScheduled ? 'Scheduled' : 'Pending'}</h2>
+        ${installScheduled ? 
+          `<p style="font-size:18px;margin:10px 0">Your installation is scheduled for:<br><strong style="color:#d3fb1b;font-size:24px">${new Date(installScheduled).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</strong></p>
+           <p style="margin-top:15px;color:#b8bac0;font-size:15px;">We'll bring everything needed for a professional setup. See you soon!</p>` :
+          `<p style="margin:10px 0;font-size:16px;color:#b8bac0;">Your installation date will be confirmed via email within 24-48 hours.</p>
+           <p style="margin-top:15px;">Questions? Call us at <a href="tel:8165301520" style="color:#d3fb1b;font-weight:700;text-decoration:none;">816-530-1520</a></p>`
+        }
+      </div>
+    `;
+  } else {
+    html += `
+      <div class="install-status complete">
+        <h2 style="color:#0ff0b8;margin-top:0">✅ Installation Complete!</h2>
+        <p style="font-size:16px;">Installed on: <strong>${new Date(installComplete).toLocaleDateString()}</strong></p>
+        <p style="color:#d3fb1b;font-weight:700;font-size:20px;margin-top:15px;">You're LIVE and earning! 🎉</p>
+      </div>
+    `;
+  }
+  
+  html += `
+    <div class="card">
+      <h2>💰 Commission Dashboard</h2>
+      <p style="margin-bottom:15px;">You earn 10% commission on every order. Commissions are paid monthly by the 10th via check.</p>
+      <div class="stats-row">
+        <div class="stat-box">
+          <h3>Total Earned</h3>
+          <p>$${totalEarned.toFixed(2)}</p>
+        </div>
+        <div class="stat-box">
+          <h3>Orders This Month</h3>
+          <p>${thisMonthOrders}</p>
+        </div>
+        <div class="stat-box">
+          <h3>Total Orders</h3>
+          <p>${orders.length}</p>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  const landingPageUrl = `${LANDING_PAGE_BASE}?id=${partner.partner_id}`;
+  const qrCodeUrl = partner.qr_code_url || generateQRCodeUrl(partner.partner_id);
+  
+  html += `
+    <div class="card qr-box">
+      <h2>📱 Your Customer QR Code</h2>
+      <p style="margin-bottom:10px;">This QR code takes customers to your product showcase page. Share it everywhere to boost your sales!</p>
+      <img src="${qrCodeUrl}" alt="QR Code" id="qrImage">
+      <div class="qr-buttons">
+        <button class="qr-btn" onclick="downloadQR()">⬇️ Download QR</button>
+        <button class="qr-btn" onclick="copyLink()">📋 Copy Link</button>
+      </div>
+      <p style="font-size:12px;margin-top:20px;color:#666;word-break:break-all;">
+        Customer landing page:<br>
+        <a href="${landingPageUrl}" target="_blank" style="color:#0ff0b8;text-decoration:none;font-weight:600;">${landingPageUrl}</a>
+      </p>
+      <div style="background:rgba(15,240,184,0.1);border:1px solid rgba(15,240,184,0.3);border-radius:10px;padding:15px;margin-top:20px;text-align:left;">
+        <p style="margin:0;font-size:14px;color:#0ff0b8;font-weight:700;">💡 Ways to Share Your QR Code:</p>
+        <ul style="margin:10px 0 0 20px;font-size:13px;color:#b8bac0;line-height:1.8;">
+          <li>Print on business cards to hand out</li>
+          <li>Share with staff to distribute to clients</li>
+          <li>Post in common areas of your location</li>
+          <li>Include in emails or newsletters</li>
+          <li>Share on social media</li>
+        </ul>
+        <p style="margin:10px 0 0;font-size:13px;color:#b8bac0;"><strong>Every order placed = 10% commission for you!</strong></p>
+      </div>
+    </div>
+  `;
+  
+  if (orders.length > 0) {
+    html += `
+      <div class="card">
+        <h2>📦 Recent Orders</h2>
+        <div style="overflow-x:auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Order #</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Commission</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+    `;
+    
+    orders.forEach(order => {
+      const last4 = order.order_id ? order.order_id.slice(-4) : 'N/A';
+      const date = order.created_at ? new Date(order.created_at).toLocaleDateString() : 'N/A';
+      const total = parseFloat(order.order_total) || 0;
+      const commission = total * 0.10;
+      const status = order.status || 'Processing';
+      
+      html += `
+        <tr>
+          <td>#${last4}</td>
+          <td>${date}</td>
+          <td style="font-weight:700">$${total.toFixed(2)}</td>
+          <td style="color:#0ff0b8;font-weight:700">$${commission.toFixed(2)}</td>
+          <td>${status}</td>
+        </tr>
+      `;
+    });
+    
+    html += `
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  } else {
+    html += `
+      <div class="card">
+        <h2>📦 Orders</h2>
+        <p style="text-align:center;padding:40px 0;color:#666;font-size:16px;">
+          No orders yet! Share your QR code to start earning commissions. 💰
+        </p>
+      </div>
+    `;
+  }
+  
+  html += `
+    <a href="mailto:info@dopeleeprezzedbysllc.com" class="contact-btn">
+      💬 Contact Dopelee Support
+    </a>
+  `;
+  
+  document.getElementById('content').innerHTML = html;
+}
+
+function generateQRCodeUrl(partnerId) {
+  const landingPageUrl = `${LANDING_PAGE_BASE}?id=${partnerId}`;
+  return `https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=${encodeURIComponent(landingPageUrl)}`;
+}
+
+function downloadQR() {
+  const img = document.getElementById('qrImage');
+  const link = document.createElement('a');
+  link.href = img.src;
+  link.download = `legacy-lounge-qr-${partnerId}.png`;
+  link.click();
+}
+
+function copyLink() {
+  const landingPageUrl = `${LANDING_PAGE_BASE}?id=${partnerId}`;
+  navigator.clipboard.writeText(landingPageUrl).then(() => {
+    alert('✅ Link copied to clipboard!');
+  }).catch(() => {
+    prompt('Copy this link:', landingPageUrl);
+  });
+}
+
+function showError(message) {
+  document.getElementById('content').innerHTML = `
+    <div class="error">
+      <h2>⚠️ Error</h2>
+      <p style="margin: 20px 0; font-size: 16px;">${message}</p>
+      <p style="margin-top: 30px;">
+        Need help? Call K.Smith: <a href="tel:8165301520">816-530-1520</a>
+      </p>
+    </div>
+  `;
+}
+</script>
+
+</body>
+</html>
