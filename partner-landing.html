@@ -40,43 +40,113 @@
     
     /* ANIMATED HEADER */
     .header {
-      background: linear-gradient(90deg, #0a95a8, #3461fa, #fd26fd, #d3fb1b, #0ff0b8, #0a95a8);
-      background-size: 400% 400%;
-      animation: gradientShift 8s ease infinite;
-      padding: 3rem 2rem;
+      background: #000;
+      padding: 2rem 2rem;
       text-align: center;
       position: relative;
       overflow: hidden;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      border-top: 2px solid #d4af37;
+      border-bottom: 2px solid #d4af37;
+    }
+    
+    /* Blue Bling Bubbles Background */
+    .header::after {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: 
+        radial-gradient(circle at 25% 35%, rgba(15, 240, 184, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 75% 65%, rgba(10, 149, 168, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(15, 240, 184, 0.1) 0%, transparent 60%);
+      pointer-events: none;
+      animation: heroBling 5s ease-in-out infinite;
+    }
+    
+    @keyframes heroBling {
+      0%, 100% { opacity: 0.7; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.05); }
+    }
+    
+    /* Floating Colored Bubbles */
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: bubbleRise 8s infinite ease-in-out;
+      pointer-events: none;
+      box-shadow: 0 0 30px currentColor, 0 0 60px currentColor, inset 0 0 20px rgba(255, 255, 255, 0.3);
+      filter: blur(1px);
+    }
+    
+    @keyframes bubbleRise {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.6;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+      }
+    }
+    
+    .header .bubble:nth-child(1) { left: 10%; width: 40px; height: 40px; background: #0ff0b8; animation-delay: 0s; animation-duration: 10s; }
+    .header .bubble:nth-child(2) { left: 25%; width: 60px; height: 60px; background: #d3fb1b; animation-delay: 2s; animation-duration: 12s; }
+    .header .bubble:nth-child(3) { left: 45%; width: 50px; height: 50px; background: #fd26fd; animation-delay: 1s; animation-duration: 11s; }
+    .header .bubble:nth-child(4) { left: 65%; width: 35px; height: 35px; background: #3461fa; animation-delay: 3s; animation-duration: 9s; }
+    .header .bubble:nth-child(5) { left: 80%; width: 55px; height: 55px; background: #0a95a8; animation-delay: 4s; animation-duration: 13s; }
+    
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(5deg); }
+    }
+    
+    @keyframes logoGlow {
+      0%, 100% { filter: drop-shadow(0 0 30px rgba(211, 251, 27, 0.6)) drop-shadow(0 0 60px rgba(15, 240, 184, 0.4)); }
+      50% { filter: drop-shadow(0 0 50px rgba(253, 38, 253, 0.8)) drop-shadow(0 0 80px rgba(52, 97, 250, 0.6)); }
     }
     
     .logo-container {
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.5rem;
+      position: relative;
+      z-index: 2;
     }
     
     .logo-container img {
-      max-width: 150px;
+      max-width: 200px;
       height: auto;
       border-radius: 15px;
-      box-shadow: 0 8px 30px rgba(15, 240, 184, 0.4);
+      animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
     }
     
     .header h1 {
-      color: #000;
-      font-size: 2.5rem;
-      font-weight: 900;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: 300;
+      margin-bottom: 0.3rem;
       letter-spacing: 2px;
-      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+      text-shadow: 0 2px 20px rgba(15, 240, 184, 0.5);
+      position: relative;
+      z-index: 2;
     }
     
     .header .tagline {
-      color: #000;
+      color: #0ff0b8;
       font-size: 1.2rem;
       font-weight: 600;
       font-style: italic;
       letter-spacing: 1px;
+      text-shadow: 0 2px 15px rgba(211, 251, 27, 0.4);
+      position: relative;
+      z-index: 2;
     }
     
     /* PARTNER BANNER */
@@ -312,10 +382,17 @@
 
   <!-- HEADER -->
   <div class="header">
+    <!-- Floating Bubbles -->
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    
     <div class="logo-container">
-      <img src="https://dopeleeprezzed-oss.github.io/dopelee-form/logo.png" alt="Dopelee Prezzed by S">
+      <img src="https://dopeleeprezzed-oss.github.io/dopelee-form/logo.png" alt="The Legacy Lounge">
     </div>
-    <h1>DOPELEE PREZZED BY S™</h1>
+    <h1>THE LEGACY LOUNGE™</h1>
     <p class="tagline">Luxury • Legacy • Keepsakes</p>
   </div>
 
@@ -456,9 +533,9 @@
         
         if (data && data.length > 0) {
           partnerData = data[0];
-          document.getElementById('partnerName').innerText = `Legacy Lounge™ at ${partnerData.business_name}`;
-          document.getElementById('partnerTagline').innerText = `Available exclusively at this location`;
-          document.title = `Legacy Lounge™ at ${partnerData.business_name} | Dopelee Prezzed by S™`;
+          document.getElementById('partnerName').innerText = partnerData.business_name;
+          document.getElementById('partnerTagline').innerText = `Hosted exclusively at this location`;
+          document.title = `The Legacy Lounge™ at ${partnerData.business_name} | Dopelee Prezzed by S™`;
         }
         
         loadProducts();
