@@ -381,30 +381,6 @@
     font-weight: 600;
   }
 
-  /* CONTACT BUTTON */
-  .contact-btn {
-    display: block;
-    width: 100%;
-    max-width: 400px;
-    margin: 20px auto 0;
-    background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d3fb1b);
-    color: #000;
-    text-align: center;
-    padding: 18px;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 16px;
-    text-decoration: none;
-    transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(15, 240, 184, 0.3);
-    cursor: pointer;
-  }
-  
-  .contact-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(15, 240, 184, 0.5);
-  }
-  
   /* LOADING & ERROR */
   .loading {
     text-align: center;
@@ -453,6 +429,94 @@
     text-decoration: underline;
   }
 
+  /* ══════════════════════════════════════════════════════════════════
+     PARTNER PORTAL FOOTER - MATCHES EMAIL FOOTER
+     ══════════════════════════════════════════════════════════════════ */
+
+  .portal-footer {
+    background: #0a0a0a;
+    border-top: 1px solid #2a2a2a;
+    padding: 50px 20px;
+    margin-top: 60px;
+    text-align: center;
+  }
+
+  .footer-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .footer-help {
+    margin: 0 0 30px;
+    font-size: 15px;
+    color: #b8bac0;
+    line-height: 1.6;
+  }
+
+  .footer-brand {
+    margin: 0 0 15px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #d3fb1b;
+    letter-spacing: 0.5px;
+  }
+
+  .footer-contact {
+    margin: 0 0 30px;
+    font-size: 15px;
+    line-height: 1.8;
+    color: #b8bac0;
+  }
+
+  .footer-contact a {
+    color: #3461fa;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-contact a:hover {
+    color: #0ff0b8;
+  }
+
+  .footer-social {
+    margin: 0 0 30px;
+  }
+
+  .social-label {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #999;
+    font-weight: 600;
+  }
+
+  .social-links {
+    font-size: 15px;
+  }
+
+  .social-links a {
+    color: #3461fa;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .social-links a:hover {
+    color: #0ff0b8;
+  }
+
+  .social-links .separator {
+    color: #666;
+    margin: 0 10px;
+  }
+
+  .footer-copyright {
+    margin: 0;
+    padding-top: 25px;
+    border-top: 1px solid #2a2a2a;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+  }
+
   /* RESPONSIVE */
   @media (max-width: 768px) {
     .header {
@@ -494,6 +558,28 @@
     
     th, td {
       padding: 8px 6px;
+    }
+    
+    .portal-footer {
+      padding: 40px 20px;
+      margin-top: 40px;
+    }
+    
+    .footer-brand {
+      font-size: 18px;
+    }
+    
+    .footer-help {
+      font-size: 14px;
+    }
+    
+    .footer-contact,
+    .social-links {
+      font-size: 14px;
+    }
+    
+    .social-links .separator {
+      margin: 0 8px;
     }
   }
 </style>
@@ -827,11 +913,38 @@ function renderDashboard(partner, orders) {
     `;
   }
   
-  // CONTACT
+  // FOOTER - MATCHES EMAIL FOOTER
   html += `
-    <a href="mailto:Info@dopeleeprezzedbys.com" class="contact-btn">
-      💬 Contact K. Smith
-    </a>
+    <footer class="portal-footer">
+      <div class="footer-container">
+        
+        <p class="footer-help">Need help? Contact us anytime!</p>
+        
+        <h3 class="footer-brand">Dopelee Prezzed by S™</h3>
+        
+        <p class="footer-contact">
+          <a href="https://www.dopeleeprezzedbys.com" target="_blank">www.dopeleeprezzedbys.com</a><br>
+          <a href="tel:816-530-1520">816-530-1520</a>
+        </p>
+        
+        <div class="footer-social">
+          <p class="social-label">Follow Us:</p>
+          <div class="social-links">
+            <a href="https://www.facebook.com/dopeleeprezzedbys" target="_blank">Facebook</a>
+            <span class="separator">|</span>
+            <a href="https://www.instagram.com/dopeleeprezzedbys" target="_blank">Instagram</a>
+            <span class="separator">|</span>
+            <a href="https://www.pinterest.com/dopeleeprezzedbys" target="_blank">Pinterest</a>
+          </div>
+        </div>
+        
+        <p class="footer-copyright">
+          © 2025 Dopelee Prezzed by S LLC<br>
+          Creating legacy pieces with love and precision.
+        </p>
+        
+      </div>
+    </footer>
   `;
   
   document.getElementById('content').innerHTML = html;
