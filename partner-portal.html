@@ -177,6 +177,43 @@
     line-height: 1.8;
   }
 
+  /* TIER BADGE */
+  .tier-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    margin: 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .tier-foundation {
+    background: linear-gradient(135deg, rgba(10, 149, 168, 0.2), rgba(15, 240, 184, 0.2));
+    border: 2px solid #0ff0b8;
+    color: #0ff0b8;
+  }
+  
+  .tier-growth {
+    background: linear-gradient(135deg, rgba(211, 251, 27, 0.2), rgba(10, 149, 168, 0.2));
+    border: 2px solid #d3fb1b;
+    color: #d3fb1b;
+  }
+  
+  .tier-impact {
+    background: linear-gradient(135deg, rgba(253, 38, 253, 0.2), rgba(52, 97, 250, 0.2));
+    border: 2px solid #fd26fd;
+    color: #fd26fd;
+  }
+  
+  .tier-legacy {
+    background: linear-gradient(135deg, rgba(211, 251, 27, 0.3), rgba(253, 38, 253, 0.3));
+    border: 2px solid #d3fb1b;
+    color: #d3fb1b;
+    box-shadow: 0 0 20px rgba(211, 251, 27, 0.4);
+  }
+
   /* STATS ROW */
   .stats-row {
     display: grid;
@@ -217,6 +254,13 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+  
+  .stat-box small {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    color: #666;
   }
 
   /* QR CODE SECTION */
@@ -296,25 +340,6 @@
     margin: 0 0 15px;
     font-size: 24px;
   }
-  
-  .schedule-btn {
-    display: inline-block;
-    padding: 16px 40px;
-    background: linear-gradient(135deg, #d3fb1b, #0ff0b8);
-    color: #000;
-    text-decoration: none;
-    border-radius: 12px;
-    font-weight: 700;
-    font-size: 16px;
-    margin-top: 20px;
-    transition: all 0.3s;
-    box-shadow: 0 6px 20px rgba(211, 251, 27, 0.3);
-  }
-  
-  .schedule-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(211, 251, 27, 0.5);
-  }
 
   /* ORDERS TABLE */
   table {
@@ -372,6 +397,7 @@
     text-decoration: none;
     transition: all 0.3s;
     box-shadow: 0 6px 20px rgba(15, 240, 184, 0.3);
+    cursor: pointer;
   }
   
   .contact-btn:hover {
@@ -516,6 +542,51 @@ if (!partnerId) {
   loadPartnerDashboard();
 }
 
+// ═══════════════════════════════════════════════════════════
+// CALCULATE TIER BASED ON TOTAL SALES
+// ═══════════════════════════════════════════════════════════
+function calculateTier(totalSales) {
+  if (totalSales >= 10000) {
+    return { 
+      name: 'Legacy Partner', 
+      rate: 0.18, 
+      class: 'tier-legacy',
+      min: 10000,
+      message: 'You\'re moving volume. You understand the mission.'
+    };
+  } else if (totalSales >= 5000) {
+    return { 
+      name: 'Impact Partner', 
+      rate: 0.15, 
+      class: 'tier-impact',
+      min: 5000,
+      max: 9999,
+      message: 'You\'re consistent. You\'re activating your audience.'
+    };
+  } else if (totalSales >= 2000) {
+    return { 
+      name: 'Growth Partner', 
+      rate: 0.12, 
+      class: 'tier-growth',
+      min: 2000,
+      max: 4999,
+      message: 'You\'re in. You\'re learning. You\'re building.'
+    };
+  } else {
+    return { 
+      name: 'Foundation Partner', 
+      rate: 0.10, 
+      class: 'tier-foundation',
+      min: 0,
+      max: 1999,
+      message: 'You\'re in. You\'re learning. You\'re building.'
+    };
+  }
+}
+
+// ═══════════════════════════════════════════════════════════
+// LOAD PARTNER DASHBOARD
+// ═══════════════════════════════════════════════════════════
 async function loadPartnerDashboard() {
   try {
     const partnerResponse = await fetch(
@@ -538,7 +609,7 @@ async function loadPartnerDashboard() {
     const partner = partnerData[0];
     
     const ordersResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/orders?partner_id=eq.${partnerId}&select=*&order=created_at.desc&limit=20`,
+      `${SUPABASE_URL}/rest/v1/orders?partner_id=eq.${partnerId}&select=*&order=created_at.desc&limit=50`,
       {
         headers: {
           'apikey': SUPABASE_ANON_KEY,
@@ -557,20 +628,35 @@ async function loadPartnerDashboard() {
   }
 }
 
+// ═══════════════════════════════════════════════════════════
+// RENDER DASHBOARD
+// ═══════════════════════════════════════════════════════════
 function renderDashboard(partner, orders) {
   const status = partner.status || 'Pending';
   const installScheduled = partner.setup_scheduled_date || null;
   const installComplete = partner.setup_completed_date || null;
-  const isLive = status === 'Active' || status === 'Live' || status === 'Scheduled';
+  const isActive = status === 'Active' || status === 'Live';
   
+  // CALCULATE REAL COMMISSIONS FROM ORDERS
+  let totalSales = 0;
   let totalEarned = 0;
   let thisMonthOrders = 0;
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
   
+  // First pass: calculate total sales to determine tier
   orders.forEach(order => {
     const orderTotal = parseFloat(order.order_total) || 0;
-    const commission = orderTotal * 0.10;
+    totalSales += orderTotal;
+  });
+  
+  // Get tier based on total sales
+  const tier = calculateTier(totalSales);
+  
+  // Second pass: calculate commissions at the tier rate
+  orders.forEach(order => {
+    const orderTotal = parseFloat(order.order_total) || 0;
+    const commission = orderTotal * tier.rate;
     totalEarned += commission;
     
     const orderDate = new Date(order.created_at);
@@ -583,43 +669,66 @@ function renderDashboard(partner, orders) {
     <div class="card" style="max-width:800px;margin:0 auto 30px;">
       <h2>👋 Welcome, ${partner.business_name}!</h2>
       <p><strong>Contact Person:</strong> K. Smith</p>
-      <p><strong>Email:</strong> Info@dopeleeprezzedbysllc.com</p>
+      <p><strong>Email:</strong> Info@dopeleeprezzedbys.com</p>
       <p><strong>Phone:</strong> 816-530-1520</p>
-      <p><strong>Status:</strong> <span style="color:${isLive ? '#0ff0b8' : '#fd26fd'};font-weight:700">${status}</span></p>
+      <p><strong>Status:</strong> <span style="color:${isActive ? '#0ff0b8' : '#fd26fd'};font-weight:700">${status}</span></p>
+      
+      <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(15,240,184,0.2);">
+        <p style="margin:0 0 10px;color:#0ff0b8;font-weight:700;">Current Tier:</p>
+        <span class="tier-badge ${tier.class}">${tier.name} - ${Math.round(tier.rate * 100)}% Commission</span>
+        <p style="margin:10px 0 0;font-size:14px;color:#b8bac0;font-style:italic;">"${tier.message}"</p>
+      </div>
     </div>
   `;
   
-  if (!installComplete) {
+  // INSTALLATION STATUS - Only show if NOT Active
+  if (!isActive && !installComplete) {
     const statusClass = installScheduled ? 'install-status' : 'install-status pending';
     html += `
       <div class="${statusClass}">
         <h2 style="color:#d3fb1b;margin-top:0">📅 Installation ${installScheduled ? 'Scheduled' : 'Pending'}</h2>
         ${installScheduled ? 
           `<p style="font-size:18px;margin:10px 0">Your installation is scheduled for:<br><strong style="color:#d3fb1b;font-size:24px">${new Date(installScheduled).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</strong></p>
-           <p style="margin-top:15px;color:#b8bac0;font-size:15px;">We'll bring everything needed for your setup. See you soon!</p>` :
+           <p style="margin-top:15px;color:#b8bac0;font-size:15px;">We'll bring everything needed for a professional setup. See you soon!</p>` :
           `<p style="margin:10px 0;font-size:16px;color:#b8bac0;">Your installation date will be confirmed via email within 24-48 hours.</p>
            <p style="margin-top:15px;">Questions? Call us at <a href="tel:8165301520" style="color:#d3fb1b;font-weight:700;text-decoration:none;">816-530-1520</a></p>`
         }
       </div>
     `;
-  } else {
-    html += `
-      <div class="install-status complete">
-        <h2 style="color:#0ff0b8;margin-top:0">✅ Installation Complete!</h2>
-        <p style="font-size:16px;">Installed on: <strong>${new Date(installComplete).toLocaleDateString()}</strong></p>
-        <p style="color:#d3fb1b;font-weight:700;font-size:20px;margin-top:15px;">You're LIVE and earning! 🎉</p>
-      </div>
-    `;
   }
+  
+  // COMMISSION DASHBOARD
+  const nextTier = totalSales >= 10000 ? null : (
+    totalSales >= 5000 ? { name: 'Legacy Partner', min: 10000, rate: 0.18 } :
+    totalSales >= 2000 ? { name: 'Impact Partner', min: 5000, rate: 0.15 } :
+    { name: 'Growth Partner', min: 2000, rate: 0.12 }
+  );
   
   html += `
     <div class="card">
       <h2>💰 Commission Dashboard</h2>
-      <p style="margin-bottom:15px;">You earn 10% commission on every order. Commissions are paid monthly by the 10th via check.</p>
+      <p style="margin-bottom:15px;">You earn ${Math.round(tier.rate * 100)}% commission on every order. Commissions are paid monthly by the 10th via check.</p>
+      ${nextTier ? `
+        <p style="background:rgba(211,251,27,0.1);border-left:4px solid #d3fb1b;padding:12px;margin:15px 0;border-radius:8px;">
+          <strong style="color:#d3fb1b;">Next Tier:</strong> Reach $${nextTier.min.toLocaleString()} in sales to unlock ${tier.name === 'Foundation Partner' ? nextTier.name : nextTier.name} status and earn ${Math.round(nextTier.rate * 100)}% commission!<br>
+          <span style="font-size:14px;color:#b8bac0;">You're $${(nextTier.min - totalSales).toLocaleString()} away!</span>
+        </p>
+      ` : `
+        <p style="background:rgba(211,251,27,0.2);border:2px solid #d3fb1b;padding:15px;margin:15px 0;border-radius:12px;text-align:center;">
+          <strong style="color:#d3fb1b;font-size:18px;">🏆 Maximum Tier Achieved!</strong><br>
+          <span style="color:#b8bac0;font-size:14px;">You're earning the highest commission rate!</span>
+        </p>
+      `}
       <div class="stats-row">
         <div class="stat-box">
           <h3>Total Earned</h3>
           <p>$${totalEarned.toFixed(2)}</p>
+          <small>at ${Math.round(tier.rate * 100)}% rate</small>
+        </div>
+        <div class="stat-box">
+          <h3>Total Sales</h3>
+          <p>$${totalSales.toFixed(2)}</p>
+          <small>${tier.name}</small>
         </div>
         <div class="stat-box">
           <h3>Orders This Month</h3>
@@ -633,6 +742,7 @@ function renderDashboard(partner, orders) {
     </div>
   `;
   
+  // QR CODE
   const landingPageUrl = `${LANDING_PAGE_BASE}?id=${partner.partner_id}`;
   const qrCodeUrl = partner.qr_code_url || generateQRCodeUrl(partner.partner_id);
   
@@ -658,11 +768,12 @@ function renderDashboard(partner, orders) {
           <li>Include in emails or newsletters</li>
           <li>Share on social media</li>
         </ul>
-        <p style="margin:10px 0 0;font-size:13px;color:#b8bac0;"><strong>Every order placed = 10% commission for you!</strong></p>
+        <p style="margin:10px 0 0;font-size:13px;color:#b8bac0;"><strong>Every order placed = ${Math.round(tier.rate * 100)}% commission for you!</strong></p>
       </div>
     </div>
   `;
   
+  // RECENT ORDERS
   if (orders.length > 0) {
     html += `
       <div class="card">
@@ -685,8 +796,8 @@ function renderDashboard(partner, orders) {
       const last4 = order.order_id ? order.order_id.slice(-4) : 'N/A';
       const date = order.created_at ? new Date(order.created_at).toLocaleDateString() : 'N/A';
       const total = parseFloat(order.order_total) || 0;
-      const commission = total * 0.10;
-      const status = order.status || 'Processing';
+      const commission = total * tier.rate;
+      const orderStatus = order.status || 'Processing';
       
       html += `
         <tr>
@@ -694,7 +805,7 @@ function renderDashboard(partner, orders) {
           <td>${date}</td>
           <td style="font-weight:700">$${total.toFixed(2)}</td>
           <td style="color:#0ff0b8;font-weight:700">$${commission.toFixed(2)}</td>
-          <td>${status}</td>
+          <td>${orderStatus}</td>
         </tr>
       `;
     });
@@ -716,8 +827,9 @@ function renderDashboard(partner, orders) {
     `;
   }
   
+  // CONTACT
   html += `
-    <a href="mailto:Info@dopeleeprezzedbysllc.com" class="contact-btn">
+    <a href="mailto:Info@dopeleeprezzedbys.com" class="contact-btn">
       💬 Contact K. Smith
     </a>
   `;
