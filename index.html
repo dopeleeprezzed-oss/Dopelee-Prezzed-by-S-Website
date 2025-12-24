@@ -1124,12 +1124,27 @@
 
         .accordion-item.active {
             border-color: #0ff0b8;
-            box-shadow: 0 8px 30px rgba(15, 240, 184, 0.2);
+            box-shadow: 0 8px 30px rgba(15, 240, 184, 0.3), 0 0 60px rgba(15, 240, 184, 0.1);
+        }
+
+        .accordion-item.active .step-number-circle {
+            box-shadow: 0 0 30px rgba(15, 240, 184, 0.8), 0 0 60px rgba(15, 240, 184, 0.5);
+            animation: numberPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes numberPulse {
+            0%, 100% {
+                box-shadow: 0 0 30px rgba(15, 240, 184, 0.8), 0 0 60px rgba(15, 240, 184, 0.5);
+            }
+            50% {
+                box-shadow: 0 0 40px rgba(15, 240, 184, 1), 0 0 80px rgba(15, 240, 184, 0.7);
+            }
         }
 
         .accordion-header {
             display: flex;
             align-items: center;
+            justify-content: center;
             padding: 25px 30px;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -1153,10 +1168,13 @@
             color: #000;
             margin-right: 20px;
             flex-shrink: 0;
+            box-shadow: 0 0 20px rgba(15, 240, 184, 0.6), 0 0 40px rgba(15, 240, 184, 0.3);
         }
 
         .accordion-title-wrapper {
             flex: 1;
+            display: flex;
+            justify-content: center;
         }
 
         .accordion-title {
@@ -1167,16 +1185,39 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            text-shadow: 0 0 15px rgba(211, 251, 27, 0.4);
         }
 
         .accordion-title-icon {
             font-size: 1.8rem;
+            filter: drop-shadow(0 0 20px rgba(15, 240, 184, 0.8)) 
+                    drop-shadow(0 0 40px rgba(15, 240, 184, 0.5))
+                    drop-shadow(0 0 60px rgba(10, 149, 168, 0.4));
+            animation: luxuryEmojiGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes luxuryEmojiGlow {
+            0%, 100% {
+                filter: drop-shadow(0 0 20px rgba(15, 240, 184, 0.8)) 
+                        drop-shadow(0 0 40px rgba(15, 240, 184, 0.5))
+                        drop-shadow(0 0 60px rgba(10, 149, 168, 0.4));
+                transform: scale(1);
+            }
+            50% {
+                filter: drop-shadow(0 0 30px rgba(15, 240, 184, 1)) 
+                        drop-shadow(0 0 60px rgba(15, 240, 184, 0.7))
+                        drop-shadow(0 0 80px rgba(10, 149, 168, 0.6));
+                transform: scale(1.1);
+            }
         }
 
         .accordion-toggle {
             font-size: 1.5rem;
             color: #0ff0b8;
             transition: transform 0.3s ease;
+            position: absolute;
+            right: 30px;
+            filter: drop-shadow(0 0 10px rgba(15, 240, 184, 0.6));
         }
 
         .accordion-item.active .accordion-toggle {
@@ -1596,6 +1637,7 @@
             /* Accordion mobile */
             .accordion-header {
                 padding: 20px 15px;
+                justify-content: flex-start;
             }
 
             .step-number-circle {
@@ -1611,6 +1653,10 @@
 
             .accordion-title-icon {
                 font-size: 1.4rem;
+            }
+
+            .accordion-toggle {
+                right: 15px;
             }
 
             .accordion-content {
@@ -1951,80 +1997,243 @@
             </p>
         </section>
 
-        <!-- Use Cases -->
-        <section class="use-cases">
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- PERFECT FOR - INTERACTIVE ACCORDION WITH VIDEOS -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section class="partnership-accordion">
             <h2>Perfect For</h2>
-            <div class="use-case-grid">
-                
-                <div class="use-case-card">
-                    <div class="use-case-icon">💍</div>
-                    <h3>Weddings</h3>
-                    <p>
+
+            <!-- WEDDINGS -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-wrapper" style="flex: 1;">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">💍</span>
+                            Weddings
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
                         Custom luxury gift bags for bridal parties, guests, and VIPs. 
                         Elegant keepsakes that match your wedding theme and leave a lasting impression.
                     </p>
+                    
+                    <!-- VIDEO -->
+                    <div class="accordion-video-container" style="margin-top: 20px;">
+                        <div style="position: relative; padding-bottom: 177.78%; height: 0; overflow: hidden; max-width: 400px; margin: 0 auto; border-radius: 12px;">
+                            <iframe 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;" 
+                                src="https://www.youtube.com/embed/mFIed429Ol0" 
+                                title="VIP Custom Bags Video" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- CTA -->
+                    <div style="text-align: center; margin-top: 25px;">
+                        <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/" target="_blank" class="btn">Request Wedding Quote</a>
+                    </div>
                 </div>
+            </div>
 
-                <div class="use-case-card">
-                    <div class="use-case-icon">🏢</div>
-                    <h3>Corporate Events</h3>
-                    <p>
+            <!-- CORPORATE EVENTS -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-wrapper" style="flex: 1;">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">🏢</span>
+                            Corporate Events
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
                         Premium branded gifts for clients, employees, and stakeholders. 
                         Thoughtfully curated items that elevate your brand and show appreciation.
                     </p>
+                    
+                    <!-- VIDEO -->
+                    <div class="accordion-video-container" style="margin-top: 20px;">
+                        <div style="position: relative; padding-bottom: 177.78%; height: 0; overflow: hidden; max-width: 400px; margin: 0 auto; border-radius: 12px;">
+                            <iframe 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;" 
+                                src="https://www.youtube.com/embed/-G788O9PDmc" 
+                                title="Corporate Branded Video" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- CTA -->
+                    <div style="text-align: center; margin-top: 25px;">
+                        <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/" target="_blank" class="btn">Request Corporate Quote</a>
+                    </div>
                 </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🎉</div>
-                    <h3>Swag Favors</h3>
-                    <p>
-                        High-end swag bags for special occasions, conferences, and celebrations. 
-                        We source and assemble premium items that align with your event's aesthetic.
-                    </p>
-                </div>
-
-                <div class="use-case-card">
-                    <div class="use-case-icon">🎊</div>
-                    <h3>Parties & Celebrations</h3>
-                    <p>
-                        Personalized gift experiences for birthdays, anniversaries, graduations, and milestones. 
-                        Tell us your theme, and we'll create something extraordinary.
-                    </p>
-                </div>
-
             </div>
+
+            <!-- SWAG & CELEBRATIONS -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="accordion-title-wrapper" style="flex: 1;">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">🎉</span>
+                            Swag & Celebrations
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        High-end swag bags and personalized gift experiences for parties, conferences, birthdays, 
+                        anniversaries, graduations, and special occasions. We source and assemble premium items 
+                        that align with your event's aesthetic. Tell us your theme, and we'll create something extraordinary.
+                    </p>
+                    
+                    <!-- VIDEO -->
+                    <div class="accordion-video-container" style="margin-top: 20px;">
+                        <div style="position: relative; padding-bottom: 177.78%; height: 0; overflow: hidden; max-width: 400px; margin: 0 auto; border-radius: 12px;">
+                            <iframe 
+                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;" 
+                                src="https://www.youtube.com/embed/zFPKnq-zYuo" 
+                                title="Party VIP Video" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                referrerpolicy="strict-origin-when-cross-origin" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- CTA -->
+                    <div style="text-align: center; margin-top: 25px;">
+                        <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/" target="_blank" class="btn">Request Custom Quote</a>
+                    </div>
+                </div>
+            </div>
+
         </section>
 
-        <!-- How It Works -->
-        <section class="use-cases">
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- HOW IT WORKS - ACCORDION -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section class="partnership-accordion" style="margin-top: 80px;">
             <h2>How VIP Experiences Work</h2>
-            <div class="use-case-grid">
-                <div class="use-case-card">
-                    <div class="use-case-icon">1️⃣</div>
-                    <h3>Share Your Vision</h3>
-                    <p>Tell us about your event, theme, budget, and the story you want to tell through your gifts.</p>
+
+            <!-- STEP 1: Share Your Vision -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">1</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">💭</span>
+                            Share Your Vision
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
                 </div>
-                <div class="use-case-card">
-                    <div class="use-case-icon">2️⃣</div>
-                    <h3>We Curate Options</h3>
-                    <p>Our team researches and presents premium gift options tailored to your needs and aesthetic.</p>
-                </div>
-                <div class="use-case-card">
-                    <div class="use-case-icon">3️⃣</div>
-                    <h3>You Approve</h3>
-                    <p>Review our curated selections and approve the final items, quantities, and customization details.</p>
-                </div>
-                <div class="use-case-card">
-                    <div class="use-case-icon">4️⃣</div>
-                    <h3>We Handle Everything</h3>
-                    <p>From sourcing to assembly to delivery, we manage every detail so you can focus on your event.</p>
-                </div>
-                <div class="use-case-card">
-                    <div class="use-case-icon">5️⃣</div>
-                    <h3>Your Guests Are Wowed</h3>
-                    <p>Deliver an unforgettable experience with luxury gifts that reflect your thoughtfulness and style.</p>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        Tell us about your event, theme, budget, and the story you want to tell through your gifts. 
+                        The more detail you share, the better we can curate the perfect experience. We listen carefully 
+                        to your vision and preferences to ensure every detail aligns with your expectations.
+                    </p>
                 </div>
             </div>
+
+            <!-- STEP 2: We Curate Options -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">2</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">🎨</span>
+                            We Curate Options
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        Our team researches and presents premium gift options tailored to your needs and aesthetic. 
+                        We source high-quality items, create mockups, and provide detailed proposals with pricing 
+                        and timelines. You'll see exactly what your guests will receive before we move forward.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 3: You Approve -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">3</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">✅</span>
+                            You Approve
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        Review our curated selections and approve the final items, quantities, and customization details. 
+                        We welcome your feedback and make revisions until everything is exactly how you envision it. 
+                        Once approved, we lock in your order and begin production.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 4: We Handle Everything -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">4</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">🔧</span>
+                            We Handle Everything
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        From sourcing to assembly to delivery, we manage every detail so you can focus on your event. 
+                        We coordinate with vendors, oversee quality control, assemble gift bags with care, and ensure 
+                        everything arrives on time. You don't lift a finger—we do it all.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 5: Your Guests Are Wowed -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">5</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">✨</span>
+                            Your Guests Are Wowed
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        Deliver an unforgettable experience with luxury gifts that reflect your thoughtfulness and style. 
+                        Your guests receive premium keepsakes they'll cherish, and you get the satisfaction of knowing 
+                        you gave them something truly special. That's the Dopelee difference.
+                    </p>
+                </div>
+            </div>
+
         </section>
 
         <!-- CTA -->
@@ -2114,9 +2323,9 @@
                 </div>
                 <div class="accordion-content">
                     <p class="accordion-text">
-                     We provide a beautifully designed Legacy Lounge™ display, complete with QR codes and all materials. 
-                     Our team handles installation, placement, and provides full support to ensure your display looks perfect. 
-                     You just watch the orders roll in.
+                        We provide a beautifully designed Legacy Lounge™ display, complete with QR codes and all materials. 
+                        Everything arrives ready to go—no assembly required, no complicated setup. Just unpack, plug in, and you're earning. 
+                        We handle delivery, setup instructions, and provide full support to ensure your display looks perfect.
                     </p>
                 </div>
             </div>
@@ -2135,7 +2344,7 @@
                 </div>
                 <div class="accordion-content">
                     <p class="accordion-text">
-                        Sleek, modern display fits any space:funeral homes, vet clinics, pet salons, or memorials. 
+                        Sleek, modern display fits any space—funeral homes, vet clinics, pet salons, or memorials. 
                         Display showcases finished pieces so customers see the quality and craftsmanship firsthand. 
                         Just needs a small corner and an outlet. Simple and elegant.
                     </p>
@@ -2144,12 +2353,12 @@
                     <div class="accordion-slider-container">
                         <div class="slider-wrapper">
                             <!-- Pet Display (Before) -->
-                            <img src="Pet Legacy Lounge display .png" 
+                            <img src="Pet_Legacy_Lounge_display_.png" 
                                  alt="Pet Legacy Lounge Display" 
                                  class="slider-image before">
                             
                             <!-- Human Display (After) -->
-                            <img src="Human Legacy Lounge display .png" 
+                            <img src="Human_Legacy_Lounge_display_.png" 
                                  alt="Human Legacy Lounge Display" 
                                  class="slider-image after"
                                  id="afterImage">
@@ -2184,7 +2393,7 @@
                 </div>
                 <div class="accordion-content">
                     <p class="accordion-text">
-                        Families scan the QR code to instantly access your custom ordering portal:no apps, no friction. 
+                        Families scan the QR code to instantly access your custom ordering portal—no apps, no friction. 
                         They customize their keepsake, add photos, choose designs, and place orders directly from their phone. 
                         The entire experience is seamless, beautiful, and designed to make ordering effortless. 
                         Your unique partner link tracks every order automatically.
@@ -2209,7 +2418,7 @@
                         We handle crafting, packaging, and shipping. Your customers receive their keepsakes at home. 
                         You never touch inventory, manage orders, or deal with shipping logistics. 
                         We provide tracking updates, handle customer service, and ensure every piece meets our luxury standards. 
-                        Your role is simply to display and we take care of everything else.
+                        Your role is simply to display—we take care of everything else.
                     </p>
                 </div>
             </div>
@@ -2230,7 +2439,7 @@
                     <p class="accordion-text">
                         You receive 10% commission on every order placed at your location, paid monthly. 
                         Track your earnings in real-time through your partner portal. Watch your passive income grow 
-                        as families discover meaningful keepsakes through your display. No caps, no limits!The more your 
+                        as families discover meaningful keepsakes through your display. No caps, no limits—the more your 
                         customers order, the more you earn. It's that simple.
                     </p>
                 </div>
