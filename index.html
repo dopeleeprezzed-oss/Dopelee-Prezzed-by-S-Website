@@ -39,6 +39,42 @@
             color: #e8e8ec;
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        /* GOLD SHIMMER FLAKES - LUXURY EFFECT */
+        .shimmer-flake {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #d4af37 0%, rgba(212, 175, 55, 0) 70%);
+            border-radius: 50%;
+            opacity: 0;
+            pointer-events: none;
+            z-index: 9999;
+            animation: shimmerFall linear infinite;
+            box-shadow: 0 0 10px #d4af37, 0 0 20px #d4af37, 0 0 30px rgba(212, 175, 55, 0.5);
+        }
+
+        @keyframes shimmerFall {
+            0% {
+                opacity: 0;
+                transform: translateY(-100px) translateX(0) rotate(0deg) scale(0);
+            }
+            10% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(50vh) translateX(20px) rotate(180deg) scale(1);
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(100vh) translateX(-10px) rotate(360deg) scale(0.5);
+            }
         }
 
         /* ANIMATIONS */
@@ -288,6 +324,16 @@
         .bubble:nth-child(6) { left: 15%; width: 45px; height: 45px; background: #0ff0b8; animation-delay: 5s; animation-duration: 10s; }
         .bubble:nth-child(7) { left: 70%; width: 40px; height: 40px; background: #d3fb1b; animation-delay: 2.5s; animation-duration: 11.5s; }
         .bubble:nth-child(8) { left: 35%; width: 50px; height: 50px; background: #fd26fd; animation-delay: 6s; animation-duration: 12s; }
+
+        /* VIP Hero bubbles */
+        .vip-hero .bubble {
+            z-index: 1;
+        }
+
+        /* Partner page header bubbles */
+        .page-header .bubble {
+            z-index: 1;
+        }
 
         .hero::before {
             content: '';
@@ -1982,6 +2028,16 @@
     <div id="vip" class="page">
         <!-- VIP Hero -->
         <section class="vip-hero">
+            <!-- Floating Bubbles -->
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+
             <h1>🎁 VIP Experiences</h1>
             <p>Not just custom. Curated. Luxury gift experiences tailored to your vision.</p>
         </section>
@@ -2208,7 +2264,7 @@
                     <p class="accordion-text">
                         From sourcing to assembly to delivery, we manage every detail so you can focus on your event. 
                         We coordinate with vendors, oversee quality control, assemble gift bags with care, and ensure 
-                        everything arrives on time. You don't lift a finger,we do it all.
+                        everything arrives on time. You don't lift a finger—we do it all.
                     </p>
                 </div>
             </div>
@@ -2262,6 +2318,16 @@
     <div id="partner" class="page">
         <!-- Page Header -->
         <section class="page-header">
+            <!-- Floating Bubbles -->
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+
             <h1>Partner With Us</h1>
             <p>
                 Host The Legacy Lounge™ display at your location and earn 10% commission on every order. 
@@ -2303,7 +2369,7 @@
                 <div class="accordion-content">
                     <p class="accordion-text">
                         Fill out our simple partnership form. We review and get back to you within 48 hours 
-                        to welcome you to The Legacy Lounge™ Network. No complicated applications or lengthy processes,just 
+                        to welcome you to The Legacy Lounge™ Network. No complicated applications or lengthy processes—just 
                         straightforward partnership that gets you earning quickly.
                     </p>
                 </div>
@@ -2323,7 +2389,8 @@
                 </div>
                 <div class="accordion-content">
                     <p class="accordion-text">
-                        We provide a beautifully designed Legacy Lounge™ display, complete with QR codes and all materials.
+                        We provide a beautifully designed Legacy Lounge™ display, complete with QR codes and all materials. 
+                        Everything arrives ready to go—no assembly required, no complicated setup. Just unpack, plug in, and you're earning. 
                         We handle delivery, setup instructions, and provide full support to ensure your display looks perfect.
                     </p>
                 </div>
@@ -2343,7 +2410,7 @@
                 </div>
                 <div class="accordion-content">
                     <p class="accordion-text">
-                        Sleek, modern display fits any space: funeral homes, vet clinics, pet salons, or memorials. 
+                        Sleek, modern display fits any space—funeral homes, vet clinics, pet salons, or memorials. 
                         Display showcases finished pieces so customers see the quality and craftsmanship firsthand. 
                         Just needs a small corner and an outlet. Simple and elegant.
                     </p>
@@ -2352,12 +2419,12 @@
                     <div class="accordion-slider-container">
                         <div class="slider-wrapper">
                             <!-- Pet Display (Before) -->
-                            <img src="Pet Legacy Lounge display .png" 
+                            <img src="Pet_Legacy_Lounge_display_.png" 
                                  alt="Pet Legacy Lounge Display" 
                                  class="slider-image before">
                             
                             <!-- Human Display (After) -->
-                            <img src="Human Legacy Lounge display .png" 
+                            <img src="Human_Legacy_Lounge_display_.png" 
                                  alt="Human Legacy Lounge Display" 
                                  class="slider-image after"
                                  id="afterImage">
@@ -2392,7 +2459,7 @@
                 </div>
                 <div class="accordion-content">
                     <p class="accordion-text">
-                        Families scan the QR code to instantly access your custom ordering portal, no apps and no friction. 
+                        Families scan the QR code to instantly access your custom ordering portal—no apps, no friction. 
                         They customize their keepsake, add photos, choose designs, and place orders directly from their phone. 
                         The entire experience is seamless, beautiful, and designed to make ordering effortless. 
                         Your unique partner link tracks every order automatically.
@@ -2417,7 +2484,7 @@
                         We handle crafting, packaging, and shipping. Your customers receive their keepsakes at home. 
                         You never touch inventory, manage orders, or deal with shipping logistics. 
                         We provide tracking updates, handle customer service, and ensure every piece meets our luxury standards. 
-                        Your role is simply to display! We take care of everything else.
+                        Your role is simply to display—we take care of everything else.
                     </p>
                 </div>
             </div>
@@ -2438,7 +2505,7 @@
                     <p class="accordion-text">
                         You receive 10% commission on every order placed at your location, paid monthly. 
                         Track your earnings in real-time through your partner portal. Watch your passive income grow 
-                        as families discover meaningful keepsakes through your display. No caps, no limits!The more your 
+                        as families discover meaningful keepsakes through your display. No caps, no limits—the more your 
                         customers order, the more you earn. It's that simple.
                     </p>
                 </div>
@@ -2646,9 +2713,9 @@
                 const percentage = match ? parseFloat(match[0]) : 50;
                 
                 if (percentage > 50) {
-                    lightboxImage.src = 'HuHuman Legacy Lounge display .pngman_Legacy_Lounge_display_.png';
+                    lightboxImage.src = 'Human_Legacy_Lounge_display_.png';
                 } else {
-                    lightboxImage.src = 'Pet Legacy Lounge display .png';
+                    lightboxImage.src = 'Pet_Legacy_Lounge_display_.png';
                 }
                 
                 lightbox.classList.add('active');
@@ -2661,11 +2728,11 @@
             }
 
             window.showPetDisplay = function() {
-                lightboxImage.src = 'Pet Legacy Lounge display .png';
+                lightboxImage.src = 'Pet_Legacy_Lounge_display_.png';
             }
 
             window.showHumanDisplay = function() {
-                lightboxImage.src = 'Human Legacy Lounge display .png';
+                lightboxImage.src = 'Human_Legacy_Lounge_display_.png';
             }
 
             // Close lightbox on background click
@@ -2682,6 +2749,40 @@
                 }
             });
         }
+
+        // GOLD SHIMMER FLAKES ANIMATION
+        function createShimmerFlakes() {
+            const flakeCount = 30;
+            
+            for (let i = 0; i < flakeCount; i++) {
+                const flake = document.createElement('div');
+                flake.className = 'shimmer-flake';
+                
+                // Random horizontal position
+                const randomX = Math.random() * 100;
+                flake.style.left = randomX + '%';
+                
+                // Random animation duration (8-20 seconds)
+                const duration = 8 + Math.random() * 12;
+                flake.style.animationDuration = duration + 's';
+                
+                // Random delay
+                const delay = Math.random() * 5;
+                flake.style.animationDelay = delay + 's';
+                
+                // Random size (6-12px)
+                const size = 6 + Math.random() * 6;
+                flake.style.width = size + 'px';
+                flake.style.height = size + 'px';
+                
+                document.body.appendChild(flake);
+            }
+        }
+
+        // Initialize shimmer flakes on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            createShimmerFlakes();
+        });
     </script>
 
 
