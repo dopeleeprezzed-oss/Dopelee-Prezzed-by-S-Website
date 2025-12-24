@@ -529,48 +529,6 @@
             }
         }
 
-        /* Luxury Monogram Style (keeping for backward compatibility) */
-        .luxury-monogram {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 30px;
-            border: 2px solid #d4af37;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 400;
-            color: #d4af37;
-            letter-spacing: 2px;
-            position: relative;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.05), transparent);
-            box-shadow: 0 0 30px rgba(212, 175, 55, 0.2), inset 0 0 20px rgba(212, 175, 55, 0.1);
-            transition: all 0.4s ease;
-        }
-
-        .luxury-monogram::before {
-            content: '';
-            position: absolute;
-            width: 130px;
-            height: 130px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 50%;
-            top: -7px;
-            left: -7px;
-        }
-
-        .service-card:hover .luxury-monogram {
-            transform: scale(1.1);
-            box-shadow: 0 0 50px rgba(212, 175, 55, 0.4), inset 0 0 30px rgba(212, 175, 55, 0.2);
-            border-color: #0ff0b8;
-        }
-
-        .service-card:hover .luxury-monogram::before {
-            border-color: rgba(15, 240, 184, 0.5);
-        }
-
         .service-card h3 {
             font-size: 1.5rem;
             color: #d3fb1b;
@@ -1130,13 +1088,17 @@
             border-radius: 12px;
         }
 
-        .how-it-works {
-            max-width: 1200px;
+        /* ========================================
+           INTERACTIVE ACCORDION - NEW!
+        ======================================== */
+
+        .partnership-accordion {
+            max-width: 1000px;
             margin: 80px auto;
             padding: 0 20px;
         }
 
-        .how-it-works h2 {
+        .partnership-accordion h2 {
             text-align: center;
             font-size: 2.5rem;
             background: linear-gradient(90deg, #0a95a8, #d3fb1b, #fd26fd, #3461fa);
@@ -1147,46 +1109,287 @@
             font-weight: 800;
         }
 
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 40px;
-        }
-
-        .step {
+        .accordion-item {
             background: linear-gradient(135deg, #1a1b24 0%, #0a0a0a 100%);
-            padding: 40px;
-            border-radius: 20px;
             border: 2px solid #2a2a2a;
-            text-align: center;
-            transition: transform 0.3s, border-color 0.3s;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .step:hover {
-            transform: translateY(-5px);
+        .accordion-item:hover {
             border-color: #d3fb1b;
         }
 
-        .step-number {
-            font-size: 3rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, #0a95a8, #d3fb1b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
+        .accordion-item.active {
+            border-color: #0ff0b8;
+            box-shadow: 0 8px 30px rgba(15, 240, 184, 0.2);
         }
 
-        .step h3 {
+        .accordion-header {
+            display: flex;
+            align-items: center;
+            padding: 25px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .accordion-header:hover {
+            background: rgba(15, 240, 184, 0.05);
+        }
+
+        .step-number-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0a95a8, #0ff0b8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #000;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .accordion-title-wrapper {
+            flex: 1;
+        }
+
+        .accordion-title {
             font-size: 1.4rem;
             color: #d3fb1b;
-            margin-bottom: 15px;
             font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .step p {
+        .accordion-title-icon {
+            font-size: 1.8rem;
+        }
+
+        .accordion-toggle {
+            font-size: 1.5rem;
+            color: #0ff0b8;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item.active .accordion-toggle {
+            transform: rotate(180deg);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 30px;
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 2000px;
+            padding: 0 30px 30px;
+        }
+
+        .accordion-text {
             color: #b8bac0;
-            line-height: 1.6;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 0;
+        }
+
+        /* Display Slider Inside Accordion */
+        .accordion-slider-container {
+            margin-top: 30px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .slider-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slider-image.before {
+            z-index: 1;
+        }
+
+        .slider-image.after {
+            z-index: 2;
+            clip-path: inset(0 50% 0 0);
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #e9ff60, #0a95a8);
+            z-index: 3;
+            transform: translateX(-50%);
+            cursor: ew-resize;
+        }
+
+        .slider-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: rgba(233, 255, 96, 0.95);
+            border-radius: 50%;
+            box-shadow: 0 4px 20px rgba(233, 255, 96, 0.5);
+        }
+
+        .slider-handle::after {
+            content: '⟷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            color: #000;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .slider-labels {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .slider-label {
+            background: rgba(0, 0, 0, 0.85);
+            color: #e9ff60;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 2px solid #e9ff60;
+        }
+
+        .zoom-hint {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(233, 255, 96, 0.95);
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            z-index: 4;
+            animation: pulse-hint 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-hint {
+            0%, 100% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.05); }
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: #e9ff60;
+            color: #000;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+        }
+
+        .lightbox-nav button {
+            background: rgba(233, 255, 96, 0.2);
+            color: #e9ff60;
+            border: 2px solid #e9ff60;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-nav button:hover {
+            background: #e9ff60;
+            color: #000;
         }
 
         .partner-cta {
@@ -1285,7 +1488,7 @@
             .tagline { font-size: 1rem; }
             .logo-container img { max-width: 200px; }
             
-            /* Tighter hero on mobile - uses variables */
+            /* Tighter hero on mobile */
             .hero {
                 padding: var(--hero-mobile-padding-top) 15px var(--hero-mobile-padding-bottom);
             }
@@ -1341,17 +1544,11 @@
             /* Other mobile adjustments */
             .service-cards { grid-template-columns: 1fr; }
             .use-case-grid { grid-template-columns: 1fr; }
-            .steps { grid-template-columns: 1fr; }
             .page-header h1 { font-size: 2rem; }
             
             /* Mobile ticker */
             .ticker p {
                 font-size: 0.85rem;
-            }
-
-            /* Hide control panel on mobile */
-            #heroControls {
-                display: none !important;
             }
 
             /* Luxury page mobile */
@@ -1394,6 +1591,53 @@
             .page-header h1 {
                 font-size: 2.2rem;
                 letter-spacing: 3px;
+            }
+
+            /* Accordion mobile */
+            .accordion-header {
+                padding: 20px 15px;
+            }
+
+            .step-number-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                margin-right: 15px;
+            }
+
+            .accordion-title {
+                font-size: 1.1rem;
+            }
+
+            .accordion-title-icon {
+                font-size: 1.4rem;
+            }
+
+            .accordion-content {
+                padding: 0 15px;
+            }
+
+            .accordion-item.active .accordion-content {
+                padding: 0 15px 20px;
+            }
+
+            .slider-labels {
+                padding: 0 15px;
+            }
+
+            .slider-label {
+                font-size: 0.75rem;
+                padding: 6px 12px;
+            }
+
+            .slider-handle::before {
+                width: 40px;
+                height: 40px;
+            }
+
+            .zoom-hint {
+                font-size: 0.75rem;
+                padding: 8px 16px;
             }
         }
     </style>
@@ -1550,7 +1794,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>© <span id="currentYear"></span> Dopelee Prezzed by S LLC</p>
+            <p>© <span class="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
             <p style="margin-top: 15px; font-size: 0.9rem;">
                 <a href="https://tr.ee/f3FpnW" target="_blank">Policies & Terms</a>
@@ -1678,7 +1922,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>© <span id="currentYear"></span> Dopelee Prezzed by S LLC</p>
+            <p>© <span class="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
             <p style="margin-top: 15px; font-size: 0.9rem;">
                 <a href="https://tr.ee/f3FpnW" target="_blank">Policies & Terms</a>
@@ -1752,31 +1996,31 @@
         </section>
 
         <!-- How It Works -->
-        <section class="how-it-works">
+        <section class="use-cases">
             <h2>How VIP Experiences Work</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
+            <div class="use-case-grid">
+                <div class="use-case-card">
+                    <div class="use-case-icon">1️⃣</div>
                     <h3>Share Your Vision</h3>
                     <p>Tell us about your event, theme, budget, and the story you want to tell through your gifts.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">2️⃣</div>
                     <h3>We Curate Options</h3>
                     <p>Our team researches and presents premium gift options tailored to your needs and aesthetic.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">3</div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">3️⃣</div>
                     <h3>You Approve</h3>
                     <p>Review our curated selections and approve the final items, quantities, and customization details.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">4</div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">4️⃣</div>
                     <h3>We Handle Everything</h3>
                     <p>From sourcing to assembly to delivery, we manage every detail so you can focus on your event.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">5</div>
+                <div class="use-case-card">
+                    <div class="use-case-icon">5️⃣</div>
                     <h3>Your Guests Are Wowed</h3>
                     <p>Deliver an unforgettable experience with luxury gifts that reflect your thoughtfulness and style.</p>
                 </div>
@@ -1795,7 +2039,7 @@
 
         <!-- Footer -->
         <footer>
-            <p>© <span id="currentYear"></span> Dopelee Prezzed by S LLC</p>
+            <p>© <span class="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
             <p style="margin-top: 15px; font-size: 0.9rem;">
                 <a href="https://tr.ee/f3FpnW" target="_blank">Policies & Terms</a>
@@ -1829,51 +2073,196 @@
             </div>
         </section>
 
-        <!-- How It Works -->
-        <section class="how-it-works">
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <!-- INTERACTIVE ACCORDION - NEW! -->
+        <!-- ═══════════════════════════════════════════════════════════════ -->
+        <section class="partnership-accordion">
             <h2>How It Works</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>We Deliver</h3>
-                    <p>We provide a beautifully designed Legacy Lounge™ display, complete with QR codes and all materials.</p>
+
+            <!-- STEP 1: Partner With Us -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">1</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">🤝</span>
+                            Partner With Us
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>You Display</h3>
-                    <p>Place the display in your location. It only needs a corner and an outlet—simple and elegant.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Customers Order</h3>
-                    <p>Families scan the QR code, customize their keepsake, and place orders directly from their phone.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3>We Fulfill</h3>
-                    <p>We handle crafting, packaging, and shipping. Your customers receive their keepsakes at home.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">5</div>
-                    <h3>You Earn</h3>
-                    <p>You receive 10% commission on every order placed at your location, paid monthly.</p>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        Fill out our simple partnership form. We review and get back to you within 48 hours 
+                        to welcome you to The Legacy Lounge™ Network. No complicated applications or lengthy processes—just 
+                        straightforward partnership that gets you earning quickly.
+                    </p>
                 </div>
             </div>
+
+            <!-- STEP 2: We Deliver -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">2</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">📦</span>
+                            We Deliver
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                     We provide a beautifully designed Legacy Lounge™ display, complete with QR codes and all materials. 
+                     Our team handles installation, placement, and provides full support to ensure your display looks perfect. 
+                     You just watch the orders roll in.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 3: You Display -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">3</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">📍</span>
+                            You Display
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        Sleek, modern display fits any space:funeral homes, vet clinics, pet salons, or memorials. 
+                        Display showcases finished pieces so customers see the quality and craftsmanship firsthand. 
+                        Just needs a small corner and an outlet. Simple and elegant.
+                    </p>
+                    
+                    <!-- EMBEDDED SLIDER HERE! -->
+                    <div class="accordion-slider-container">
+                        <div class="slider-wrapper">
+                            <!-- Pet Display (Before) -->
+                            <img src="Pet Legacy Lounge display .png" 
+                                 alt="Pet Legacy Lounge Display" 
+                                 class="slider-image before">
+                            
+                            <!-- Human Display (After) -->
+                            <img src="Human Legacy Lounge display .png" 
+                                 alt="Human Legacy Lounge Display" 
+                                 class="slider-image after"
+                                 id="afterImage">
+                            
+                            <!-- Slider Handle -->
+                            <div class="slider-handle" id="sliderHandle"></div>
+                            
+                            <!-- Labels -->
+                            <div class="slider-labels">
+                                <span class="slider-label">🐾 Pet Display</span>
+                                <span class="slider-label">👤 Human Display</span>
+                            </div>
+                            
+                            <!-- Zoom Hint -->
+                            <div class="zoom-hint">👆 Drag to compare • Double-click to zoom</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 4: Customers Order -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">4</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">📱</span>
+                            Customers Order
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        Families scan the QR code to instantly access your custom ordering portal:no apps, no friction. 
+                        They customize their keepsake, add photos, choose designs, and place orders directly from their phone. 
+                        The entire experience is seamless, beautiful, and designed to make ordering effortless. 
+                        Your unique partner link tracks every order automatically.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 5: We Fulfill -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">5</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">🎨</span>
+                            We Fulfill
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        We handle crafting, packaging, and shipping. Your customers receive their keepsakes at home. 
+                        You never touch inventory, manage orders, or deal with shipping logistics. 
+                        We provide tracking updates, handle customer service, and ensure every piece meets our luxury standards. 
+                        Your role is simply to display and we take care of everything else.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 6: You Earn -->
+            <div class="accordion-item">
+                <div class="accordion-header" onclick="toggleAccordion(this)">
+                    <div class="step-number-circle">6</div>
+                    <div class="accordion-title-wrapper">
+                        <h3 class="accordion-title">
+                            <span class="accordion-title-icon">💰</span>
+                            You Earn
+                        </h3>
+                    </div>
+                    <div class="accordion-toggle">▼</div>
+                </div>
+                <div class="accordion-content">
+                    <p class="accordion-text">
+                        You receive 10% commission on every order placed at your location, paid monthly. 
+                        Track your earnings in real-time through your partner portal. Watch your passive income grow 
+                        as families discover meaningful keepsakes through your display. No caps, no limits!The more your 
+                        customers order, the more you earn. It's that simple.
+                    </p>
+                </div>
+            </div>
+
         </section>
+
+        <!-- Lightbox for Zoom -->
+        <div class="lightbox" id="lightbox">
+            <div class="lightbox-content">
+                <button class="lightbox-close" onclick="closeLightbox()">×</button>
+                <img id="lightboxImage" src="" alt="Display Detail" class="lightbox-image">
+                <div class="lightbox-nav">
+                    <button onclick="showPetDisplay()">🐾 Pet Display</button>
+                    <button onclick="showHumanDisplay()">👤 Human Display</button>
+                </div>
+            </div>
+        </div>
 
         <!-- CTA Section -->
         <section class="partner-cta">
             <h2>Ready to Partner With Us?</h2>
             <p>
                 Join our growing network of partners and start earning passive income while serving 
-                your community with meaningful memorial keepsakes. Apply today and we'll be in touch within 48 hours!
+                your community with meaningful memorial keepsakes. Join today and we'll be in touch within 48 hours!
             </p>
             <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/partnership.html" target="_blank" class="btn">Join Now</a>
         </section>
 
         <!-- Footer -->
         <footer>
-            <p>© <span id="currentYear"></span> Dopelee Prezzed by S LLC</p>
+            <p>© <span class="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
             <p style="margin-top: 15px; font-size: 0.9rem;">
                 <a href="https://tr.ee/f3FpnW" target="_blank">Policies & Terms</a>
@@ -1908,7 +2297,7 @@
         
         // Auto-update year in footer
         document.addEventListener('DOMContentLoaded', () => {
-            const yearSpans = document.querySelectorAll('#currentYear');
+            const yearSpans = document.querySelectorAll('.currentYear');
             const currentYear = new Date().getFullYear();
             yearSpans.forEach(span => span.textContent = currentYear);
         });
@@ -1951,6 +2340,139 @@
                     });
                 }
             }, 300);
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // ACCORDION FUNCTIONALITY
+        // ═══════════════════════════════════════════════════════════════
+
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const wasActive = item.classList.contains('active');
+            
+            // Close all accordion items
+            document.querySelectorAll('.accordion-item').forEach(acc => {
+                acc.classList.remove('active');
+            });
+            
+            // If it wasn't active, open it
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // ═══════════════════════════════════════════════════════════════
+        // BEFORE/AFTER SLIDER FUNCTIONALITY
+        // ═══════════════════════════════════════════════════════════════
+
+        const slider = document.querySelector('.accordion-slider-container');
+        const handle = document.getElementById('sliderHandle');
+        const afterImage = document.getElementById('afterImage');
+        let isDragging = false;
+
+        if (slider && handle && afterImage) {
+            function updateSlider(x) {
+                const rect = slider.getBoundingClientRect();
+                const position = Math.max(0, Math.min(x - rect.left, rect.width));
+                const percentage = (position / rect.width) * 100;
+                
+                handle.style.left = percentage + '%';
+                afterImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+            }
+
+            // Mouse events
+            handle.addEventListener('mousedown', () => {
+                isDragging = true;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    updateSlider(e.clientX);
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // Touch events for mobile
+            handle.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                e.preventDefault();
+            });
+
+            document.addEventListener('touchmove', (e) => {
+                if (isDragging) {
+                    updateSlider(e.touches[0].clientX);
+                }
+            });
+
+            document.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+
+            // Click anywhere on slider to move
+            slider.addEventListener('click', (e) => {
+                if (e.target.closest('.slider-handle')) return;
+                updateSlider(e.clientX);
+            });
+
+            // ═══════════════════════════════════════════════════════════════
+            // LIGHTBOX ZOOM FUNCTIONALITY
+            // ═══════════════════════════════════════════════════════════════
+
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImage = document.getElementById('lightboxImage');
+
+            // Open lightbox on double-click
+            slider.addEventListener('dblclick', (e) => {
+                if (!e.target.closest('.slider-handle')) {
+                    openLightbox();
+                }
+            });
+
+            function openLightbox() {
+                // Determine which image is more visible
+                const afterClip = afterImage.style.clipPath;
+                const match = afterClip ? afterClip.match(/\d+/) : null;
+                const percentage = match ? parseFloat(match[0]) : 50;
+                
+                if (percentage > 50) {
+                    lightboxImage.src = 'Human_Legacy_Lounge_display_.png';
+                } else {
+                    lightboxImage.src = 'Pet_Legacy_Lounge_display_.png';
+                }
+                
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            window.closeLightbox = function() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+
+            window.showPetDisplay = function() {
+                lightboxImage.src = 'Pet_Legacy_Lounge_display_.png';
+            }
+
+            window.showHumanDisplay = function() {
+                lightboxImage.src = 'Human_Legacy_Lounge_display_.png';
+            }
+
+            // Close lightbox on background click
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+
+            // Close lightbox on ESC key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                }
+            });
         }
     </script>
 
