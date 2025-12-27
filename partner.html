@@ -537,9 +537,12 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2025 Dopelee Prezzed by S LLC</p>
+        <p>© <span id="copyrightYear">2025</span> Dopelee Prezzed by S LLC</p>
         <p>Creating legacy pieces with love and precision</p>
     </footer>
 
-</body>
+    <script>
+      document.getElementById('copyrightYear').textContent = new Date().getFullYear();
+    </script>
+  </body>
 </html>
