@@ -194,6 +194,47 @@
             color: #000;
             text-shadow: 0 2px 8px rgba(255, 255, 255, 0.3);
             cursor: pointer;
+            transition: margin-left 0.3s ease;
+        }
+
+        /* ✨ SHEIN-STYLE BACK BUTTON ✨ */
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.1);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 0, 0, 0.2);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .back-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .back-btn svg {
+            color: #000;
+            filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.3));
+        }
+
+        /* Adjust logo when back button is visible */
+        .nav-container:has(.back-btn[style*="display: flex"]) .logo-nav,
+        .nav-container:has(.back-btn:not([style*="display: none"])) .logo-nav {
+            margin-left: 50px;
         }
 
         .nav-links {
@@ -1767,6 +1808,29 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            /* ✨ MOBILE BACK BUTTON ADJUSTMENTS ✨ */
+            .back-btn {
+                left: 15px;
+                width: 36px;
+                height: 36px;
+            }
+
+            .back-btn svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            /* Adjust logo when back button is visible on mobile */
+            .nav-container:has(.back-btn[style*="display: flex"]) .logo-nav,
+            .nav-container:has(.back-btn:not([style*="display: none"])) .logo-nav {
+                margin-left: 45px;
+                font-size: 18px;
+            }
+
+            .logo-nav {
+                font-size: 20px;
+            }
+            
             .hamburger {
                 display: flex;
             }
@@ -1983,6 +2047,13 @@
 
     <nav>
         <div class="nav-container">
+            <!-- ✨ SHEIN-STYLE BACK BUTTON ✨ -->
+            <button id="backBtn" class="back-btn" onclick="goBack()" style="display: none;" aria-label="Go back">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+            </button>
+            
             <div class="logo-nav" onclick="showPage('home')">Dopelee Prezzed By S™</div>
             
             <div class="hamburger" onclick="toggleMenu()">
@@ -2088,7 +2159,7 @@
         <section class="contact" id="contact-section">
             <h2>Get In Touch</h2>
             <div class="contact-info">
-                <p><strong>Email:</strong> <a href="mailto:info@dopeleeprezzedbysllc.com">info@dopeleeprezzedbysllc.com</a></p>
+                <p><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection#375e59515877535847525b52524745524d4d5253554e445b5b541954585a"><span class="__cf_email__" data-cfemail="8de4e3ebe2cde9e2fde8e1e8e8fdffe8f7f7e8e9eff4fee1e1eea3eee2e0">[email&#160;protected]</span></a></p>
                 <p><strong>Phone:</strong> <a href="tel:8165301520">816-530-1520</a></p>
                 <p><strong>Website:</strong> <a href="https://www.dopeleeprezzedbys.com" target="_blank">www.dopeleeprezzedbys.com</a></p>
             </div>
@@ -2756,7 +2827,7 @@
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         
         // ========================================
         // HAMBURGER MENU
@@ -2786,11 +2857,54 @@
             yearSpans.forEach(span => span.textContent = currentYear);
         });
 
+        // ✨ NAVIGATION HISTORY & BACK BUTTON ✨
+        let navigationHistory = ['home'];
+
         function showPage(pageId) {
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
             
             document.getElementById(pageId).classList.add('active');
+            
+            // Track navigation history
+            if (navigationHistory[navigationHistory.length - 1] !== pageId) {
+                navigationHistory.push(pageId);
+            }
+            
+            // Show/hide back button
+            updateBackButton();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateBackButton() {
+            const backBtn = document.getElementById('backBtn');
+            const currentPage = navigationHistory[navigationHistory.length - 1];
+            
+            // Show back button if not on home page
+            if (currentPage === 'home') {
+                backBtn.style.display = 'none';
+            } else {
+                backBtn.style.display = 'flex';
+            }
+        }
+
+        function goBack() {
+            // Remove current page from history
+            if (navigationHistory.length > 1) {
+                navigationHistory.pop();
+            }
+            
+            // Get previous page
+            const previousPage = navigationHistory[navigationHistory.length - 1] || 'home';
+            
+            // Show previous page
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(previousPage).classList.add('active');
+            
+            // Update back button
+            updateBackButton();
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -3148,13 +3262,6 @@
                 closeTemplateGallery();
             }
         });
-
-        document.addEventListener('click', (e) => {
-            if (e.target.classList.contains('template-modal-overlay')) {
-                closeTemplateGallery();
-            }
-        });
     </script>
-
 </body>
 </html>
