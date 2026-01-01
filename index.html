@@ -2037,6 +2037,46 @@
             .template-card { min-width: 240px; max-width: 240px; }
             .template-card-image { height: 260px; }
         }
+
+        /* ========================================
+           TAWK.TO LIVE CHAT CUSTOMIZATION
+        ======================================== */
+        
+        /* Adjust chat widget position on mobile to avoid navigation conflicts */
+        @media (max-width: 768px) {
+            /* Tawk.to widget - ensure it doesn't block bottom navigation */
+            #tawk-bubble-container {
+                bottom: 20px !important;
+                right: 15px !important;
+            }
+            
+            /* Make the chat bubble slightly smaller on mobile */
+            .tawk-min-container {
+                transform: scale(0.9);
+                transform-origin: bottom right;
+            }
+        }
+        
+        /* Desktop positioning */
+        @media (min-width: 769px) {
+            #tawk-bubble-container {
+                bottom: 25px !important;
+                right: 25px !important;
+            }
+        }
+        
+        /* Ensure chat widget has proper z-index (below modals, above content) */
+        .tawk-min-container,
+        #tawk-bubble-container {
+            z-index: 999 !important;
+        }
+        
+        /* When template modal is open, slightly fade the chat widget */
+        .modal.active ~ * #tawk-bubble-container {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
     </style>
 </head>
 <body>
@@ -3263,5 +3303,19 @@
             }
         });
     </script>
+
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69562b2c0feeb4197e36de51/1jds9h9td';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 </html>
