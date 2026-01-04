@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecting... | Dopelee ARK</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: radial-gradient(circle at top, #181829 0%, #050509 40%, #000 100%);
+      color: #f5f5ff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .container {
+      text-align: center;
+      padding: 3rem;
+      max-width: 500px;
+    }
+    
+    .spinner {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(15, 240, 184, 0.2);
+      border-top: 4px solid #0ff0b8;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 2rem;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    h1 { color: #e9ff60; margin-bottom: 1rem; font-size: 1.5rem; }
+    p { color: #b9bed8; margin-bottom: 1rem; }
+    .success { color: #0ff0b8; }
+    .error { color: #fd26fd; }
+    .status-icon { font-size: 4rem; margin-bottom: 1rem; }
+    
+    .manual-token {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      text-align: left;
+    }
+    
+    .manual-token input {
+      width: 100%;
+      padding: 12px;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: #fff;
+      margin: 1rem 0;
+      font-family: monospace;
+    }
+    
+    .manual-token button {
+      background: linear-gradient(135deg, #0ff0b8, #e9ff60);
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="loading">
+      <div class="spinner"></div>
+      <h1>🔗 Connecting Your Account</h1>
+      <p>Please wait...</p>
+    </div>
+    
+    <div id="success" style="display: none;">
+      <div class="status-icon">✅</div>
+      <h1 class="success">Connected Successfully!</h1>
+      <p>You can close this window now.</p>
+      <p style="font-size: 0.9rem; color: #7a7f9a;">Closing automatically...</p>
+    </div>
+    
+    <div id="error" style="display: none;">
+      <div class="status-icon">❌</div>
+      <h1 class="error">Connection Issue</h1>
+      <p id="errorMessage">Something went wrong.</p>
+      
+      <div class="manual-token" id="manualEntry" style="display: none;">
+        <p style="color: #e9ff60; font-weight: 600;">📋 Manual Token Entry</p>
+        <p style="font-size: 0.85rem;">If the URL contains an access_token, paste it below:</p>
+        <input type="text" id="manualTokenInput" placeholder="Paste access_token here">
+        <button onclick="submitManualToken()">Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Parse URL params and hash
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(window.location.hash.substring(1));
+    
+    // Get tokens from URL or hash (different OAuth flows)
+    const accessToken = hashParams.get('access_token') || urlParams.get('access_token');
+    const code = urlParams.get('code') || hashParams.get('code');
+    const state = urlParams.get('state') || hashParams.get('state');
+    const error = urlParams.get('error') || hashParams.get('error');
+    const errorDesc = urlParams.get('error_description') || hashParams.get('error_description');
+    
+    function sendToParent(data) {
+      if (window.opener) {
+        window.opener.postMessage(data, window.location.origin);
+        
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+        
+        setTimeout(() => window.close(), 2000);
+      } else {
+        // No opener - show manual instructions
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('errorMessage').textContent = 'Popup blocked. Please copy the token manually.';
+        document.getElementById('manualEntry').style.display = 'block';
+        
+        if (accessToken) {
+          document.getElementById('manualTokenInput').value = accessToken;
+        }
+      }
+    }
+    
+    function submitManualToken() {
+      const token = document.getElementById('manualTokenInput').value.trim();
+      if (token) {
+        // Store in localStorage for main page to pick up
+        localStorage.setItem('pending_oauth_token', JSON.stringify({
+          accessToken: token,
+          state: state,
+          timestamp: Date.now()
+        }));
+        
+        alert('Token saved! Go back to your dashboard and refresh the page.');
+        window.close();
+      }
+    }
+    
+    // Process the callback
+    if (error) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('errorMessage').textContent = errorDesc || error;
+      
+      sendToParent({ error, state });
+      
+    } else if (accessToken) {
+      // Implicit flow - got token directly
+      sendToParent({ accessToken, state });
+      
+    } else if (code) {
+      // Authorization code flow - need to exchange
+      // For simplified version, we'll show this needs server-side handling
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('error').style.display = 'block';
+      document.getElementById('errorMessage').textContent = 
+        'This platform requires server-side token exchange. Use the implicit flow or set up Edge Functions.';
+      
+    } else {
+      // Check if token is in the full URL (some providers put it weirdly)
+      const fullUrl = window.location.href;
+      const tokenMatch = fullUrl.match(/access_token=([^&]+)/);
+      
+      if (tokenMatch) {
+        sendToParent({ accessToken: tokenMatch[1], state });
+      } else {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').style.display = 'block';
+        document.getElementById('errorMessage').textContent = 'No token received. Please try again.';
+        document.getElementById('manualEntry').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
