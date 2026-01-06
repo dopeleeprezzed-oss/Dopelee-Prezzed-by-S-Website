@@ -2610,7 +2610,7 @@
         </footer>
     </div>
 
-    <div id="partner" class="page">
+    <div id="partners" class="page">
         <section class="page-header">
             <div class="bubble"></div>
             <div class="bubble"></div>
@@ -2891,11 +2891,17 @@
         // PAGE NAVIGATION
         // ========================================
         
-        document.addEventListener('DOMContentLoaded', () => {
-            const yearSpans = document.querySelectorAll('.currentYear');
-            const currentYear = new Date().getFullYear();
-            yearSpans.forEach(span => span.textContent = currentYear);
-        });
+       document.addEventListener('DOMContentLoaded', () => {
+    const yearSpans = document.querySelectorAll('.currentYear');
+    const currentYear = new Date().getFullYear();
+    yearSpans.forEach(span => span.textContent = currentYear);
+    
+    // Handle direct URL links like #partner
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        showPage(hash);
+    }
+});
 
         // ✨ NAVIGATION HISTORY & BACK BUTTON ✨
         let navigationHistory = ['home'];
