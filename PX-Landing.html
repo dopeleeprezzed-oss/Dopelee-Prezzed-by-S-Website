@@ -375,6 +375,134 @@
       .intro-section h3 { font-size: 1.5rem; }
       .products-grid { grid-template-columns: 1fr; gap: 1.5rem; }
       .product-image { height: 200px; }
+      .vip-section h3 { font-size: 1.5rem; }
+      .vip-grid { grid-template-columns: 1fr; }
+    }
+    
+    /* VIDEO CONTAINER */
+    .video-container {
+      max-width: 700px;
+      margin: 0 auto 2.5rem;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 2px solid rgba(15, 240, 184, 0.3);
+      box-shadow: 0 10px 40px rgba(15, 240, 184, 0.2);
+    }
+    
+    .video-container iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+    }
+    
+    /* VIP SECTION */
+    .vip-section {
+      background: linear-gradient(135deg, rgba(253, 38, 253, 0.08), rgba(211, 251, 27, 0.05));
+      border: 2px solid rgba(253, 38, 253, 0.3);
+      border-radius: 20px;
+      padding: 3rem 2rem;
+      margin: 3rem 0;
+      animation: fadeIn 1s ease;
+    }
+    
+    .vip-section h3 {
+      background: linear-gradient(90deg, #fd26fd, #d3fb1b, #0ff0b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      text-align: center;
+    }
+    
+    .vip-section > p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      line-height: 1.8;
+    }
+    
+    .vip-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .vip-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(253, 38, 253, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .vip-card:hover {
+      border-color: rgba(253, 38, 253, 0.5);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(253, 38, 253, 0.2);
+    }
+    
+    .vip-card .icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .vip-card h4 {
+      color: #d3fb1b;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    
+    .vip-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .vip-disclaimer {
+      background: rgba(255, 193, 7, 0.1);
+      border: 1px solid rgba(255, 193, 7, 0.3);
+      border-radius: 10px;
+      padding: 1rem 1.5rem;
+      margin: 1.5rem auto;
+      max-width: 600px;
+      text-align: center;
+    }
+    
+    .vip-disclaimer p {
+      color: #ffc107;
+      font-size: 0.9rem;
+      margin: 0;
+      line-height: 1.6;
+    }
+    
+    .vip-cta {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    
+    .btn-vip {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: linear-gradient(135deg, #fd26fd, #d3fb1b);
+      color: #000;
+      text-decoration: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 20px rgba(253, 38, 253, 0.3);
+    }
+    
+    .btn-vip:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(253, 38, 253, 0.5);
     }
   </style>
 </head>
@@ -419,9 +547,60 @@
         Create a lasting tribute that brings comfort and keeps their memory close.
       </p>
     </div>
+    
+    <!-- INTRO VIDEO - Who We Are -->
+    <div class="video-container">
+      <iframe 
+        src="https://www.youtube.com/embed/BBil4qK5gck" 
+        title="About Dopelee Prezzed by S"
+        frameborder="0" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
 
     <!-- PRODUCTS - Now loaded from Supabase -->
     <div class="products-grid" id="productsGrid"></div>
+
+    <!-- VIP EXPERIENCES SECTION -->
+    <div class="vip-section">
+      <h3>🎁 VIP Experiences</h3>
+      <p>
+        Beyond keepsakes, we curate premium, personalized gift experiences for your special events. 
+        From weddings to corporate gatherings, we handle every detail so your guests receive 
+        something truly meaningful and memorable.
+      </p>
+      
+      <div class="vip-grid">
+        <div class="vip-card">
+          <div class="icon">💍</div>
+          <h4>Weddings</h4>
+          <p>Custom luxury gift bags for bridal parties, guests, and VIPs. Elegant keepsakes that match your wedding theme.</p>
+        </div>
+        
+        <div class="vip-card">
+          <div class="icon">🏢</div>
+          <h4>Corporate Events</h4>
+          <p>Premium branded gifts for clients, employees, and stakeholders that elevate your brand.</p>
+        </div>
+        
+        <div class="vip-card">
+          <div class="icon">🥂</div>
+          <h4>Swag & Celebrations</h4>
+          <p>High-end swag bags for parties, conferences, birthdays, anniversaries, and special occasions.</p>
+        </div>
+      </div>
+      
+      <!-- IMPORTANT SHIPPING DISCLAIMER -->
+      <div class="vip-disclaimer">
+        <p>⚠️ <strong>Please Note:</strong> VIP Experience services including custom gift bags, banners, event favors, and party packages are available for <strong>local pickup and U.S. domestic shipping only</strong>. International shipping is not available for these items.</p>
+      </div>
+      
+      <div class="vip-cta">
+        <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/" class="btn-vip" target="_blank">Request VIP Quote →</a>
+      </div>
+    </div>
 
     <!-- CTA -->
     <div class="cta-section">
@@ -441,7 +620,7 @@
     <p>Luxury • Legacy • Keepsakes</p>
     <p style="margin-top: 1rem;">
       <a href="https://www.dopeleeprezzedbys.com" target="_blank">Website</a> • 
-      <a href="mailto:info@dopeleeprezzedbys.com">Email</a> • 
+      <a href="/cdn-cgi/l/email-protection#137a7d757c53777c63767f767663617669697677716a603d707c7e">Email</a> • 
       <a href="tel:8165301520">816-530-1520</a>
     </p>
     <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">
@@ -449,7 +628,7 @@
     </p>
   </div>
 
-  <script>
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
     // ═══════════════════════════════════════════════════════════════
     // CONFIGURATION
     // ═══════════════════════════════════════════════════════════════
@@ -571,13 +750,14 @@
     // INITIALIZE
     // ═══════════════════════════════════════════════════════════════
     async function init() {
-      console.log('🏠 Legacy Lounge Loading...', partnerId ? `Partner: ${partnerId}` : 'Direct');
+      console.log('🏠 Legacy Lounge Loading...', partnerId ? `Partner: ${partnerId}` : 'No partner');
       
       await loadPartnerData();
-      setupCTA();
       await loadProducts();
+      setupCTA();
     }
     
+    // Start the app
     init();
   </script>
 
