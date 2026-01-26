@@ -2252,82 +2252,80 @@
         </div>
 
         <section class="luxury-products-section">
-            <div class="products-grid">
-
-                <div class="product-card">
-                    <div class="product-image" style="background: none; padding: 0;">
-                        <img src="photo-book.png" alt="Photo Book">
-                    </div>
-                    <div class="product-content">
-                        <h3>Custom Photo LookBook</h3>
-                        <p>A beautifully designed photo book that tells your story in vivid detail and lasting quality.</p>
-                        <p class="price">Starting at $65</p>
-                        <a href="https://dopelee-prezzed-by-s.square.site" target="_blank" class="btn btn-block">Shop Now</a>
-                    </div>
+            <!-- Products loaded dynamically from Supabase -->
+            <div class="products-grid" id="mainProductsGrid">
+                <!-- Loading state -->
+                <div id="productsLoading" style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #0ff0b8;">
+                    Loading products...
                 </div>
-
-                <div class="product-card">
-                    <div class="product-image" style="background: none; padding: 0;">
-                        <img src="wood-keepsake.png" alt="Wood Keepsake">
-                    </div>
-                    <div class="product-content">
-                        <h3>Hand-Crafted Wood Keepsake</h3>
-                        <p>Premium wood display crafted with precision, perfect for honoring cherished memories.</p>
-                        <p class="price">$65</p>
-                        <a href="https://dopelee-prezzed-by-s.square.site" target="_blank" class="btn btn-block">Shop Now</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image" style="background: none; padding: 0;">
-                        <img src="slate-keepsake.png" alt="Slate Keepsake">
-                    </div>
-                    <div class="product-content">
-                        <h3>Custom Slate Keepsake</h3>
-                        <p>Timeless memories etched in stone. A durable and elegant tribute that lasts forever.</p>
-                        <p class="price">Starting at $60</p>
-                        <a href="https://dopelee-prezzed-by-s.square.site" target="_blank" class="btn btn-block">Shop Now</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image" style="background: none; padding: 0;">
-                        <img src="metal-ornament.png" alt="Metal Ornaments">
-                    </div>
-                    <div class="product-content">
-                        <h3>Hand-Crafted Metal Ornaments</h3>
-                        <p>Delicate metal ornaments engraved with love, perfect for remembering special moments.</p>
-                        <p class="price">Starting at $25</p>
-                        <a href="https://dopelee-prezzed-by-s.square.site" target="_blank" class="btn btn-block">Shop Now</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image" style="background: none; padding: 0;">
-                        <img src="glass-display.png" alt="Glass Display">
-                    </div>
-                    <div class="product-content">
-                        <h3>Glass Display Keepsake (6x8)</h3>
-                        <p>Elegant glass display with stand, featuring your cherished photo in stunning clarity.</p>
-                        <p class="price">$55</p>
-                        <a href="https://dopelee-prezzed-by-s.square.site" target="_blank" class="btn btn-block">Shop Now</a>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <div class="product-image" style="background: none; padding: 0;">
-                        <img src="Legacy Archive Upgrade.png" alt="Legacy Archive">
-                    </div>
-                    <div class="product-content">
-                        <h3>Legacy Archive Upgrade</h3>
-                        <p>Transform your keepsakes into living memories with our premium digital archive service.</p>
-                        <p class="price">Starting at $45</p>
-                        <a href="https://dopelee-prezzed-by-s.square.site" target="_blank" class="btn btn-block">Shop Now</a>
-                    </div>
-                </div>
-
             </div>
         </section>
+
+        <script>
+        // ═══════════════════════════════════════════════════════════════
+        // SUPABASE PRODUCT LOADER FOR MAIN WEBSITE
+        // ═══════════════════════════════════════════════════════════════
+        (function() {
+            const SUPABASE_URL = 'https://dyehxtiozfwlexkbalvn.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs';
+            
+            async function loadMainProducts() {
+                const grid = document.getElementById('mainProductsGrid');
+                const loading = document.getElementById('productsLoading');
+                
+                try {
+                    const response = await fetch(`${SUPABASE_URL}/rest/v1/products?is_active=eq.true&order=sort_order.asc`, {
+                        headers: {
+                            'apikey': SUPABASE_ANON_KEY,
+                            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                        }
+                    });
+                    
+                    const products = await response.json();
+                    
+                    if (!products || products.length === 0 || products.error) {
+                        console.warn('No products found in Supabase, using fallback');
+                        loading.innerHTML = 'Products coming soon...';
+                        return;
+                    }
+                    
+                    // Clear loading state
+                    grid.innerHTML = '';
+                    
+                    // Render products from Supabase
+                    products.forEach(product => {
+                        const card = document.createElement('div');
+                        card.className = 'product-card';
+                        card.innerHTML = `
+                            <div class="product-image" style="background: none; padding: 0;">
+                                <img src="${product.image_url}" alt="${product.name}" onerror="this.style.display='none'">
+                            </div>
+                            <div class="product-content">
+                                <h3>${product.name}</h3>
+                                <p>${product.description}</p>
+                                <p class="price">${product.price}</p>
+                                <a href="${product.square_link}" target="_blank" class="btn btn-block">Shop Now</a>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                    });
+                    
+                    console.log('✅ Main website: Loaded ' + products.length + ' products from Supabase');
+                    
+                } catch (err) {
+                    console.error('Error loading products:', err);
+                    loading.innerHTML = 'Error loading products. Please refresh.';
+                }
+            }
+            
+            // Load products when DOM is ready
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadMainProducts);
+            } else {
+                loadMainProducts();
+            }
+        })();
+        </script>
 
         <section class="partner-cta">
             <h2>Bring The Legacy Lounge™ to Your Location</h2>
