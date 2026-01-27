@@ -2501,6 +2501,12 @@
                     product.image_url &&
                     product.image_url.toLowerCase().endsWith('.mp4');
 
+                // Debug logging for video products
+                if (isVideo) {
+                  console.log('🎥 Video product found:', product.name);
+                  console.log('🔗 Video URL:', product.image_url);
+                }
+
                 // For video products: use thumbnail_url if exists, otherwise use placeholder
                 const thumbnailUrl = product.thumbnail_url || 
                     'https://dopeleeprezzed-oss.github.io/dopelee-form/logo.png';
@@ -2516,7 +2522,12 @@
           alt="${product.name}"
           class="product-img"
         />
-        <div class="video-play-overlay" onclick="openVideoModal('${product.image_url}', '${product.name.replace(/'/g, "\\'")}', '${product.description ? product.description.replace(/'/g, "\\'") : ''}', '${product.price}', '${product.square_link}')">
+        <div class="video-play-overlay" 
+             data-video-url="${product.image_url}"
+             data-name="${product.name}"
+             data-desc="${product.description || ''}"
+             data-price="${product.price}"
+             data-link="${product.square_link}">
           <div class="play-icon">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </div>
@@ -2568,15 +2579,25 @@
 // ═══════════════════════════════════════════════════════════════
 
 function openVideoModal(videoUrl, name, description, price, shopLink) {
+  console.log('🎬 Opening video modal');
+  console.log('📹 Video URL:', videoUrl);
+  console.log('📦 Product:', name);
+  
   const modal = document.getElementById('videoModal');
   const video = document.getElementById('modalVideo');
   
+  if (!videoUrl) {
+    console.error('❌ No video URL provided');
+    return;
+  }
+  
   // Set video source
   video.src = videoUrl;
+  console.log('✅ Video src set to:', video.src);
   
   // Set product info
   document.getElementById('modalProductName').textContent = name;
-  document.getElementById('modalProductDesc').textContent = description;
+  document.getElementById('modalProductDesc').textContent = description || '';
   document.getElementById('modalProductPrice').textContent = price;
   document.getElementById('modalShopBtn').href = shopLink;
   
@@ -2585,7 +2606,11 @@ function openVideoModal(videoUrl, name, description, price, shopLink) {
   document.body.style.overflow = 'hidden';
   
   // Play video
-  video.play().catch(e => console.log('Autoplay prevented:', e));
+  video.play().then(() => {
+    console.log('✅ Video playing');
+  }).catch(e => {
+    console.error('❌ Video play error:', e.name, e.message);
+  });
 }
 
 function closeVideoModal() {
@@ -2601,8 +2626,25 @@ function closeVideoModal() {
   document.body.style.overflow = '';
 }
 
-// Close modal on backdrop click
+// Event delegation for video play overlays
 document.addEventListener('click', function(e) {
+  // Check if clicked element or parent is video-play-overlay
+  const overlay = e.target.closest('.video-play-overlay');
+  if (overlay) {
+    const videoUrl = overlay.dataset.videoUrl;
+    const name = overlay.dataset.name;
+    const desc = overlay.dataset.desc;
+    const price = overlay.dataset.price;
+    const link = overlay.dataset.link;
+    
+    console.log('🖱️ Play overlay clicked');
+    console.log('📦 Data attributes:', { videoUrl, name, desc, price, link });
+    
+    openVideoModal(videoUrl, name, desc, price, link);
+    return;
+  }
+  
+  // Close modal on backdrop click
   const modal = document.getElementById('videoModal');
   if (e.target === modal) {
     closeVideoModal();
