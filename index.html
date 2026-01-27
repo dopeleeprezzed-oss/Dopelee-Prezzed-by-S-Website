@@ -2125,9 +2125,158 @@
   display: block;
 }
 
+/* === VIDEO PLAY OVERLAY === */
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.video-play-overlay:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.play-icon {
+  width: 70px;
+  height: 70px;
+  background: rgba(15, 240, 184, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(15, 240, 184, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-play-overlay:hover .play-icon {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(15, 240, 184, 0.6);
+}
+
+.play-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: #000;
+  margin-left: 4px;
+}
+
+/* === VIDEO MODAL === */
+.video-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.95);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.video-modal.active {
+  display: flex;
+}
+
+.video-modal-content {
+  position: relative;
+  max-width: 900px;
+  width: 100%;
+  background: #0f1018;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 240, 184, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+.video-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.video-modal-close:hover {
+  background: rgba(253, 38, 253, 0.8);
+}
+
+.video-modal video {
+  width: 100%;
+  display: block;
+  max-height: 70vh;
+}
+
+.video-modal-info {
+  padding: 20px 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-modal-info h3 {
+  color: #0ff0b8;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.video-modal-info p {
+  color: #b9bed8;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.video-modal-info .price {
+  color: #d4af37;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.video-modal-info .btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #0ff0b8, #0a95a8);
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.video-modal-info .btn:hover {
+  transform: translateY(-2px);
+}
+
 </style>
 </head>
 <body>
+
+<!-- VIDEO MODAL -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-content">
+    <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
+    <video id="modalVideo" controls muted playsinline></video>
+    <div class="video-modal-info">
+      <h3 id="modalProductName"></h3>
+      <p id="modalProductDesc"></p>
+      <p class="price" id="modalProductPrice"></p>
+      <a href="#" id="modalShopBtn" target="_blank" class="btn">Shop Now</a>
+    </div>
+  </div>
+</div>
 
     <div class="ticker">
         <p> Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available </p>
@@ -2352,22 +2501,26 @@
                     product.image_url &&
                     product.image_url.toLowerCase().endsWith('.mp4');
 
+                // For video products: use thumbnail_url if exists, otherwise use placeholder
+                const thumbnailUrl = product.thumbnail_url || 
+                    'https://dopeleeprezzed-oss.github.io/dopelee-form/logo.png';
                 
                 card.innerHTML = `
                    
 <div class="product-image">
   ${
-    product.image_url && product.image_url.toLowerCase().endsWith('.mp4')
+    isVideo
       ? `
-        <video
-          class="product-video"
-          src="${product.image_url}#t=1"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-        ></video>
+        <img
+          src="${thumbnailUrl}"
+          alt="${product.name}"
+          class="product-img"
+        />
+        <div class="video-play-overlay" onclick="openVideoModal('${product.image_url}', '${product.name.replace(/'/g, "\\'")}', '${product.description ? product.description.replace(/'/g, "\\'") : ''}', '${product.price}', '${product.square_link}')">
+          <div class="play-icon">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
       `
       : `
         <img
@@ -2409,6 +2562,59 @@
         loadMainProducts();
     }
 })();
+
+// ═══════════════════════════════════════════════════════════════
+// VIDEO MODAL FUNCTIONS
+// ═══════════════════════════════════════════════════════════════
+
+function openVideoModal(videoUrl, name, description, price, shopLink) {
+  const modal = document.getElementById('videoModal');
+  const video = document.getElementById('modalVideo');
+  
+  // Set video source
+  video.src = videoUrl;
+  
+  // Set product info
+  document.getElementById('modalProductName').textContent = name;
+  document.getElementById('modalProductDesc').textContent = description;
+  document.getElementById('modalProductPrice').textContent = price;
+  document.getElementById('modalShopBtn').href = shopLink;
+  
+  // Show modal
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Play video
+  video.play().catch(e => console.log('Autoplay prevented:', e));
+}
+
+function closeVideoModal() {
+  const modal = document.getElementById('videoModal');
+  const video = document.getElementById('modalVideo');
+  
+  // Pause and reset video
+  video.pause();
+  video.src = '';
+  
+  // Hide modal
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close modal on backdrop click
+document.addEventListener('click', function(e) {
+  const modal = document.getElementById('videoModal');
+  if (e.target === modal) {
+    closeVideoModal();
+  }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeVideoModal();
+  }
+});
 </script>
 
 
