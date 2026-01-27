@@ -2101,6 +2101,13 @@
 }
 /* --- END VIDEO CONTAINMENT FIX --- */
 
+
+/* --- VIDEO CONTAINMENT (FINAL) --- */
+.product-image{position:relative;width:100%;height:260px;overflow:hidden}
+.product-video,.product-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.product-video{pointer-events:none}
+/* --- END VIDEO CONTAINMENT --- */
+
 </style>
 </head>
 <body>
@@ -2328,34 +2335,14 @@
                     product.image_url &&
                     product.image_url.toLowerCase().endsWith('.mp4');
 
-                const mediaMarkup = isVideo
-                    ? `
-                        <video
-                            src="${mediaUrl}#t=1.5"
-                            poster="https://dopeleeprezzed-oss.github.io/Dopelee-Prezzed-by-S-Website/wood-keepsake.png"
-                            autoplay
-                            muted
-                            loop
-                            playsinline
-                            preload="metadata"
-                            class="product-video"
-                        ></video>
-                      `
-                    : `
-                        <img
-                            src="${product.image_url}"
-                            alt="${product.name}"
-                            class="product-img"
-                        />
-                      `;
-
+                
                 card.innerHTML = `
                    <div class="product-image">
   ${
     product.image_url && product.image_url.toLowerCase().endsWith('.mp4')
       ? `
         <video
-          src="${product.image_url}"
+          src="${product.image_url}#t=1.8" poster="https://dopeleeprezzed-oss.github.io/Dopelee-Prezzed-by-S-Website/wood-keepsake.png"
           class="product-video"
           autoplay
           muted
@@ -2369,7 +2356,7 @@
           src="${product.image_url}"
           alt="${product.name}"
           class="product-img"
-        >
+         loading="lazy" onerror="this.style.display='none'">
       `
   }
 </div>
