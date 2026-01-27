@@ -2350,9 +2350,30 @@
                       `;
 
                 card.innerHTML = `
-                    <div class="product-image">
-                        ${mediaMarkup}
-                    </div>
+                   <div class="product-image">
+  ${
+    product.image_url && product.image_url.toLowerCase().endsWith('.mp4')
+      ? `
+        <video
+          src="${product.image_url}"
+          class="product-video"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="metadata"
+        ></video>
+      `
+      : `
+        <img
+          src="${product.image_url}"
+          alt="${product.name}"
+          class="product-img"
+        >
+      `
+  }
+</div>
+
                     <div class="product-content">
                         <h3>${product.name}</h3>
                         <p>${product.description}</p>
