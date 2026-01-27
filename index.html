@@ -2268,7 +2268,10 @@
 <div class="video-modal" id="videoModal">
   <div class="video-modal-content">
     <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
-    <video id="modalVideo" controls muted playsinline></video>
+    <video id="modalVideo" controls muted playsinline>
+      <source id="modalVideoSource" src="" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
     <div class="video-modal-info">
       <h3 id="modalProductName"></h3>
       <p id="modalProductDesc"></p>
@@ -2585,6 +2588,7 @@ function openVideoModal(videoUrl, name, description, price, shopLink) {
   
   const modal = document.getElementById('videoModal');
   const video = document.getElementById('modalVideo');
+  const source = document.getElementById('modalVideoSource');
   
   if (!videoUrl) {
     console.error('❌ No video URL provided');
@@ -2592,8 +2596,9 @@ function openVideoModal(videoUrl, name, description, price, shopLink) {
   }
   
   // Set video source
-  video.src = videoUrl;
-  console.log('✅ Video src set to:', video.src);
+  source.src = videoUrl;
+  video.load(); // Important: reload the video element
+  console.log('✅ Video src set to:', source.src);
   
   // Set product info
   document.getElementById('modalProductName').textContent = name;
@@ -2605,12 +2610,19 @@ function openVideoModal(videoUrl, name, description, price, shopLink) {
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
   
-  // Play video
-  video.play().then(() => {
-    console.log('✅ Video playing');
-  }).catch(e => {
-    console.error('❌ Video play error:', e.name, e.message);
-  });
+  // Wait for video to be ready, then play
+  video.oncanplay = function() {
+    console.log('✅ Video can play');
+    video.play().then(() => {
+      console.log('✅ Video playing');
+    }).catch(e => {
+      console.error('❌ Video play error:', e.name, e.message);
+    });
+  };
+  
+  video.onerror = function() {
+    console.error('❌ Video load error:', video.error);
+  };
 }
 
 function closeVideoModal() {
