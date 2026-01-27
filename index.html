@@ -2189,7 +2189,7 @@
 
 .video-modal-content {
   position: relative;
-  max-width: 900px;
+  max-width: 500px;
   width: 100%;
   background: #0f1018;
   border-radius: 16px;
@@ -2231,7 +2231,6 @@
   position: relative;
   width: 100%;
   aspect-ratio: 9/16;
-  max-height: 70vh;
   background: #000;
   overflow: hidden;
 }
@@ -2242,6 +2241,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  border: none;
 }
 
 .video-modal-info {
@@ -2531,28 +2531,28 @@
                     product.image_url &&
                     product.image_url.toLowerCase().endsWith('.mp4');
 
+                // Check if product has a YouTube video
+                const hasYouTube = product.youtube_id ? true : false;
+
                 // Debug logging for video products
-                if (isVideo) {
+                if (isVideo || hasYouTube) {
                   console.log('🎥 Video product found:', product.name);
-                  console.log('🔗 Video URL:', product.image_url);
+                  if (hasYouTube) console.log('📺 YouTube ID:', product.youtube_id);
                 }
 
-                // For video products: use thumbnail_url if exists, otherwise use hardcoded thumbnail
+                // For video products: use thumbnail_url if exists
                 const thumbnailUrl = product.thumbnail_url || 
-                    (isVideo ? 'https://dopeleeprezzed-oss.github.io/Dopelee-Prezzed-by-S-Website/wood-keepsake.png' : null);
+                    (hasYouTube ? product.image_url : null);
                 
                 card.innerHTML = `
                    
 <div class="product-image">
   ${
-    isVideo
+    hasYouTube
       ? `
-        ${thumbnailUrl 
-          ? `<img src="${thumbnailUrl}" alt="${product.name}" class="product-img" />`
-          : `<div class="video-placeholder"></div>`
-        }
+        <img src="${thumbnailUrl || product.image_url}" alt="${product.name}" class="product-img" />
         <div class="video-play-overlay" 
-             data-video-url="${product.image_url}"
+             data-youtube-id="${product.youtube_id}"
              data-name="${product.name}"
              data-desc="${product.description || ''}"
              data-price="${product.price}"
@@ -2607,8 +2607,9 @@
 // VIDEO MODAL FUNCTIONS
 // ═══════════════════════════════════════════════════════════════
 
-function openVideoModal(videoUrl, name, description, price, shopLink) {
+function openVideoModal(youtubeId, name, description, price, shopLink) {
   console.log('🎬 Opening video modal');
+  console.log('📹 YouTube ID:', youtubeId);
   
   const modal = document.getElementById('videoModal');
   const iframe = document.getElementById('modalYouTube');
@@ -2624,8 +2625,7 @@ function openVideoModal(videoUrl, name, description, price, shopLink) {
   document.body.style.overflow = 'hidden';
   
   // Set YouTube embed with autoplay and mute
-  // Using youtube-nocookie for privacy and cleaner look
-  iframe.src = 'https://www.youtube-nocookie.com/embed/8_y2WcJwLlA?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=8_y2WcJwLlA';
+  iframe.src = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=${youtubeId}`;
   
   console.log('✅ YouTube embed loaded');
 }
@@ -2647,16 +2647,16 @@ document.addEventListener('click', function(e) {
   // Check if clicked element or parent is video-play-overlay
   const overlay = e.target.closest('.video-play-overlay');
   if (overlay) {
-    const videoUrl = overlay.dataset.videoUrl;
+    const youtubeId = overlay.dataset.youtubeId;
     const name = overlay.dataset.name;
     const desc = overlay.dataset.desc;
     const price = overlay.dataset.price;
     const link = overlay.dataset.link;
     
     console.log('🖱️ Play overlay clicked');
-    console.log('📦 Data attributes:', { videoUrl, name, desc, price, link });
+    console.log('📺 YouTube ID:', youtubeId);
     
-    openVideoModal(videoUrl, name, desc, price, link);
+    openVideoModal(youtubeId, name, desc, price, link);
     return;
   }
   
