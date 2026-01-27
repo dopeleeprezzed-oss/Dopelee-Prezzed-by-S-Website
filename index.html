@@ -2125,9 +2125,225 @@
   display: block;
 }
 
+/* === VIDEO PLAY OVERLAY === */
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0a95a8 0%, #1a1b24 50%, #0f1018 100%);
+}
+
+.video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.video-play-overlay:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.play-icon {
+  width: 70px;
+  height: 70px;
+  background: rgba(15, 240, 184, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(15, 240, 184, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-play-overlay:hover .play-icon {
+  transform: scale(1.1);
+  box-shadow: 0 6px 30px rgba(15, 240, 184, 0.6);
+}
+
+.play-icon svg {
+  width: 30px;
+  height: 30px;
+  fill: #000;
+  margin-left: 4px;
+}
+
+/* === VIDEO MODAL === */
+.video-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.95);
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.video-modal.active {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.video-modal-content {
+  position: relative;
+  max-width: 400px;
+  width: 100%;
+  background: #0f1018;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(15, 240, 184, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  margin: auto;
+}
+
+@media (max-width: 480px) {
+  .video-modal.active {
+    padding: 15px;
+    padding-top: 20px;
+    padding-bottom: 100px;
+    align-items: flex-start;
+  }
+  
+  .video-modal-content {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+  
+  .video-wrapper {
+    aspect-ratio: 9/16;
+    max-height: 55vh;
+  }
+  
+  .video-modal-info {
+    padding: 15px 18px;
+  }
+  
+  .video-modal-info h3 {
+    font-size: 1.1rem;
+  }
+  
+  .video-modal-info .btn {
+    width: 100%;
+    text-align: center;
+    padding: 14px 20px;
+  }
+}
+
+.video-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.video-modal-close:hover {
+  background: rgba(253, 38, 253, 0.8);
+}
+
+.video-modal video {
+  width: 100%;
+  display: block;
+  max-height: 70vh;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/16;
+  background: #000;
+  overflow: hidden;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-modal-info {
+  padding: 20px 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.video-modal-info h3 {
+  color: #0ff0b8;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.video-modal-info p {
+  color: #b9bed8;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
+
+.video-modal-info .price {
+  color: #d4af37;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.video-modal-info .btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background: linear-gradient(135deg, #0ff0b8, #0a95a8);
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.video-modal-info .btn:hover {
+  transform: translateY(-2px);
+}
+
 </style>
 </head>
 <body>
+
+<!-- VIDEO MODAL -->
+<div class="video-modal" id="videoModal">
+  <div class="video-modal-content">
+    <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
+    <div class="video-wrapper">
+      <iframe id="modalYouTube" 
+              src="" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+    </div>
+    <div class="video-modal-info">
+      <h3 id="modalProductName"></h3>
+      <p id="modalProductDesc"></p>
+      <p class="price" id="modalProductPrice"></p>
+      <a href="#" id="modalShopBtn" target="_blank" class="btn">Shop Now</a>
+    </div>
+  </div>
+</div>
 
     <div class="ticker">
         <p> Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available </p>
@@ -2352,22 +2568,36 @@
                     product.image_url &&
                     product.image_url.toLowerCase().endsWith('.mp4');
 
+                // Check if product has a YouTube video
+                const hasYouTube = product.youtube_id ? true : false;
+
+                // Debug logging for video products
+                if (isVideo || hasYouTube) {
+                  console.log('🎥 Video product found:', product.name);
+                  if (hasYouTube) console.log('📺 YouTube ID:', product.youtube_id);
+                }
+
+                // For video products: use thumbnail_url if exists
+                const thumbnailUrl = product.thumbnail_url || 
+                    (hasYouTube ? product.image_url : null);
                 
                 card.innerHTML = `
                    
 <div class="product-image">
   ${
-    product.image_url && product.image_url.toLowerCase().endsWith('.mp4')
+    hasYouTube
       ? `
-        <video
-          class="product-video"
-          src="${product.image_url}#t=1"
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="metadata"
-        ></video>
+        <img src="${thumbnailUrl || product.image_url}" alt="${product.name}" class="product-img" />
+        <div class="video-play-overlay" 
+             data-youtube-id="${product.youtube_id}"
+             data-name="${product.name}"
+             data-desc="${product.description || ''}"
+             data-price="${product.price}"
+             data-link="${product.square_link}">
+          <div class="play-icon">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
       `
       : `
         <img
@@ -2409,6 +2639,77 @@
         loadMainProducts();
     }
 })();
+
+// ═══════════════════════════════════════════════════════════════
+// VIDEO MODAL FUNCTIONS
+// ═══════════════════════════════════════════════════════════════
+
+function openVideoModal(youtubeId, name, description, price, shopLink) {
+  console.log('🎬 Opening video modal');
+  console.log('📹 YouTube ID:', youtubeId);
+  
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('modalYouTube');
+  
+  // Set product info
+  document.getElementById('modalProductName').textContent = name;
+  document.getElementById('modalProductDesc').textContent = description || '';
+  document.getElementById('modalProductPrice').textContent = price;
+  document.getElementById('modalShopBtn').href = shopLink;
+  
+  // Show modal
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  
+  // Set YouTube embed with autoplay and mute
+  iframe.src = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=${youtubeId}`;
+  
+  console.log('✅ YouTube embed loaded');
+}
+
+function closeVideoModal() {
+  const modal = document.getElementById('videoModal');
+  const iframe = document.getElementById('modalYouTube');
+  
+  // Stop video by clearing src
+  iframe.src = '';
+  
+  // Hide modal
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Event delegation for video play overlays
+document.addEventListener('click', function(e) {
+  // Check if clicked element or parent is video-play-overlay
+  const overlay = e.target.closest('.video-play-overlay');
+  if (overlay) {
+    const youtubeId = overlay.dataset.youtubeId;
+    const name = overlay.dataset.name;
+    const desc = overlay.dataset.desc;
+    const price = overlay.dataset.price;
+    const link = overlay.dataset.link;
+    
+    console.log('🖱️ Play overlay clicked');
+    console.log('📺 YouTube ID:', youtubeId);
+    
+    openVideoModal(youtubeId, name, desc, price, link);
+    return;
+  }
+  
+  // Close modal on backdrop click
+  const modal = document.getElementById('videoModal');
+  if (e.target === modal) {
+    closeVideoModal();
+  }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeVideoModal();
+  }
+});
 </script>
 
 
