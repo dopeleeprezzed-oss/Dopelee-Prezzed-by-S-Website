@@ -816,6 +816,11 @@
         .product-content {
             padding: 30px;
         }
+        
+        /* Hide product content for video products - they use overlay instead */
+        .product-card:has(.video-play-overlay) .product-content {
+            display: none;
+        }
 
         .product-content h3 {
             font-size: 1.4rem;
@@ -2087,6 +2092,21 @@
   border-radius: 14px 14px 0 0;
 }
 
+/* Make video products compact and square - no wasted space */
+.product-card:has(.video-play-overlay) .product-image {
+  height: 350px;
+  border-radius: 20px;
+  border-bottom: none; /* Remove the border line */
+}
+
+/* Make the whole card fit the image perfectly - remove any padding */
+.product-card:has(.video-play-overlay) {
+  overflow: hidden;
+  padding: 0 !important;
+  height: 350px; /* Match the image height exactly */
+  border: 2px solid #2a2a2a; /* Keep just the outer border */
+}
+
 .product-video,
 .product-img {
   position: absolute;
@@ -2125,7 +2145,7 @@
   display: block;
 }
 
-/* === VIDEO PLAY OVERLAY === */
+/* === VIDEO PLAY OVERLAY - LUXURY GOLD === */
 .video-placeholder {
   width: 100%;
   height: 100%;
@@ -2136,113 +2156,267 @@
   position: absolute;
   inset: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.3);
+  gap: 12px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 100%);
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(2px);
 }
 
 .video-play-overlay:hover {
-  background: rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.9) 100%);
+  backdrop-filter: blur(3px);
 }
 
-.play-icon {
-  width: 70px;
-  height: 70px;
-  background: rgba(15, 240, 184, 0.9);
+.experience-text {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.7);
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(211,251,27,0.2));
+  padding: 6px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.experience-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 40px rgba(212, 175, 55, 0.8);
+  text-align: center;
+  padding: 0 15px;
+  margin-top: -5px;
+  letter-spacing: 1px;
+}
+
+.gold-play-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #d4af37 0%, #f5d76e 50%, #d4af37 100%);
+  border: none;
+  border-radius: 50px;
+  color: #000;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 15px rgba(212, 175, 55, 0.5),
+    0 0 30px rgba(212, 175, 55, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  animation: goldGlow 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+  margin-top: 5px;
+}
+
+.gold-play-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 
+    0 6px 25px rgba(212, 175, 55, 0.7),
+    0 0 50px rgba(212, 175, 55, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.gold-play-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: #000;
+}
+
+@keyframes goldGlow {
+  0%, 100% {
+    box-shadow: 
+      0 4px 15px rgba(212, 175, 55, 0.5),
+      0 0 30px rgba(212, 175, 55, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    box-shadow: 
+      0 4px 25px rgba(212, 175, 55, 0.7),
+      0 0 50px rgba(212, 175, 55, 0.5),
+      0 0 80px rgba(212, 175, 55, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* ========================================
+   IMAGE CAROUSEL STYLES
+======================================== */
+.product-carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.carousel-container {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  height: 100%;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(212, 175, 55, 0.8);
+  color: #d4af37;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(15, 240, 184, 0.4);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
-.video-play-overlay:hover .play-icon {
-  transform: scale(1.1);
-  box-shadow: 0 6px 30px rgba(15, 240, 184, 0.6);
+.carousel-nav:hover {
+  background: rgba(212, 175, 55, 0.9);
+  color: #000;
+  transform: translateY(-50%) scale(1.1);
 }
 
-.play-icon svg {
-  width: 30px;
-  height: 30px;
-  fill: #000;
-  margin-left: 4px;
+.carousel-nav-prev {
+  left: 10px;
 }
 
-/* === VIDEO MODAL === */
+.carousel-nav-next {
+  right: 10px;
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+  background: #d4af37;
+  width: 24px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+}
+
+.carousel-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
+  padding: 30px 20px 20px;
+  z-index: 5;
+}
+
+.carousel-overlay-text {
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 0 2px 15px rgba(0,0,0,0.9);
+  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(211,251,27,0.2));
+  padding: 6px 16px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  display: inline-block;
+  margin-bottom: 8px;
+}
+
+.carousel-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.9);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.play-icon {
+  display: none;
+}
+
+/* === VIDEO MODAL - LUXURY PRODUCT EXPERIENCE === */
 .video-modal {
   display: none;
   position: fixed;
   inset: 0;
   z-index: 10000;
-  background: rgba(0, 0, 0, 0.95);
+  background: rgba(0, 0, 0, 0.97);
   overflow-y: auto;
   padding: 20px;
 }
 
 .video-modal.active {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding-top: 40px;
-  padding-bottom: 40px;
 }
 
 .video-modal-content {
   position: relative;
-  max-width: 400px;
+  max-width: 1000px;
   width: 100%;
-  background: #0f1018;
-  border-radius: 16px;
+  background: linear-gradient(135deg, #0f1018 0%, #1a1b26 100%);
+  border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(15, 240, 184, 0.3);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-  margin: auto;
-}
-
-@media (max-width: 480px) {
-  .video-modal.active {
-    padding: 15px;
-    padding-top: 20px;
-    padding-bottom: 100px;
-    align-items: flex-start;
-  }
-  
-  .video-modal-content {
-    max-width: 100%;
-    border-radius: 12px;
-  }
-  
-  .video-wrapper {
-    aspect-ratio: 9/16;
-    max-height: 55vh;
-  }
-  
-  .video-modal-info {
-    padding: 15px 18px;
-  }
-  
-  .video-modal-info h3 {
-    font-size: 1.1rem;
-  }
-  
-  .video-modal-info .btn {
-    width: 100%;
-    text-align: center;
-    padding: 14px 20px;
-  }
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 
+    0 25px 80px rgba(0, 0, 0, 0.9),
+    0 0 60px rgba(212, 175, 55, 0.1);
+  display: flex;
+  flex-direction: row;
 }
 
 .video-modal-close {
   position: absolute;
   top: 15px;
   right: 15px;
-  width: 40px;
-  height: 40px;
-  background: rgba(0, 0, 0, 0.7);
-  border: none;
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   color: #fff;
   font-size: 24px;
@@ -2251,25 +2425,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .video-modal-close:hover {
-  background: rgba(253, 38, 253, 0.8);
+  background: rgba(212, 175, 55, 0.9);
+  color: #000;
+  border-color: #d4af37;
 }
 
-.video-modal video {
-  width: 100%;
-  display: block;
-  max-height: 70vh;
+/* LEFT SIDE - VIDEO */
+.modal-video-side {
+  flex: 0 0 55%;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .video-wrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 9/16;
+  max-height: 85vh;
   background: #000;
-  overflow: hidden;
 }
 
 .video-wrapper iframe {
@@ -2281,66 +2460,493 @@
   border: none;
 }
 
-.video-modal-info {
-  padding: 20px 25px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+/* MODAL CAROUSEL WRAPPER */
+.modal-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/16;
+  max-height: 85vh;
+  background: #000;
+  overflow: hidden;
 }
 
-.video-modal-info h3 {
-  color: #0ff0b8;
-  font-size: 1.3rem;
-  margin-bottom: 8px;
+.modal-carousel-wrapper .product-carousel {
+  width: 100%;
+  height: 100%;
 }
 
-.video-modal-info p {
-  color: #b9bed8;
-  font-size: 0.95rem;
-  margin-bottom: 15px;
+.modal-carousel-wrapper .carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.video-modal-info .price {
+/* RIGHT SIDE - PRODUCT INFO CARD */
+.modal-info-side {
+  flex: 0 0 45%;
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  overflow-y: auto;
+  max-height: 85vh;
+  background: linear-gradient(180deg, #0f1018 0%, #12131d 100%);
+}
+
+.modal-product-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
   color: #d4af37;
-  font-size: 1.2rem;
-  font-weight: 700;
-  margin-bottom: 15px;
+  margin: 0;
+  line-height: 1.3;
 }
 
-.video-modal-info .btn {
-  display: inline-block;
-  padding: 12px 30px;
-  background: linear-gradient(135deg, #0ff0b8, #0a95a8);
+.modal-product-price {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0ff0b8;
+  margin: 0;
+}
+
+.modal-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+}
+
+.modal-section-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #d4af37;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-section-title span {
+  font-size: 0.95rem;
+}
+
+/* USE CASES */
+.use-cases-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.use-case-tag {
+  padding: 6px 12px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  color: #e8e8ec;
+  transition: all 0.2s ease;
+}
+
+.use-case-tag:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: #d4af37;
+}
+
+/* MUSIC PLAYER */
+.music-player {
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.music-player-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.music-player-inner > :first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.music-play-btn {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #d4af37, #f5d76e);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+}
+
+.music-play-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
+}
+
+.music-play-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: #000;
+  margin-left: 2px;
+}
+
+.music-play-btn.playing svg {
+  margin-left: 0;
+}
+
+.music-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.music-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.music-artist {
+  font-size: 0.7rem;
+  color: #7a7f9a;
+}
+
+/* MUSIC PROGRESS BAR */
+.music-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.music-time {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  min-width: 35px;
+  text-align: center;
+}
+
+.music-progress-bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.music-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d4af37, #f5d76e);
+  width: 0%;
+  transition: width 0.1s linear;
+  border-radius: 2px;
+}
+
+/* WAVEFORM ANIMATION (keep for backward compatibility but hidden) */
+.waveform {
+  display: none;
+}
+
+.waveform-bar {
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(180deg, #d4af37, #f5d76e);
+  border-radius: 2px;
+  transform-origin: bottom;
+  transform: scaleY(0.3);
+}
+
+.waveform.playing .waveform-bar {
+  animation: waveformPulse 0.6s ease-in-out infinite;
+}
+
+.waveform-bar:nth-child(1) { animation-delay: 0s; }
+.waveform-bar:nth-child(2) { animation-delay: 0.08s; }
+.waveform-bar:nth-child(3) { animation-delay: 0.16s; }
+.waveform-bar:nth-child(4) { animation-delay: 0.24s; }
+.waveform-bar:nth-child(5) { animation-delay: 0.32s; }
+.waveform-bar:nth-child(6) { animation-delay: 0.24s; }
+.waveform-bar:nth-child(7) { animation-delay: 0.16s; }
+.waveform-bar:nth-child(8) { animation-delay: 0.08s; }
+
+@keyframes waveformPulse {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
+}
+
+/* SPECIAL FEATURES */
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: #b9bed8;
+}
+
+.feature-item span {
+  font-size: 0.9rem;
+}
+
+/* CTA BUTTON */
+.modal-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px 24px;
+  background: linear-gradient(135deg, #d4af37 0%, #f5d76e 50%, #d4af37 100%);
+  border: none;
+  border-radius: 12px;
   color: #000;
+  font-size: 0.95rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   text-decoration: none;
-  border-radius: 8px;
-  transition: transform 0.2s ease;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+  margin-top: auto;
 }
 
-.video-modal-info .btn:hover {
+.modal-cta-btn:hover {
   transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+}
+
+.modal-cta-btn span {
+  font-size: 1rem;
+}
+
+/* LEGACY ARCHIVE BUTTON */
+.legacy-archive-btn {
+  width: 100%;
+  padding: 12px 20px;
+  background: transparent;
+  border: 2px solid rgba(212, 175, 55, 0.5);
+  border-radius: 8px;
+  color: #d4af37;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.75rem;
+}
+
+.legacy-archive-btn:hover {
+  background: rgba(212, 175, 55, 0.1);
+  border-color: #d4af37;
+  transform: translateY(-1px);
+}
+
+/* MOBILE RESPONSIVE */
+@media (max-width: 900px) {
+  .video-modal-content {
+    flex-direction: column;
+    max-width: 450px;
+  }
+  
+  .modal-video-side {
+    flex: none;
+    width: 100%;
+  }
+  
+  .video-wrapper {
+    max-height: 50vh;
+  }
+  
+  .modal-info-side {
+    flex: none;
+    width: 100%;
+    max-height: none;
+    padding: 22px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .video-modal.active {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 15px;
+  }
+  
+  .video-modal-content {
+    border-radius: 16px;
+    max-width: 100%;
+  }
+  
+  .video-wrapper {
+    max-height: 45vh;
+  }
+  
+  .modal-info-side {
+    padding: 18px 16px;
+    gap: 14px;
+  }
+  
+  .modal-product-name {
+    font-size: 1.25rem;
+  }
+  
+  .modal-product-price {
+    font-size: 1.1rem;
+  }
+  
+  .use-case-tag {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+  }
 }
 
 </style>
 </head>
 <body>
 
-<!-- VIDEO MODAL -->
+<!-- VIDEO MODAL - LUXURY PRODUCT EXPERIENCE -->
 <div class="video-modal" id="videoModal">
   <div class="video-modal-content">
     <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
-    <div class="video-wrapper">
-      <iframe id="modalYouTube" 
-              src="" 
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen>
-      </iframe>
+    
+    <!-- LEFT SIDE - IMAGE CAROUSEL (REPLACES VIDEO) -->
+    <div class="modal-video-side">
+      <div class="modal-carousel-wrapper" id="modalCarouselWrapper">
+        <!-- Carousel will be populated dynamically -->
+        <div class="product-carousel" id="modalCarousel">
+          <div class="carousel-container" id="modalCarouselContainer">
+            <!-- Images loaded dynamically -->
+          </div>
+          
+          <button class="carousel-nav carousel-nav-prev" onclick="moveModalCarousel(-1)" style="display:none;" id="modalCarouselPrev">
+            ‹
+          </button>
+          <button class="carousel-nav carousel-nav-next" onclick="moveModalCarousel(1)" style="display:none;" id="modalCarouselNext">
+            ›
+          </button>
+          
+          <div class="carousel-dots" id="modalCarouselDots">
+            <!-- Dots loaded dynamically -->
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="video-modal-info">
-      <h3 id="modalProductName"></h3>
-      <p id="modalProductDesc"></p>
-      <p class="price" id="modalProductPrice"></p>
-      <a href="#" id="modalShopBtn" target="_blank" class="btn">Shop Now</a>
+    
+    <!-- RIGHT SIDE - PRODUCT INFO CARD -->
+    <div class="modal-info-side">
+      <h2 class="modal-product-name" id="modalProductName"></h2>
+      <p class="modal-product-price" id="modalProductPrice"></p>
+      
+      <div class="modal-divider"></div>
+      
+      <!-- MORE THAN A MEMORIAL -->
+      <div class="modal-section">
+        <div class="modal-section-title"><span id="modalSectionEmoji">🤎</span> <span id="modalSectionTitle">More Than A Memorial</span></div>
+        <div class="use-cases-list" id="modalUseCases">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+      
+      <div class="modal-divider"></div>
+      
+      <!-- MUSIC PLAYER -->
+      <div class="modal-section">
+        <div class="modal-section-title"><span>🎵</span> Listen to the Vibe</div>
+        <div class="music-player">
+          <div class="music-player-inner">
+            <div>
+              <button class="music-play-btn" id="musicPlayBtn" onclick="toggleMusic()">
+                <svg viewBox="0 0 24 24" id="musicPlayIcon"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="music-info">
+                <div class="music-title" id="musicTitle">Product Theme</div>
+                <div class="music-artist">Dopelee Prezzed by S™</div>
+              </div>
+            </div>
+            <div class="music-progress">
+              <div class="music-time" id="musicCurrentTime">0:00</div>
+              <div class="music-progress-bar" id="musicProgressBar">
+                <div class="music-progress-fill" id="musicProgressFill"></div>
+              </div>
+              <div class="music-time" id="musicDuration">0:00</div>
+            </div>
+          </div>
+        </div>
+        <audio id="modalAudio" src="" preload="auto"></audio>
+      </div>
+      
+      <div class="modal-divider"></div>
+      
+      <!-- WHAT MAKES US SPECIAL -->
+      <div class="modal-section">
+        <div class="modal-section-title"><span>💎</span> What Makes Us Special</div>
+        <div class="features-list">
+          <div class="feature-item"><span>🎨</span> Custom Designed Just For You</div>
+          <div class="feature-item"><span>💎</span> Premium Quality Materials</div>
+          <div class="feature-item"><span>⚡</span> Fast Turnaround</div>
+          <div class="feature-item"><span>🤎</span> Made With Love in Kansas City</div>
+        </div>
+      </div>
+      
+      <div class="modal-divider"></div>
+      
+      <!-- LEGACY ARCHIVE UPGRADE -->
+      <div class="modal-section">
+        <div class="modal-section-title"><span>📱</span> Preserve It Beyond the Moment</div>
+        <p style="font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 1rem; font-weight: 300; letter-spacing: 0.3px;">
+          Every keepsake tells a story. But too often, those stories get lost, tucked away in old phones, forgotten hard drives, or voicemails you replay until they fade.
+        </p>
+        <p style="font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 1rem; font-weight: 300; letter-spacing: 0.3px;">
+          The Legacy Archive Upgrade transforms this reality. We take your most meaningful moments and make them part of the gift itself. With a custom QR code seamlessly integrated into your keepsake, your memories aren't hidden anymore. They're unlocked, beautifully presented, and preserved for the next generation.
+        </p>
+        <div style="margin: 1.5rem 0; padding: 1.2rem; background: rgba(212, 175, 55, 0.08); border-left: 3px solid #d4af37; border-radius: 8px;">
+          <p style="font-size: 0.85rem; color: rgba(255,255,255,0.9); margin: 0 0 1rem 0; font-weight: 500; letter-spacing: 0.5px;">Choose Your Legacy Experience:</p>
+          
+          <div style="margin-bottom: 1rem;">
+            <p style="font-size: 0.82rem; color: #d4af37; margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Capsule • Starting at $45</p>
+            <p style="font-size: 0.78rem; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; font-weight: 300;">A QR-linked memory capsule where your photos, videos, or voice notes live forever. Compact, secure, and simple, yet powerful enough to bring back a voice, a smile, a moment, anytime you need it.</p>
+          </div>
+          
+          <div>
+            <p style="font-size: 0.82rem; color: #d4af37; margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Showcase • Starting at $100</p>
+            <p style="font-size: 0.78rem; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; font-weight: 300;">For stories too rich to keep in a folder. A private, custom-designed page that showcases your memories with images, video embeds, and text, beautifully laid out like a digital gallery. Expand any section for $45 each.</p>
+          </div>
+        </div>
+        <p style="font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-style: italic; font-weight: 300;">
+          Perfect for weddings, memorials, milestone birthdays, or corporate moments. Pass it down from one generation to the next. Design and tech integration included. Luxury presentation guaranteed.
+        </p>
+        <button class="legacy-archive-btn" onclick="window.open('https://square.link/u/uBvKtldH', '_blank')">
+          Explore Legacy Archive Upgrade
+        </button>
+      </div>
+      
+      <!-- CTA BUTTON -->
+      <a href="#" id="modalShopBtn" target="_blank" class="modal-cta-btn">
+        <span>🤎</span> START YOUR JOURNII
+      </a>
     </div>
   </div>
 </div>
@@ -2508,13 +3114,6 @@
             </div>
         </section>
 
-        <!-- PREVIEW TEMPLATES BUTTON -->
-        <div style="text-align: center; padding: 40px 20px; background: #000;">
-            <button onclick="openTemplateGallery()" style="padding: 18px 50px; background: linear-gradient(135deg, #0a95a8, #0ff0b8); color: #000; border: none; border-radius: 50px; font-weight: 700; font-size: 1.1rem; cursor: pointer; box-shadow: 0 8px 30px rgba(15, 240, 184, 0.4); transition: all 0.3s ease;">
-                👀 Preview Our Templates First
-            </button>
-        </div>
-
         <section class="luxury-products-section">
             <!-- Products loaded dynamically from Supabase -->
             <div class="products-grid" id="mainProductsGrid">
@@ -2527,7 +3126,298 @@
 
        <script>
 /* ═══════════════════════════════════════════════════════════════
-   SUPABASE PRODUCT LOADER FOR MAIN WEBSITE
+   🧠 SMART PRODUCT SYSTEM - AI-Powered & Self-Optimizing
+   WITH SUPABASE ANALYTICS TRACKING
+   ═══════════════════════════════════════════════════════════════ */
+
+// Supabase config (shared)
+const SUPABASE_CONFIG = {
+  url: 'https://dyehxtiozfwlexkbalvn.supabase.co',
+  key: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs'
+};
+
+// ========================================
+// SUPABASE ANALYTICS - Save Everything!
+// ========================================
+const SupabaseAnalytics = {
+  async trackEvent(eventType, data = {}) {
+    try {
+      const userId = localStorage.getItem('user_id');
+      const sessionId = localStorage.getItem('session_id') || this.generateSessionId();
+      
+      const eventData = {
+        user_id: userId,
+        event_type: eventType,
+        session_id: sessionId,
+        user_agent: navigator.userAgent,
+        is_returning: SmartUser.isReturningUser(),
+        has_purchased: SmartUser.hasPurchased(),
+        product_id: data.product_id || null,
+        product_name: data.product_name || null,
+        metadata: data
+      };
+      
+      const response = await fetch(
+        `${SUPABASE_CONFIG.url}/rest/v1/user_analytics`,
+        {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_CONFIG.key,
+            'Authorization': `Bearer ${SUPABASE_CONFIG.key}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify(eventData)
+        }
+      );
+      
+      if (response.ok) {
+        console.log(`📊 Tracked: ${eventType}`);
+      } else {
+        const error = await response.text();
+        console.warn('Tracking failed:', response.status, error);
+      }
+    } catch (err) {
+      console.warn('Analytics tracking failed:', err);
+      // Fail silently - don't break user experience
+    }
+  },
+  
+  async updateProductPerformance(productId, metricType) {
+    try {
+      // Increment the specific metric for today
+      const today = new Date().toISOString().split('T')[0];
+      
+      const response = await fetch(
+        `${SUPABASE_CONFIG.url}/rest/v1/rpc/increment_product_metric`,
+        {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_CONFIG.key,
+            'Authorization': `Bearer ${SUPABASE_CONFIG.key}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            p_product_id: productId,
+            p_date: today,
+            p_metric: metricType // 'views', 'clicks', 'modal_opens'
+          })
+        }
+      );
+      
+      console.log(`📈 Updated product performance: ${metricType}`);
+    } catch (err) {
+      console.warn('Performance tracking failed:', err);
+    }
+  },
+  
+  async trackABTest(productId, variant, overlayText, buttonText, action) {
+    try {
+      // Track A/B test impression or click
+      const response = await fetch(
+        `${SUPABASE_CONFIG.url}/rest/v1/rpc/track_ab_test`,
+        {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_CONFIG.key,
+            'Authorization': `Bearer ${SUPABASE_CONFIG.key}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            p_product_id: productId,
+            p_variant: variant,
+            p_overlay_text: overlayText,
+            p_button_text: buttonText,
+            p_action: action // 'impression' or 'click'
+          })
+        }
+      );
+      
+      console.log(`🧪 A/B Test tracked: ${variant} - ${action}`);
+    } catch (err) {
+      console.warn('A/B test tracking failed:', err);
+    }
+  },
+  
+  generateSessionId() {
+    const sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('session_id', sessionId);
+    return sessionId;
+  },
+  
+  async startSession() {
+    try {
+      const userId = localStorage.getItem('user_id');
+      const sessionId = this.generateSessionId();
+      
+      await fetch(
+        `${SUPABASE_CONFIG.url}/rest/v1/user_sessions`,
+        {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_CONFIG.key,
+            'Authorization': `Bearer ${SUPABASE_CONFIG.key}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=minimal'
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            session_id: sessionId,
+            device_type: /mobile/i.test(navigator.userAgent) ? 'mobile' : 'desktop',
+            browser: navigator.userAgent.split(' ').pop()
+          })
+        }
+      );
+      
+      console.log('🚀 Session started:', sessionId);
+    } catch (err) {
+      console.warn('Session start failed:', err);
+    }
+  }
+};
+
+// ========================================
+// SMART USER TRACKING (Enhanced with Supabase)
+// ========================================
+const SmartUser = {
+  init() {
+    if (!localStorage.getItem('user_id')) {
+      localStorage.setItem('user_id', 'user_' + Date.now());
+    }
+    this.trackVisit();
+    SupabaseAnalytics.startSession(); // Start Supabase session
+  },
+  
+  async trackVisit() {
+    const visits = parseInt(localStorage.getItem('visit_count') || '0');
+    localStorage.setItem('visit_count', visits + 1);
+    localStorage.setItem('last_visit', new Date().toISOString());
+    
+    // Save to Supabase
+    await SupabaseAnalytics.trackEvent('visit', {
+      visit_number: visits + 1
+    });
+  },
+  
+  async trackProductView(productId, productName) {
+    const views = JSON.parse(localStorage.getItem('product_views') || '{}');
+    views[productId] = (views[productId] || 0) + 1;
+    localStorage.setItem('product_views', JSON.stringify(views));
+    
+    console.log(`👁️ Tracked view: ${productName}`);
+    
+    // Save to Supabase
+    await SupabaseAnalytics.trackEvent('product_view', {
+      product_id: productId,
+      product_name: productName,
+      view_count: views[productId]
+    });
+    
+    // Update product performance
+    await SupabaseAnalytics.updateProductPerformance(productId, 'views');
+  },
+  
+  async trackProductClick(productId, productName, variant, overlayText, buttonText) {
+    console.log(`🖱️ Tracked click: ${productName}`);
+    
+    // Save to Supabase
+    await SupabaseAnalytics.trackEvent('product_click', {
+      product_id: productId,
+      product_name: productName,
+      variant: variant,
+      overlay_text: overlayText,
+      button_text: buttonText
+    });
+    
+    // Update product performance
+    await SupabaseAnalytics.updateProductPerformance(productId, 'clicks');
+    
+    // Track A/B test click
+    await SupabaseAnalytics.trackABTest(productId, variant, overlayText, buttonText, 'click');
+  },
+  
+  async trackModalOpen(productId, productName) {
+    console.log(`📹 Tracked modal open: ${productName}`);
+    
+    // Save to Supabase
+    await SupabaseAnalytics.trackEvent('modal_open', {
+      product_id: productId,
+      product_name: productName
+    });
+    
+    // Update product performance
+    await SupabaseAnalytics.updateProductPerformance(productId, 'modal_opens');
+  },
+  
+  hasPurchased() {
+    return localStorage.getItem('has_purchased') === 'true';
+  },
+  
+  isReturningUser() {
+    return parseInt(localStorage.getItem('visit_count') || '0') > 1;
+  },
+  
+  getMostViewedProducts() {
+    const views = JSON.parse(localStorage.getItem('product_views') || '{}');
+    return Object.entries(views).sort((a, b) => b[1] - a[1]).slice(0, 3);
+  }
+};
+
+// ========================================
+// SMART OVERLAY TEXT GENERATOR (Enhanced)
+// ========================================
+const SmartOverlay = {
+  getOverlayText(product, userContext) {
+    const productType = product.product_type || 'physical';
+    const category = product.category || 'keepsake';
+    const isReturning = userContext.isReturning;
+    const hasPurchased = userContext.hasPurchased;
+    
+    // LOCKED BRANDING - All products use consistent luxury messaging
+    // Top line: "Where Memory Lives"
+    // CTA: "Enter the Experience"
+    
+    // Returning customer gets different messaging
+    if (hasPurchased) {
+      return { prefix: "WHERE MEMORY LIVES", button: "CREATE ANOTHER", variant: "RETURNING_CUSTOMER" };
+    }
+    
+    // Default for ALL products - luxury gallery experience
+    return { prefix: "WHERE MEMORY LIVES", button: "ENTER THE EXPERIENCE", variant: "LUXURY_STANDARD" };
+  },
+  
+  getUseCases(product) {
+    const category = product.category || '';
+    const defaultCases = 'Weddings,Anniversaries,Graduations,Memorials,Celebrations';
+    
+    // Smart use case suggestions based on category
+    const smartCases = {
+      memorial: 'Memorials,Tributes,Celebrations of Life,Funeral Services,Family Gatherings',
+      celebration: 'Weddings,Anniversaries,Birthdays,Graduations,Retirements',
+      luxury: 'VIP Gifts,Corporate Events,High-End Memorials,Luxury Weddings,Estate Planning',
+      keepsake: 'Family Reunions,Baby Announcements,Milestone Birthdays,Legacy Building,Time Capsules'
+    };
+    
+    return product.use_cases || smartCases[category] || defaultCases;
+  }
+};
+
+// ========================================
+// SMART RECOMMENDATIONS ENGINE
+// ========================================
+const SmartRecommendations = {
+  getRelatedProducts(currentProduct, allProducts) {
+    // Simple recommendation logic
+    // Later can be replaced with AI-powered recommendations
+    return allProducts
+      .filter(p => p.id !== currentProduct.id)
+      .filter(p => p.category === currentProduct.category || p.product_type === currentProduct.product_type)
+      .slice(0, 3);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   SUPABASE PRODUCT LOADER FOR MAIN WEBSITE (SMART VERSION)
    ═══════════════════════════════════════════════════════════════ */
 (function () {
     const SUPABASE_URL = 'https://dyehxtiozfwlexkbalvn.supabase.co';
@@ -2559,47 +3449,77 @@
             // Clear loading state
             grid.innerHTML = '';
 
+            // Initialize smart user tracking
+            SmartUser.init();
+            const userContext = {
+              isReturning: SmartUser.isReturningUser(),
+              hasPurchased: SmartUser.hasPurchased()
+            };
+            
+            console.log('🧠 Smart System Active:', userContext);
+            
             // Render products
             products.forEach((product) => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
 
-                const isVideo =
-                    product.image_url &&
-                    product.image_url.toLowerCase().endsWith('.mp4');
+                // 🎨 Check if product has carousel images (for modal use)
+                const hasCarouselImages = product.product_images && product.product_images.length > 0;
+                
+                // 🧠 SMART: ALL products with experience type or youtube_id get overlay on FRONT
+                // Carousel only shows INSIDE modal when clicked
+                const shouldHaveOverlay = product.product_type === 'experience' || 
+                                         product.product_type === 'vip' ||
+                                         product.youtube_id ||
+                                         hasCarouselImages; // If has carousel, show overlay on front too!
 
-                // Check if product has a YouTube video
-                const hasYouTube = product.youtube_id ? true : false;
-
-                // Debug logging for video products
-                if (isVideo || hasYouTube) {
-                  console.log('🎥 Video product found:', product.name);
-                  if (hasYouTube) console.log('📺 YouTube ID:', product.youtube_id);
+                // Debug logging
+                if (hasCarouselImages) {
+                  console.log('🎨 Product has carousel for modal:', product.name, '| Images:', product.product_images.length);
+                }
+                if (shouldHaveOverlay) {
+                  console.log('🎥 Experience product found:', product.name, '| Type:', product.product_type);
                 }
 
-                // For video products: use thumbnail_url if exists
-                const thumbnailUrl = product.thumbnail_url || 
-                    (hasYouTube ? product.image_url : null);
+                // 🧠 SMART: Get dynamic overlay text
+                const overlayContent = SmartOverlay.getOverlayText(product, userContext);
+                const smartUseCases = SmartOverlay.getUseCases(product);
+                
+                // Use thumbnail or main image for front
+                const thumbnailUrl = product.thumbnail_url || product.image_url;
                 
                 card.innerHTML = `
                    
 <div class="product-image">
   ${
-    hasYouTube
+      shouldHaveOverlay
       ? `
-        <img src="${thumbnailUrl || product.image_url}" alt="${product.name}" class="product-img" />
+        <!-- OVERLAY (Front card - always single image) -->
+        <img src="${thumbnailUrl}" alt="${product.name}" class="product-img" />
         <div class="video-play-overlay" 
-             data-youtube-id="${product.youtube_id}"
+             data-youtube-id="${product.youtube_id || ''}"
              data-name="${product.name}"
              data-desc="${product.description || ''}"
              data-price="${product.price}"
-             data-link="${product.square_link}">
-          <div class="play-icon">
+             data-link="${product.square_link}"
+             data-image="${product.image_url}"
+             data-music="${product.music_url || ''}"
+             data-product-id="${product.id}"
+             data-variant="${overlayContent.variant}"
+             data-overlay-text="${overlayContent.prefix}"
+             data-button-text="${overlayContent.button}"
+             data-use-cases="${smartUseCases}"
+             data-product-images='${JSON.stringify(product.product_images || [])}'>
+          <div class="experience-text">${overlayContent.prefix}</div>
+          <div class="experience-title">${product.name}</div>
+          <button class="gold-play-btn">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
+            ${overlayContent.button}
+          </button>
         </div>
       `
       : `
+        <!-- REGULAR IMAGE (No overlay) -->
         <img
           src="${product.image_url}"
           alt="${product.name}"
@@ -2624,8 +3544,22 @@
             });
 
             console.log(
-                '✅ Main website: Loaded ' + products.length + ' products from Supabase'
+                '✅ Main website: Loaded ' + products.length + ' products from Supabase (SMART MODE)'
             );
+            
+            // 🧠 SMART: Track A/B test impressions after products are rendered
+            setTimeout(() => {
+                document.querySelectorAll('.video-play-overlay').forEach(overlay => {
+                    const productId = overlay.dataset.productId;
+                    const variant = overlay.dataset.variant;
+                    const overlayText = overlay.dataset.overlayText;
+                    const buttonText = overlay.dataset.buttonText;
+                    
+                    if (productId && variant) {
+                        SupabaseAnalytics.trackABTest(productId, variant, overlayText, buttonText, 'impression');
+                    }
+                });
+            }, 500); // Small delay to ensure DOM is ready
         } catch (err) {
             console.error('Error loading products:', err);
             loading.innerHTML = 'Error loading products. Please refresh.';
@@ -2641,59 +3575,331 @@
 })();
 
 // ═══════════════════════════════════════════════════════════════
-// VIDEO MODAL FUNCTIONS
+// VIDEO MODAL FUNCTIONS - LUXURY PRODUCT EXPERIENCE
 // ═══════════════════════════════════════════════════════════════
 
-function openVideoModal(youtubeId, name, description, price, shopLink) {
-  console.log('🎬 Opening video modal');
-  console.log('📹 YouTube ID:', youtubeId);
+function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl, useCases, productId, productImages = []) {
+  console.log('🎬 Opening modal');
+  console.log('🎨 Product Images:', productImages);
+  
+  // 🧠 SMART: Track modal open in Supabase
+  if (productId) {
+    SmartUser.trackModalOpen(productId, name);
+  }
   
   const modal = document.getElementById('videoModal');
-  const iframe = document.getElementById('modalYouTube');
+  if (!modal) {
+    console.error('❌ Modal element not found');
+    return;
+  }
   
-  // Set product info
-  document.getElementById('modalProductName').textContent = name;
-  document.getElementById('modalProductDesc').textContent = description || '';
-  document.getElementById('modalProductPrice').textContent = price;
-  document.getElementById('modalShopBtn').href = shopLink;
+  // Set product info with safety checks
+  const productNameEl = document.getElementById('modalProductName');
+  const productPriceEl = document.getElementById('modalProductPrice');
+  const shopBtnEl = document.getElementById('modalShopBtn');
+  
+  if (productNameEl) productNameEl.textContent = name;
+  if (productPriceEl) productPriceEl.textContent = price;
+  if (shopBtnEl) shopBtnEl.href = shopLink;
+  
+  // 🎯 Set per-product section title AND emoji
+  const sectionTitleEl = document.getElementById('modalSectionTitle');
+  const sectionEmojiEl = document.getElementById('modalSectionEmoji');
+  if (sectionTitleEl) {
+    const cleanName = name.trim(); // Remove any extra spaces
+    const sectionData = {
+      'Hand-Crafted Wood Keepsake': { title: 'Perfect For Life\'s Moments', emoji: '🌳' },
+      'Custom Slate Keepsake': { title: 'More Than A Memorial', emoji: '🤎' },
+      'Hand-Crafted Metal Ornaments': { title: 'Celebrate What Matters', emoji: '✨' },
+      'Glass Display Keepsake': { title: 'Honor Their Legacy', emoji: '💫' },
+      'Custom Photo Lookbook': { title: 'Tell Their Story', emoji: '📖' },
+      'Legacy Archive Upgrade': { title: 'Preserve Your Legacy', emoji: '🏛️' }
+    };
+    const data = sectionData[cleanName] || { title: 'More Than A Memorial', emoji: '🤎' };
+    console.log('🎯 Setting section for:', cleanName, '→', data.emoji, data.title);
+    sectionTitleEl.textContent = data.title;
+    if (sectionEmojiEl) sectionEmojiEl.textContent = data.emoji;
+  }
+  
+  // Set use cases
+  const useCasesContainer = document.getElementById('modalUseCases');
+  if (useCasesContainer) {
+    const useCasesArray = useCases ? useCases.split(',') : ['Weddings', 'Anniversaries', 'Graduations', 'Memorials', 'Celebrations'];
+    useCasesContainer.innerHTML = useCasesArray.map(uc => 
+      `<span class="use-case-tag">${uc.trim()}</span>`
+    ).join('');
+  }
+  
+  // Set music with safety checks
+  const audio = document.getElementById('modalAudio');
+  const musicTitle = document.getElementById('musicTitle');
+  
+  if (audio && musicTitle) {
+    if (musicUrl && musicUrl !== '') {
+      console.log('🎵 Loading music from:', musicUrl);
+      audio.src = musicUrl;
+      musicTitle.textContent = name + ' Theme';
+      
+      // Add error handling
+      audio.onerror = function() {
+        console.error('❌ Audio failed to load');
+        console.error('URL:', musicUrl);
+        if (musicTitle) musicTitle.textContent = 'Audio Unavailable';
+      };
+      
+      audio.onloadedmetadata = function() {
+        console.log('✅ Audio loaded successfully');
+        console.log('Duration:', audio.duration, 'seconds');
+        // Update duration display
+        const durationEl = document.getElementById('musicDuration');
+        if (durationEl) {
+          durationEl.textContent = formatTime(audio.duration);
+        }
+      };
+      
+      // Update progress bar as music plays
+      audio.ontimeupdate = function() {
+        const progressFill = document.getElementById('musicProgressFill');
+        const currentTimeEl = document.getElementById('musicCurrentTime');
+        
+        if (progressFill && audio.duration) {
+          const progress = (audio.currentTime / audio.duration) * 100;
+          progressFill.style.width = progress + '%';
+        }
+        
+        if (currentTimeEl) {
+          currentTimeEl.textContent = formatTime(audio.currentTime);
+        }
+      };
+    } else {
+      console.log('⚠️ No music URL provided');
+      musicTitle.textContent = 'Coming Soon';
+      audio.src = '';
+    }
+  }
+  
+  // Reset music player state
+  const musicPlayBtn = document.getElementById('musicPlayBtn');
+  const musicPlayIcon = document.getElementById('musicPlayIcon');
+  
+  if (musicPlayBtn) musicPlayBtn.classList.remove('playing');
+  if (musicPlayIcon) musicPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  
+  // Reset progress
+  const progressFill = document.getElementById('musicProgressFill');
+  const currentTimeEl = document.getElementById('musicCurrentTime');
+  if (progressFill) progressFill.style.width = '0%';
+  if (currentTimeEl) currentTimeEl.textContent = '0:00';
+  
+  // 🎨 NEW: Load carousel images (if provided) or fallback to single image
+  const carouselContainer = document.getElementById('modalCarouselContainer');
+  const carouselDots = document.getElementById('modalCarouselDots');
+  const prevBtn = document.getElementById('modalCarouselPrev');
+  const nextBtn = document.getElementById('modalCarouselNext');
+  
+  if (!carouselContainer) {
+    console.error('❌ Carousel container not found');
+    return;
+  }
+  
+  if (productImages && productImages.length > 0) {
+    console.log('✅ Loading carousel with', productImages.length, 'images');
+    
+    // Populate carousel slides
+    carouselContainer.innerHTML = productImages.map((img, index) => `
+      <div class="carousel-slide">
+        <img src="${img}" alt="${name} - Image ${index + 1}" />
+      </div>
+    `).join('');
+    
+    // Show/hide navigation based on number of images
+    if (productImages.length > 1) {
+      if (prevBtn) prevBtn.style.display = 'flex';
+      if (nextBtn) nextBtn.style.display = 'flex';
+      
+      // Populate dots
+      if (carouselDots) {
+        carouselDots.innerHTML = productImages.map((_, index) => `
+          <div class="carousel-dot ${index === 0 ? 'active' : ''}" onclick="goToModalSlide(${index})"></div>
+        `).join('');
+      }
+    } else {
+      if (prevBtn) prevBtn.style.display = 'none';
+      if (nextBtn) nextBtn.style.display = 'none';
+      if (carouselDots) carouselDots.innerHTML = '';
+    }
+    
+    // Reset carousel position
+    window.modalCarouselIndex = 0;
+    carouselContainer.style.transform = 'translateX(0)';
+  } else {
+    console.log('⚠️ No product images, using fallback single image');
+    // Fallback: show single product image
+    carouselContainer.innerHTML = `
+      <div class="carousel-slide">
+        <img src="${youtubeId}" alt="${name}" />
+      </div>
+    `;
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
+    if (carouselDots) carouselDots.innerHTML = '';
+  }
   
   // Show modal
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
   
-  // Set YouTube embed with autoplay and mute
-  iframe.src = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=1&rel=0&modestbranding=1&playsinline=1&loop=1&playlist=${youtubeId}`;
-  
-  console.log('✅ YouTube embed loaded');
+  console.log('✅ Modal loaded with carousel');
 }
 
 function closeVideoModal() {
   const modal = document.getElementById('videoModal');
-  const iframe = document.getElementById('modalYouTube');
+  const audio = document.getElementById('modalAudio');
   
-  // Stop video by clearing src
-  iframe.src = '';
+  if (!modal || !audio) return;
+  
+  // Stop music
+  audio.pause();
+  audio.currentTime = 0;
+  
+  // Reset music player UI
+  const musicPlayBtn = document.getElementById('musicPlayBtn');
+  const musicPlayIcon = document.getElementById('musicPlayIcon');
+  const progressFill = document.getElementById('musicProgressFill');
+  const currentTimeEl = document.getElementById('musicCurrentTime');
+  
+  if (musicPlayBtn) musicPlayBtn.classList.remove('playing');
+  if (musicPlayIcon) musicPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  if (progressFill) progressFill.style.width = '0%';
+  if (currentTimeEl) currentTimeEl.textContent = '0:00';
+  
+  // Reset carousel
+  window.modalCarouselIndex = 0;
   
   // Hide modal
   modal.classList.remove('active');
   document.body.style.overflow = '';
 }
 
-// Event delegation for video play overlays
+// Legacy Archive Upgrade Function
+function exploreArchive() {
+  // For now, show an alert (you can replace with actual archive page later)
+  alert('🗂️ Legacy Archive Upgrade\n\nSecurely store your keepsake design, photos, and details for:\n• Future reorders\n• Design updates\n• Sharing with family\n• Generational preservation\n\nContact us to learn more!');
+  
+  // Optional: Track this interaction
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'click', {
+      'event_category': 'Legacy Archive',
+      'event_label': 'Explore Archive'
+    });
+  }
+}
+
+// Modal Carousel Navigation Functions
+function moveModalCarousel(direction) {
+  const container = document.getElementById('modalCarouselContainer');
+  const dots = document.querySelectorAll('#modalCarouselDots .carousel-dot');
+  const totalSlides = dots.length;
+  
+  if (totalSlides === 0) return;
+  
+  window.modalCarouselIndex = window.modalCarouselIndex || 0;
+  window.modalCarouselIndex = (window.modalCarouselIndex + direction + totalSlides) % totalSlides;
+  
+  container.style.transform = `translateX(-${window.modalCarouselIndex * 100}%)`;
+  
+  // Update dots
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === window.modalCarouselIndex);
+  });
+}
+
+function goToModalSlide(slideIndex) {
+  const container = document.getElementById('modalCarouselContainer');
+  const dots = document.querySelectorAll('#modalCarouselDots .carousel-dot');
+  
+  window.modalCarouselIndex = slideIndex;
+  container.style.transform = `translateX(-${slideIndex * 100}%)`;
+  
+  // Update dots
+  dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === slideIndex);
+  });
+}
+
+// Music player toggle
+// Helper function to format time
+function formatTime(seconds) {
+  if (!seconds || isNaN(seconds)) return '0:00';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return mins + ':' + (secs < 10 ? '0' : '') + secs;
+}
+
+function toggleMusic() {
+  const audio = document.getElementById('modalAudio');
+  const btn = document.getElementById('musicPlayBtn');
+  const icon = document.getElementById('musicPlayIcon');
+  
+  if (!audio.src || audio.src === window.location.href) {
+    console.log('❌ No music loaded');
+    alert('No music available for this product yet.');
+    return;
+  }
+  
+  console.log('🎵 Audio src:', audio.src);
+  
+  if (audio.paused) {
+    console.log('▶️ Attempting to play...');
+    audio.play()
+      .then(() => {
+        console.log('✅ Audio playing');
+        btn.classList.add('playing');
+        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'; // Pause icon
+      })
+      .catch(error => {
+        console.error('❌ Audio play error:', error);
+        alert('Could not play audio. Please check:\n- File exists at URL\n- CORS is enabled\n- File format is supported');
+      });
+  } else {
+    audio.pause();
+    btn.classList.remove('playing');
+    icon.innerHTML = '<path d="M8 5v14l11-7z"/>'; // Play icon
+  }
+}
+
+// Event delegation for video play overlays (SMART VERSION WITH SUPABASE)
 document.addEventListener('click', function(e) {
-  // Check if clicked element or parent is video-play-overlay
+  // ⚠️ FIX: Only trigger on button click, not entire overlay
+  const button = e.target.closest('.gold-play-btn');
   const overlay = e.target.closest('.video-play-overlay');
-  if (overlay) {
+  
+  // Only proceed if button was clicked (not just overlay)
+  if (button && overlay) {
     const youtubeId = overlay.dataset.youtubeId;
     const name = overlay.dataset.name;
     const desc = overlay.dataset.desc;
     const price = overlay.dataset.price;
     const link = overlay.dataset.link;
+    const musicUrl = overlay.dataset.music;
+    const useCases = overlay.dataset.useCases;
+    const productId = overlay.dataset.productId;
+    const variant = overlay.dataset.variant;
+    const overlayText = overlay.dataset.overlayText;
+    const buttonText = overlay.dataset.buttonText;
+    const productImages = JSON.parse(overlay.dataset.productImages || '[]');
+    
+    // 🧠 SMART: Track product click with Supabase
+    if (productId) {
+      SmartUser.trackProductClick(productId, name, variant, overlayText, buttonText);
+    }
     
     console.log('🖱️ Play overlay clicked');
     console.log('📺 YouTube ID:', youtubeId);
+    console.log('🎨 Product Images:', productImages);
+    console.log('🧪 Variant:', variant);
     
-    openVideoModal(youtubeId, name, desc, price, link);
+    openVideoModal(youtubeId, name, desc, price, link, musicUrl, useCases, productId, productImages);
     return;
   }
   
@@ -3742,6 +4948,101 @@ document.addEventListener('keydown', function(e) {
 
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
+    
+    // ========================================
+    // IMAGE CAROUSEL FUNCTIONS
+    // ========================================
+    const carouselStates = {};
+    
+    function initCarousel(carouselId) {
+      if (!carouselStates[carouselId]) {
+        carouselStates[carouselId] = {
+          currentSlide: 0,
+          totalSlides: document.querySelectorAll(`#${carouselId} .carousel-slide`).length
+        };
+      }
+    }
+    
+    function moveCarousel(carouselId, direction) {
+      initCarousel(carouselId);
+      const state = carouselStates[carouselId];
+      const container = document.querySelector(`#${carouselId} .carousel-container`);
+      const dots = document.querySelectorAll(`#${carouselId} .carousel-dot`);
+      
+      state.currentSlide = (state.currentSlide + direction + state.totalSlides) % state.totalSlides;
+      
+      container.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+    }
+    
+    function goToSlide(carouselId, slideIndex) {
+      initCarousel(carouselId);
+      const state = carouselStates[carouselId];
+      const container = document.querySelector(`#${carouselId} .carousel-container`);
+      const dots = document.querySelectorAll(`#${carouselId} .carousel-dot`);
+      
+      state.currentSlide = slideIndex;
+      container.style.transform = `translateX(-${state.currentSlide * 100}%)`;
+      
+      // Update dots
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === state.currentSlide);
+      });
+    }
+    
+    // Auto-play carousel (optional)
+    function startCarouselAutoPlay(carouselId, interval = 4000) {
+      setInterval(() => {
+        moveCarousel(carouselId, 1);
+      }, interval);
+    }
+    
+    // Optional: Open product modal from carousel
+    function openProductModal(productId, name, desc, price, link, musicUrl, useCases) {
+      // For now, just open the product modal like video overlay does
+      // You can customize this later
+      const modal = document.getElementById('videoModal');
+      if (modal) {
+        document.getElementById('modalProductName').textContent = name;
+        document.getElementById('modalProductPrice').textContent = price;
+        document.getElementById('modalShopBtn').href = link;
+        
+        const useCasesContainer = document.getElementById('modalUseCases');
+        const useCasesArray = useCases ? useCases.split(',') : ['Weddings', 'Anniversaries', 'Graduations'];
+        useCasesContainer.innerHTML = useCasesArray.map(uc => 
+          `<span class="use-case-tag">${uc.trim()}</span>`
+        ).join('');
+        
+        // Set music if available
+        const musicSection = document.getElementById('musicSection');
+        const musicYouTube = document.getElementById('modalMusicYouTube');
+        if (musicUrl && musicUrl !== '') {
+          let videoId = musicUrl;
+          if (musicUrl.includes('youtube.com') || musicUrl.includes('youtu.be')) {
+            const urlParams = new URLSearchParams(new URL(musicUrl).search);
+            videoId = urlParams.get('v') || musicUrl.split('/').pop();
+          }
+          musicYouTube.src = `https://www.youtube.com/embed/${videoId}?modestbranding=1&rel=0`;
+          musicSection.style.display = 'block';
+        } else {
+          musicSection.style.display = 'none';
+        }
+        
+        // Show modal
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Track modal open
+        if (productId && typeof SmartUser !== 'undefined') {
+          SmartUser.trackModalOpen(productId, name);
+        }
+      }
+    }
+    
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
