@@ -2895,7 +2895,7 @@
             </div>
           </div>
         </div>
-        <audio id="modalAudio" src="" preload="auto"></audio>
+        <audio id="modalAudio" src="" preload="metadata" playsinline webkit-playsinline></audio>
       </div>
       
       <div class="modal-divider"></div>
@@ -3848,19 +3848,39 @@ function toggleMusic() {
   }
   
   console.log('🎵 Audio src:', audio.src);
+  console.log('📱 User Agent:', navigator.userAgent);
   
   if (audio.paused) {
     console.log('▶️ Attempting to play...');
-    audio.play()
-      .then(() => {
-        console.log('✅ Audio playing');
-        btn.classList.add('playing');
-        icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'; // Pause icon
-      })
-      .catch(error => {
-        console.error('❌ Audio play error:', error);
-        alert('Could not play audio. Please check:\n- File exists at URL\n- CORS is enabled\n- File format is supported');
-      });
+    
+    // Mobile fix: Load the audio first
+    audio.load();
+    
+    // Attempt to play with mobile-specific handling
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          console.log('✅ Audio playing');
+          btn.classList.add('playing');
+          icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>'; // Pause icon
+        })
+        .catch(error => {
+          console.error('❌ Audio play error:', error);
+          console.error('Error name:', error.name);
+          console.error('Error message:', error.message);
+          
+          // More helpful mobile error message
+          if (error.name === 'NotAllowedError') {
+            alert('🎵 Audio Blocked\n\nYour device requires you to interact first.\n\nTap the play button again to start music.');
+          } else if (error.name === 'NotSupportedError') {
+            alert('🎵 Audio Format Issue\n\nThis audio format may not be supported on your device.\n\nTry using headphones or external speakers.');
+          } else {
+            alert('Could not play audio.\n\nError: ' + error.message + '\n\nTry:\n- Checking your volume\n- Enabling sound permissions\n- Using headphones');
+          }
+        });
+    }
   } else {
     audio.pause();
     btn.classList.remove('playing');
