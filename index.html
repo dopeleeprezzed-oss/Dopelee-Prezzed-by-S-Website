@@ -2172,28 +2172,41 @@
 }
 
 .experience-text {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 700;
   color: #fff;
   text-transform: uppercase;
   letter-spacing: 3px;
-  text-shadow: 0 2px 15px rgba(0,0,0,0.9), 0 0 30px rgba(0,0,0,0.7);
-  background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(211,251,27,0.2));
-  padding: 6px 16px;
-  border-radius: 20px;
-  backdrop-filter: blur(10px);
+  text-shadow: 
+    0 2px 4px rgba(0,0,0,1),
+    0 4px 8px rgba(0,0,0,0.9),
+    0 0 20px rgba(0,0,0,0.8),
+    0 0 40px rgba(212,175,55,0.6);
+  background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(0,0,0,0.6));
+  padding: 8px 20px;
+  border-radius: 25px;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212,175,55,0.3);
 }
 
 .experience-title {
   font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.9), 0 0 40px rgba(212, 175, 55, 0.8);
+  text-shadow: 
+    0 2px 4px rgba(0,0,0,1),
+    0 4px 8px rgba(0,0,0,0.9),
+    0 6px 12px rgba(0,0,0,0.8),
+    0 0 30px rgba(212, 175, 55, 0.9),
+    0 0 60px rgba(0,0,0,0.7);
   text-align: center;
-  padding: 0 15px;
+  padding: 8px 20px;
   margin-top: -5px;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
 }
 
 .gold-play-btn {
@@ -2762,6 +2775,34 @@
   background: rgba(212, 175, 55, 0.1);
   border-color: #d4af37;
   transform: translateY(-1px);
+}
+
+/* TABLET / IPAD RESPONSIVE */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .video-modal-content {
+    max-width: 90vw;
+    max-height: 85vh;
+  }
+  
+  .modal-video-side {
+    flex: 1.2;
+  }
+  
+  .modal-info-side {
+    flex: 1;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
+  
+  .carousel-container {
+    height: 100%;
+  }
+  
+  .carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 }
 
 /* MOBILE RESPONSIVE */
@@ -3635,16 +3676,23 @@ function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl,
   const musicTitle = document.getElementById('musicTitle');
   
   if (audio && musicTitle) {
-    if (musicUrl && musicUrl !== '') {
+    if (musicUrl && musicUrl !== '' && musicUrl !== 'null' && musicUrl !== 'undefined') {
       console.log('🎵 Loading music from:', musicUrl);
       audio.src = musicUrl;
       musicTitle.textContent = name + ' Theme';
+      
+      // Show music section
+      const musicSection = document.querySelector('.modal-section:has(#musicPlayBtn)');
+      if (musicSection) musicSection.style.display = 'block';
       
       // Add error handling
       audio.onerror = function() {
         console.error('❌ Audio failed to load');
         console.error('URL:', musicUrl);
-        if (musicTitle) musicTitle.textContent = 'Audio Unavailable';
+        if (musicTitle) musicTitle.textContent = 'Theme Song Coming Soon';
+        // Hide play button if audio fails
+        const musicPlayBtn = document.getElementById('musicPlayBtn');
+        if (musicPlayBtn) musicPlayBtn.style.opacity = '0.5';
       };
       
       audio.onloadedmetadata = function() {
@@ -3655,6 +3703,9 @@ function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl,
         if (durationEl) {
           durationEl.textContent = formatTime(audio.duration);
         }
+        // Ensure play button is visible
+        const musicPlayBtn = document.getElementById('musicPlayBtn');
+        if (musicPlayBtn) musicPlayBtn.style.opacity = '1';
       };
       
       // Update progress bar as music plays
