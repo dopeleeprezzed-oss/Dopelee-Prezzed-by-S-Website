@@ -1231,8 +1231,8 @@
   <div class="marquee-banner">
     <div class="marquee-track">
       <span class="marquee-content">
-         Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond  &nbsp;&nbsp;&nbsp;&nbsp;
-         Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond  &nbsp;&nbsp;&nbsp;&nbsp;
+        🇺🇸 Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond 🇺🇸 &nbsp;&nbsp;&nbsp;&nbsp;
+        🇺🇸 Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond 🇺🇸 &nbsp;&nbsp;&nbsp;&nbsp;
       </span>
     </div>
   </div>
@@ -1375,96 +1375,173 @@
     // ═══════════════════════════════════════════════════════════════
     // LOAD PRODUCTS - COMPACT OVERLAY CARDS (MATCHES MAIN SITE)
     // ═══════════════════════════════════════════════════════════════
+    // ═══════════════════════════════════════════════════════════════
+    // FALLBACK PRODUCTS (when API is unavailable)
+    // ═══════════════════════════════════════════════════════════════
+    const FALLBACK_PRODUCTS = [
+      {
+        id: 'wood-keepsake',
+        name: 'Hand-Crafted Wood Keepsake',
+        price: 'Starting at $75',
+        image_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/wood-keepsake.jpg',
+        thumbnail_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/wood-keepsake.jpg',
+        square_link: 'https://square.link/u/wood',
+        use_cases: 'Weddings,Anniversaries,Graduations,Memorials,Celebrations',
+        description: 'Beautiful hand-crafted wood keepsakes to preserve your precious memories.'
+      },
+      {
+        id: 'slate-keepsake',
+        name: 'Custom Slate Keepsake',
+        price: 'Starting at $65',
+        image_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/slate-keepsake.jpg',
+        thumbnail_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/slate-keepsake.jpg',
+        square_link: 'https://square.link/u/slate',
+        use_cases: 'Memorials,Celebrations,Pet Memorials,Tributes',
+        description: 'Elegant slate keepsakes engraved with your cherished memories.'
+      },
+      {
+        id: 'metal-ornaments',
+        name: 'Hand-Crafted Metal Ornaments',
+        price: 'Starting at $45',
+        image_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/metal-ornament.jpg',
+        thumbnail_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/metal-ornament.jpg',
+        square_link: 'https://square.link/u/metal',
+        use_cases: 'Holidays,Celebrations,Memorials,Gifts',
+        description: 'Premium metal ornaments crafted with care and precision.'
+      },
+      {
+        id: 'glass-display',
+        name: 'Glass Display Keepsake',
+        price: 'Starting at $85',
+        image_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/glass-display.jpg',
+        thumbnail_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/glass-display.jpg',
+        square_link: 'https://square.link/u/glass',
+        use_cases: 'Memorials,Tributes,Celebrations,Legacy',
+        description: 'Stunning glass display pieces to honor and showcase your memories.'
+      },
+      {
+        id: 'photo-lookbook',
+        name: 'Custom Photo Lookbook',
+        price: 'Starting at $55',
+        image_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/photo-lookbook.jpg',
+        thumbnail_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/photo-lookbook.jpg',
+        square_link: 'https://square.link/u/lookbook',
+        use_cases: 'Family History,Celebrations,Memorials,Storytelling',
+        description: 'Custom photo lookbooks that tell your unique story.'
+      },
+      {
+        id: 'legacy-archive',
+        name: 'Legacy Archive Upgrade',
+        price: 'Starting at $45',
+        image_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/legacy-archive.jpg',
+        thumbnail_url: 'https://dopeleeprezzed-oss.github.io/dopelee-form/images/legacy-archive.jpg',
+        square_link: 'https://square.link/u/uBvKtldH',
+        use_cases: 'Digital Preservation,QR Memorial,Legacy,Forever Access',
+        description: 'Transform your keepsake with QR-linked digital memories.'
+      }
+    ];
+
     async function loadProducts() {
       const grid = document.getElementById('productsGrid');
       
       try {
+        // Add timeout to prevent hanging
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 second timeout
+        
         const response = await fetch(`${SUPABASE_URL}/rest/v1/products?is_active=eq.true&order=sort_order.asc`, {
           headers: {
             'apikey': SUPABASE_ANON_KEY,
             'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-          }
+          },
+          signal: controller.signal
         });
+        
+        clearTimeout(timeoutId);
         
         const products = await response.json();
         
         if (!products || products.length === 0 || products.error) {
-          grid.innerHTML = '<p style="text-align:center; color:#888;">Products coming soon...</p>';
-          showContent();
+          console.log('⚠️ No products from API, using fallback products');
+          renderProducts(FALLBACK_PRODUCTS, grid);
           return;
         }
         
-        grid.innerHTML = '';
-        
-        // Store products globally so we can access them by ID
-        window.productsData = {};
-        
-        products.forEach(product => {
-          // Use PX price if available, otherwise regular price
-          const displayPrice = product.px_price || product.price;
-          
-          // Build order link with partner tracking
-          const orderLink = partnerId 
-            ? `${product.square_link}?partner=${partnerId}` 
-            : product.square_link;
-          
-          // Get use cases
-          const useCases = product.use_cases || 'Weddings,Anniversaries,Graduations,Memorials,Celebrations';
-          
-          // Use thumbnail or main image
-          const imageUrl = product.thumbnail_url || product.image_url;
-          
-          // Store product data globally for easy access
-          window.productsData[product.id] = {
-            imageUrl: product.image_url,
-            name: product.name,
-            description: product.description || '',
-            price: displayPrice,
-            shopLink: orderLink,
-            musicUrl: product.music_url || '',
-            useCases: useCases,
-            productId: product.id,
-            productImages: product.product_images || []
-          };
-          
-          const card = document.createElement('div');
-          card.className = 'product-card';
-          
-          card.innerHTML = `
-            <img src="${imageUrl}" alt="${product.name}" class="product-bg">
-            <div class="product-overlay">
-              <div class="product-badge">WHERE MEMORY LIVES</div>
-              <div class="product-name">${product.name}</div>
-              <button class="product-enter-btn" data-product-id="${product.id}">
-                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                ENTER THE EXPERIENCE
-              </button>
-            </div>
-          `;
-          
-          grid.appendChild(card);
-        });
-        
-        // Add click listeners to all buttons
-        document.querySelectorAll('.product-enter-btn').forEach(btn => {
-          btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const productId = this.getAttribute('data-product-id');
-            const p = window.productsData[productId];
-            if (p) {
-              openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages);
-            }
-          });
-        });
-        
-        console.log(`✅ PX Landing: Loaded ${products.length} products (compact overlay cards)`);
-        showContent();
+        renderProducts(products, grid);
         
       } catch (err) {
         console.error('Error loading products:', err);
-        grid.innerHTML = '<p style="text-align:center; color:#ff6666;">Error loading products. Please refresh.</p>';
-        showContent();
+        console.log('⚠️ API error, using fallback products');
+        renderProducts(FALLBACK_PRODUCTS, grid);
       }
+    }
+    
+    function renderProducts(products, grid) {
+      grid.innerHTML = '';
+      
+      // Store products globally so we can access them by ID
+      window.productsData = {};
+      
+      products.forEach(product => {
+        // Use PX price if available, otherwise regular price
+        const displayPrice = product.px_price || product.price;
+        
+        // Build order link with partner tracking
+        const orderLink = partnerId 
+          ? `${product.square_link}?partner=${partnerId}` 
+          : product.square_link;
+        
+        // Get use cases
+        const useCases = product.use_cases || 'Weddings,Anniversaries,Graduations,Memorials,Celebrations';
+        
+        // Use thumbnail or main image
+        const imageUrl = product.thumbnail_url || product.image_url;
+        
+        // Store product data globally for easy access
+        window.productsData[product.id] = {
+          imageUrl: product.image_url,
+          name: product.name,
+          description: product.description || '',
+          price: displayPrice,
+          shopLink: orderLink,
+          musicUrl: product.music_url || '',
+          useCases: useCases,
+          productId: product.id,
+          productImages: product.product_images || []
+        };
+        
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        
+        card.innerHTML = `
+          <img src="${imageUrl}" alt="${product.name}" class="product-bg" onerror="this.src='https://via.placeholder.com/400x400/1a1a1a/d4af37?text=${encodeURIComponent(product.name)}'">
+          <div class="product-overlay">
+            <div class="product-badge">WHERE MEMORY LIVES</div>
+            <div class="product-name">${product.name}</div>
+            <button class="product-enter-btn" data-product-id="${product.id}">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              ENTER THE EXPERIENCE
+            </button>
+          </div>
+        `;
+        
+        grid.appendChild(card);
+      });
+      
+      // Add click listeners to all buttons
+      document.querySelectorAll('.product-enter-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const productId = this.getAttribute('data-product-id');
+          const p = window.productsData[productId];
+          if (p) {
+            openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages);
+          }
+        });
+      });
+      
+      console.log(`✅ PX Landing: Loaded ${products.length} products`);
+      showContent();
     }
     
     // ═══════════════════════════════════════════════════════════════
@@ -1665,4 +1742,19 @@
     }
     
     async function init() {
-      console.log('🏠 PX Legacy Lounge Loading...', partner
+      console.log('🏠 PX Legacy Lounge Loading...', partnerId ? `Partner: ${partnerId}` : 'No partner');
+      
+      // Load partner data if partner ID exists
+      if (partnerId) {
+        await loadPartnerData();
+      }
+      
+      // Load products
+      await loadProducts();
+    }
+    
+    // Start the app
+    init();
+  </script>
+</body>
+</html>
