@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Legacy Lounge™ | Dopelee Prezzed by S™</title>
   
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --bg-primary: #000;
@@ -12,9 +15,10 @@
       --bg-card: #1a1a1a;
       --text-primary: #fff;
       --text-muted: #b8bac0;
-      --accent-gold: #d3fb1b;
+      --accent-gold: #d4af37;
       --accent-cyan: #0ff0b8;
       --accent-blue: #0a95a8;
+      --accent-lime: #d3fb1b;
     }
     
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,17 +31,167 @@
       min-height: 100vh;
     }
     
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
     
+    @keyframes goldGlow {
+      0%, 100% {
+        box-shadow: 
+          0 4px 15px rgba(212, 175, 55, 0.5),
+          0 0 30px rgba(212, 175, 55, 0.3),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      }
+      50% {
+        box-shadow: 
+          0 4px 25px rgba(212, 175, 55, 0.7),
+          0 0 50px rgba(212, 175, 55, 0.5),
+          0 0 80px rgba(212, 175, 55, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      }
+    }
+    
+    /* TOP BAR - BOLD & PROUD */
+    .top-bar {
+      background: linear-gradient(180deg, #1a1508 0%, #0a0a00 100%);
+      padding: 20px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 3px solid var(--accent-gold);
+      flex-wrap: wrap;
+      gap: 15px;
+      position: relative;
+    }
+    
+    .top-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-gold), #f5d76e, var(--accent-cyan), #f5d76e, var(--accent-gold));
+    }
+    
+    .top-bar-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    
+    .top-bar-brand {
+      color: #f5d76e;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-shadow: 
+        0 0 20px rgba(245, 215, 110, 0.8),
+        0 0 40px rgba(212, 175, 55, 0.6),
+        0 2px 4px rgba(0,0,0,0.8);
+    }
+    
+    .top-bar-sub {
+      color: var(--accent-gold);
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 500;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+    
+    .top-bar-right {
+      text-align: right;
+    }
+    
+    .top-bar-military {
+      color: #f5d76e;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      text-shadow: 
+        0 0 15px rgba(245, 215, 110, 0.7),
+        0 0 30px rgba(212, 175, 55, 0.5);
+      padding: 10px 20px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(245, 215, 110, 0.1));
+      border: 2px solid var(--accent-gold);
+      border-radius: 6px;
+    }
+    
+    /* SCROLLING MARQUEE BANNER - BOLD */
+    .marquee-banner {
+      background: linear-gradient(90deg, #0d0a00, #1a1508, #0d0a00);
+      border-bottom: 3px solid var(--accent-gold);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 14px 0;
+    }
+    
+    .marquee-track {
+      display: inline-block;
+      animation: marqueeScroll 30s linear infinite;
+    }
+    
+    .marquee-content {
+      color: #f5d76e;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-shadow: 0 0 10px rgba(245, 215, 110, 0.4);
+    }
+    
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px 20px;
+      }
+      
+      .top-bar-left {
+        align-items: center;
+      }
+      
+      .top-bar-brand {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+      }
+      
+      .top-bar-sub {
+        font-size: 0.9rem;
+      }
+      
+      .top-bar-right {
+        text-align: center;
+      }
+      
+      .top-bar-military {
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        padding: 8px 15px;
+      }
+      
+      .marquee-content {
+        font-size: 0.85rem;
+      }
+      
+      .header-message h2 {
+        font-size: 1.5rem !important;
+      }
+      
+      .header-message p {
+        font-size: 1rem !important;
+      }
+    }
+
     /* ANIMATED HEADER */
     .header {
       background: #000;
@@ -45,11 +199,10 @@
       text-align: center;
       position: relative;
       overflow: hidden;
-      border-top: 2px solid #d4af37;
-      border-bottom: 2px solid #d4af37;
+      border-top: 2px solid var(--accent-gold);
+      border-bottom: 2px solid var(--accent-gold);
     }
     
-    /* Blue Bling Bubbles Background */
     .header::after {
       content: '';
       position: absolute;
@@ -70,7 +223,6 @@
       50% { opacity: 1; transform: scale(1.05); }
     }
     
-    /* Floating Colored Bubbles */
     .bubble {
       position: absolute;
       border-radius: 50%;
@@ -82,20 +234,10 @@
     }
     
     @keyframes bubbleRise {
-      0% {
-        transform: translateY(100vh) scale(0);
-        opacity: 0;
-      }
-      10% {
-        opacity: 0.6;
-      }
-      90% {
-        opacity: 0.3;
-      }
-      100% {
-        transform: translateY(-100px) scale(1);
-        opacity: 0;
-      }
+      0% { transform: translateY(100vh) scale(0); opacity: 0; }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-100px) scale(1); opacity: 0; }
     }
     
     .header .bubble:nth-child(1) { left: 10%; width: 40px; height: 40px; background: #0ff0b8; animation-delay: 0s; animation-duration: 10s; }
@@ -115,9 +257,44 @@
     }
     
     .logo-container {
-      margin-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
       position: relative;
       z-index: 2;
+    }
+    
+    .logo-container img {
+      width: 180px;
+      height: auto;
+      animation: logoFloat 4s ease-in-out infinite, logoGlow 3s ease-in-out infinite;
+    }
+    
+    /* HEADER MESSAGE - Preserving What Matters Most */
+    .header-message {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .header-message h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #f5d76e, var(--accent-gold), var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: none;
+    }
+    
+    .header-message p {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto;
     }
     
     .logo-container img {
@@ -139,12 +316,12 @@
     }
     
     .header .tagline {
-      color: #0ff0b8;
+      color: var(--accent-gold);
       font-size: 1.2rem;
       font-weight: 600;
       font-style: italic;
       letter-spacing: 1px;
-      text-shadow: 0 2px 15px rgba(211, 251, 27, 0.4);
+      text-shadow: 0 2px 15px rgba(212, 175, 55, 0.4);
       position: relative;
       z-index: 2;
     }
@@ -154,7 +331,7 @@
       background: var(--bg-card);
       padding: 2rem;
       text-align: center;
-      border-bottom: 2px solid rgba(211, 251, 27, 0.3);
+      border-bottom: 2px solid rgba(212, 175, 55, 0.3);
       animation: fadeIn 0.6s ease;
     }
     
@@ -184,7 +361,7 @@
     }
     
     .intro-section h3 {
-      background: linear-gradient(90deg, #0a95a8, #0ff0b8, #d3fb1b);
+      background: linear-gradient(90deg, var(--accent-gold), #f5d76e, var(--accent-gold));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -201,182 +378,550 @@
       line-height: 1.8;
     }
     
-    /* PRODUCTS GRID */
+    /* ═══════════════════════════════════════════════════════════════
+       PRODUCT CARDS - COMPACT OVERLAY STYLE (MATCHES MAIN SITE)
+    ═══════════════════════════════════════════════════════════════ */
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
       margin-bottom: 3rem;
     }
     
     .product-card {
-      background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+      position: relative;
+      height: 380px;
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid rgba(15, 240, 184, 0.2);
+      border: 2px solid rgba(212, 175, 55, 0.3);
       transition: all 0.3s ease;
       animation: fadeIn 1s ease;
     }
     
     .product-card:hover {
-      border-color: rgba(15, 240, 184, 0.6);
-      transform: translateY(-8px);
-      box-shadow: 0 15px 40px rgba(15, 240, 184, 0.3);
+      border-color: rgba(212, 175, 55, 0.6);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
     }
     
-    .product-image {
+    .product-card .product-bg {
+      position: absolute;
+      inset: 0;
       width: 100%;
-      height: 250px;
+      height: 100%;
       object-fit: cover;
-      border-bottom: 1px solid rgba(15, 240, 184, 0.2);
-      background: #111;
     }
     
-    .product-content {
-      padding: 1.5rem;
+    /* Dark gradient overlay on the image */
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+      z-index: 1;
     }
     
-    .product-content h4 {
-      color: #d3fb1b;
-      font-size: 1.3rem;
-      margin-bottom: 0.5rem;
+    /* Content overlay - NOT clickable, just visual */
+    .product-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      z-index: 2;
+      pointer-events: none; /* Overlay itself not clickable */
+    }
+    
+    /* "WHERE MEMORY LIVES" badge */
+    .product-badge {
+      font-size: 0.7rem;
       font-weight: 700;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      background: rgba(0,0,0,0.7);
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      backdrop-filter: blur(10px);
     }
     
-    .product-content p {
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-    
-    .product-price {
-      color: #0ff0b8;
-      font-size: 1.1rem;
+    /* Product name */
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
       font-weight: 600;
-      margin-bottom: 1rem;
+      color: #fff;
+      text-align: center;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+      padding: 0 20px;
     }
     
-    .btn-order {
+    /* "ENTER THE EXPERIENCE" button - ONLY clickable element */
+    .product-enter-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: linear-gradient(135deg, #d4af37 0%, #f5d76e 50%, #d4af37 100%);
+      border: none;
+      border-radius: 50px;
+      color: #000;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      pointer-events: auto; /* Button IS clickable */
+      box-shadow: 
+        0 4px 15px rgba(212, 175, 55, 0.5),
+        0 0 30px rgba(212, 175, 55, 0.3);
+      animation: goldGlow 2s ease-in-out infinite;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    .product-enter-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 
+        0 6px 25px rgba(212, 175, 55, 0.7),
+        0 0 50px rgba(212, 175, 55, 0.5);
+    }
+    
+    .product-enter-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: #000;
+    }
+
+    /* ═══════════════════════════════════════════════════════════════
+       VIDEO MODAL - LUXURY PRODUCT EXPERIENCE
+    ═══════════════════════════════════════════════════════════════ */
+    .video-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(0, 0, 0, 0.97);
+      overflow-y: auto;
+      padding: 20px;
+    }
+
+    .video-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-modal-content {
+      position: relative;
+      max-width: 1000px;
+      width: 100%;
+      background: linear-gradient(135deg, #0f1018 0%, #1a1b26 100%);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 
+        0 25px 80px rgba(0, 0, 0, 0.9),
+        0 0 60px rgba(212, 175, 55, 0.1);
+      display: flex;
+      flex-direction: row;
+    }
+
+    .video-modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 44px;
+      height: 44px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .video-modal-close:hover {
+      background: rgba(212, 175, 55, 0.9);
+      color: #000;
+      border-color: var(--accent-gold);
+    }
+
+    /* LEFT SIDE - IMAGE CAROUSEL */
+    .modal-video-side {
+      flex: 0 0 55%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-carousel-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9/16;
+      max-height: 85vh;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .product-carousel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .carousel-container {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      height: 100%;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.6);
+      border: 2px solid rgba(212, 175, 55, 0.8);
+      color: var(--accent-gold);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      font-size: 20px;
+    }
+
+    .carousel-nav:hover {
+      background: rgba(212, 175, 55, 0.9);
+      color: #000;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-nav-prev { left: 10px; }
+    .carousel-nav-next { right: 10px; }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(212, 175, 55, 0.6);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--accent-gold);
+      width: 24px;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+    }
+
+    /* RIGHT SIDE - PRODUCT INFO CARD */
+    .modal-info-side {
+      flex: 0 0 45%;
+      padding: 30px 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      overflow-y: auto;
+      max-height: 85vh;
+      background: linear-gradient(180deg, #0f1018 0%, #12131d 100%);
+    }
+
+    .modal-product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .modal-product-price {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin: 0;
+    }
+
+    .modal-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
+    }
+
+    .modal-section-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--accent-gold);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .modal-section-title span {
+      font-size: 0.95rem;
+    }
+
+    .use-cases-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .use-case-tag {
+      padding: 6px 12px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 20px;
+      font-size: 0.75rem;
+      color: #e8e8ec;
+      transition: all 0.2s ease;
+    }
+
+    .use-case-tag:hover {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: var(--accent-gold);
+    }
+
+    /* MUSIC PLAYER */
+    .music-player {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .music-player-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .music-player-inner > :first-child {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .music-play-btn {
+      width: 42px;
+      height: 42px;
+      background: linear-gradient(135deg, var(--accent-gold), #f5d76e);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+    }
+
+    .music-play-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
+    }
+
+    .music-play-btn.playing {
+      background: linear-gradient(135deg, var(--accent-cyan), #7fffd4);
+    }
+
+    .music-play-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: #000;
+    }
+
+    .music-info {
+      flex: 1;
+    }
+
+    .music-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .music-artist {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .music-progress {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .music-time {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.5);
+      min-width: 35px;
+    }
+
+    .music-progress-bar {
+      flex: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .music-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-gold), var(--accent-cyan));
+      width: 0%;
+      transition: width 0.1s linear;
+      border-radius: 2px;
+    }
+
+    /* FEATURES LIST */
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .feature-item span {
+      font-size: 1rem;
+    }
+
+    /* LEGACY ARCHIVE BUTTON */
+    .legacy-archive-btn {
       display: block;
       width: 100%;
-      padding: 1rem;
-      background: linear-gradient(135deg, #0a95a8, #0ff0b8);
-      color: #000;
-      text-decoration: none;
+      padding: 12px 20px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(15, 240, 184, 0.1));
+      border: 1px solid rgba(212, 175, 55, 0.4);
       border-radius: 10px;
-      font-weight: 700;
-      text-align: center;
-      font-size: 1rem;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(15, 240, 184, 0.3);
-    }
-    
-    .btn-order:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(15, 240, 184, 0.5);
-    }
-    
-    /* CTA SECTION */
-    .cta-section {
-      background: linear-gradient(135deg, rgba(10, 149, 168, 0.15), rgba(15, 240, 184, 0.1));
-      border: 2px solid #0ff0b8;
-      border-radius: 20px;
-      padding: 3rem 2rem;
-      text-align: center;
-      margin: 3rem 0;
-      animation: fadeIn 1.2s ease;
-    }
-    
-    .cta-section h3 {
-      background: linear-gradient(90deg, #0a95a8, #0ff0b8, #d3fb1b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-    
-    .cta-section p {
-      color: var(--text-primary);
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    .btn-primary {
-      display: inline-block;
-      padding: 1.2rem 2.5rem;
-      background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d3fb1b);
-      color: #000;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: 700;
-      font-size: 1.1rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(15, 240, 184, 0.3);
-    }
-    
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(15, 240, 184, 0.5);
-    }
-    
-    /* FOOTER */
-    .footer {
-      background: var(--bg-secondary);
-      padding: 3rem 2rem;
-      text-align: center;
-      margin-top: 4rem;
-      border-top: 2px solid rgba(15, 240, 184, 0.2);
-    }
-    
-    .footer h4 {
-      background: linear-gradient(90deg, #0a95a8, #0ff0b8, #d3fb1b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      margin-bottom: 1rem;
-      font-size: 1.5rem;
-    }
-    
-    .footer p {
-      color: var(--text-muted);
-      margin: 0.5rem 0;
-    }
-    
-    .footer a {
-      color: #0ff0b8;
-      text-decoration: none;
+      color: var(--accent-gold);
+      font-size: 0.85rem;
       font-weight: 600;
-    }
-    
-    .footer a:hover {
-      color: #d3fb1b;
-    }
-    
-    .loading {
       text-align: center;
-      padding: 4rem 2rem;
-      font-size: 1.5rem;
-      color: #0ff0b8;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
-    
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      .header h1 { font-size: 2rem; }
-      .header .tagline { font-size: 1rem; }
-      .partner-banner h2 { font-size: 1.5rem; }
-      .intro-section h3 { font-size: 1.5rem; }
-      .products-grid { grid-template-columns: 1fr; gap: 1.5rem; }
-      .product-image { height: 200px; }
-      .vip-section h3 { font-size: 1.5rem; }
-      .vip-grid { grid-template-columns: 1fr; }
+
+    .legacy-archive-btn:hover {
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.25), rgba(15, 240, 184, 0.15));
+      border-color: var(--accent-gold);
+      transform: translateY(-2px);
+    }
+
+    /* MODAL CTA BUTTON */
+    .modal-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, var(--accent-cyan), #7fffd4);
+      border-radius: 12px;
+      color: #000;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(15, 240, 184, 0.4);
+      margin-top: auto;
+    }
+
+    .modal-cta-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(15, 240, 184, 0.6);
+    }
+
+    /* RESPONSIVE - MODAL */
+    @media (max-width: 900px) {
+      .video-modal-content {
+        flex-direction: column;
+        max-height: 95vh;
+        overflow-y: auto;
+      }
+      
+      .modal-video-side {
+        flex: none;
+        width: 100%;
+      }
+      
+      .modal-carousel-wrapper {
+        aspect-ratio: 1/1;
+        max-height: 50vh;
+      }
+      
+      .modal-info-side {
+        flex: none;
+        max-height: none;
+        padding: 20px;
+      }
+      
+      .modal-product-name {
+        font-size: 1.25rem;
+      }
+      
+      .modal-product-price {
+        font-size: 1.1rem;
+      }
+      
+      .use-case-tag {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+      }
     }
     
     /* VIDEO CONTAINER */
@@ -385,8 +930,8 @@
       margin: 0 auto 2.5rem;
       border-radius: 16px;
       overflow: hidden;
-      border: 2px solid rgba(15, 240, 184, 0.3);
-      box-shadow: 0 10px 40px rgba(15, 240, 184, 0.2);
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 10px 40px rgba(212, 175, 55, 0.2);
     }
     
     .video-container iframe {
@@ -397,8 +942,8 @@
     
     /* VIP SECTION */
     .vip-section {
-      background: linear-gradient(135deg, rgba(253, 38, 253, 0.08), rgba(211, 251, 27, 0.05));
-      border: 2px solid rgba(253, 38, 253, 0.3);
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(15, 240, 184, 0.05));
+      border: 2px solid rgba(212, 175, 55, 0.3);
       border-radius: 20px;
       padding: 3rem 2rem;
       margin: 3rem 0;
@@ -406,7 +951,7 @@
     }
     
     .vip-section h3 {
-      background: linear-gradient(90deg, #fd26fd, #d3fb1b, #0ff0b8);
+      background: linear-gradient(90deg, var(--accent-gold), #f5d76e, var(--accent-cyan));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -434,7 +979,7 @@
     
     .vip-card {
       background: rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(253, 38, 253, 0.2);
+      border: 1px solid rgba(212, 175, 55, 0.2);
       border-radius: 12px;
       padding: 1.5rem;
       text-align: center;
@@ -442,9 +987,9 @@
     }
     
     .vip-card:hover {
-      border-color: rgba(253, 38, 253, 0.5);
+      border-color: rgba(212, 175, 55, 0.5);
       transform: translateY(-5px);
-      box-shadow: 0 10px 30px rgba(253, 38, 253, 0.2);
+      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
     }
     
     .vip-card .icon {
@@ -453,7 +998,7 @@
     }
     
     .vip-card h4 {
-      color: #d3fb1b;
+      color: var(--accent-gold);
       font-size: 1.2rem;
       margin-bottom: 0.5rem;
       font-weight: 700;
@@ -490,28 +1035,210 @@
     .btn-vip {
       display: inline-block;
       padding: 1rem 2.5rem;
-      background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d3fb1b);
+      background: linear-gradient(135deg, var(--accent-gold), #f5d76e);
       color: #000;
       text-decoration: none;
       border-radius: 12px;
       font-weight: 700;
       font-size: 1.1rem;
       transition: all 0.3s ease;
-      box-shadow: 0 6px 20px rgba(15, 240, 184, 0.3);
+      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
     }
     
     .btn-vip:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(15, 240, 184, 0.5);
+      box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+    }
+    
+    /* FOOTER */
+    .footer {
+      background: var(--bg-secondary);
+      padding: 3rem 2rem;
+      text-align: center;
+      margin-top: 4rem;
+      border-top: 2px solid rgba(212, 175, 55, 0.2);
+    }
+    
+    .footer h4 {
+      background: linear-gradient(90deg, var(--accent-gold), #f5d76e, var(--accent-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+    
+    .footer p {
+      color: var(--text-muted);
+      margin: 0.5rem 0;
+    }
+    
+    .footer a {
+      color: var(--accent-gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    
+    .footer a:hover {
+      color: var(--accent-cyan);
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 4rem 2rem;
+      font-size: 1.5rem;
+      color: var(--accent-gold);
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .header h1 { font-size: 1.6rem; }
+      .header .tagline { font-size: 1rem; }
+      .partner-banner h2 { font-size: 1.4rem; }
+      .intro-section h3 { font-size: 1.5rem; }
+      .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .product-card { height: 320px; }
+      .product-badge { font-size: 0.6rem; padding: 8px 14px; letter-spacing: 2px; }
+      .product-name { font-size: 1.1rem; }
+      .product-enter-btn { padding: 10px 20px; font-size: 0.7rem; }
+      .vip-section h3 { font-size: 1.5rem; }
+      .vip-grid { grid-template-columns: 1fr; }
+    }
+    
+    @media (max-width: 480px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .product-card { height: 350px; }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- VIDEO MODAL - LUXURY PRODUCT EXPERIENCE -->
+  <div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+      <button class="video-modal-close" onclick="closeVideoModal()">✕</button>
+      
+      <!-- LEFT SIDE - IMAGE CAROUSEL -->
+      <div class="modal-video-side">
+        <div class="modal-carousel-wrapper" id="modalCarouselWrapper">
+          <div class="product-carousel" id="modalCarousel">
+            <div class="carousel-container" id="modalCarouselContainer">
+              <!-- Images loaded dynamically -->
+            </div>
+            
+            <button class="carousel-nav carousel-nav-prev" onclick="moveModalCarousel(-1)" style="display:none;" id="modalCarouselPrev">‹</button>
+            <button class="carousel-nav carousel-nav-next" onclick="moveModalCarousel(1)" style="display:none;" id="modalCarouselNext">›</button>
+            
+            <div class="carousel-dots" id="modalCarouselDots"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- RIGHT SIDE - PRODUCT INFO CARD -->
+      <div class="modal-info-side">
+        <h2 class="modal-product-name" id="modalProductName"></h2>
+        <p class="modal-product-price" id="modalProductPrice"></p>
+        
+        <div class="modal-divider"></div>
+        
+        <!-- MORE THAN A MEMORIAL -->
+        <div class="modal-section">
+          <div class="modal-section-title"><span id="modalSectionEmoji">🤎</span> <span id="modalSectionTitle">More Than A Memorial</span></div>
+          <div class="use-cases-list" id="modalUseCases"></div>
+        </div>
+        
+        <div class="modal-divider"></div>
+        
+        <!-- MUSIC PLAYER -->
+        <div class="modal-section" id="musicSection">
+          <div class="modal-section-title"><span>🎵</span> Listen to the Vibe</div>
+          <div class="music-player">
+            <div class="music-player-inner">
+              <div>
+                <button class="music-play-btn" id="musicPlayBtn" onclick="toggleMusic()">
+                  <svg viewBox="0 0 24 24" id="musicPlayIcon"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <div class="music-info">
+                  <div class="music-title" id="musicTitle">Product Theme</div>
+                  <div class="music-artist">Dopelee Prezzed by S™</div>
+                </div>
+              </div>
+              <div class="music-progress">
+                <div class="music-time" id="musicCurrentTime">0:00</div>
+                <div class="music-progress-bar" id="musicProgressBar">
+                  <div class="music-progress-fill" id="musicProgressFill"></div>
+                </div>
+                <div class="music-time" id="musicDuration">0:00</div>
+              </div>
+            </div>
+          </div>
+          <audio id="modalAudio" src="" preload="metadata" playsinline webkit-playsinline></audio>
+        </div>
+        
+        <div class="modal-divider"></div>
+        
+        <!-- WHAT MAKES US SPECIAL -->
+        <div class="modal-section">
+          <div class="modal-section-title"><span>💎</span> What Makes Us Special</div>
+          <div class="features-list">
+            <div class="feature-item"><span>🎨</span> Custom Designed Just For You</div>
+            <div class="feature-item"><span>💎</span> Premium Quality Materials</div>
+            <div class="feature-item"><span>⚡</span> Fast Turnaround</div>
+            <div class="feature-item"><span>🤎</span> Made With Love in Kansas City</div>
+          </div>
+        </div>
+        
+        <div class="modal-divider"></div>
+        
+        <!-- LEGACY ARCHIVE UPGRADE -->
+        <div class="modal-section">
+          <div class="modal-section-title"><span>📱</span> Preserve It Beyond the Moment</div>
+          <p style="font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 1rem; font-weight: 300;">
+            Every keepsake tells a story. The Legacy Archive Upgrade transforms your memories into something that lasts forever.
+          </p>
+          <div style="margin: 1rem 0; padding: 1rem; background: rgba(212, 175, 55, 0.08); border-left: 3px solid var(--accent-gold); border-radius: 8px;">
+            <p style="font-size: 0.8rem; color: var(--accent-gold); margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Capsule • Starting at $45</p>
+            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0 0 0.8rem 0;">QR-linked memory capsule for photos, videos, or voice notes.</p>
+            <p style="font-size: 0.8rem; color: var(--accent-gold); margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Showcase • Starting at $100</p>
+            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0;">Custom-designed page showcasing your memories beautifully.</p>
+          </div>
+          <button class="legacy-archive-btn" onclick="window.open('https://square.link/u/uBvKtldH', '_blank')">
+            Explore Legacy Archive Upgrade
+          </button>
+        </div>
+        
+        <!-- CTA BUTTON -->
+        <a href="#" id="modalShopBtn" target="_blank" class="modal-cta-btn">
+          <span>🤎</span> START YOUR JOURNII
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOP BAR - Brand + Military Message -->
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <span class="top-bar-brand">THE LEGACY LOUNGE™</span>
+      <span class="top-bar-sub">by Dopelee Prezzed by S™</span>
+    </div>
+    <div class="top-bar-right">
+      <span class="top-bar-military">Proudly Serving Our Military Community</span>
+    </div>
+  </div>
+
+  <!-- SCROLLING MARQUEE BANNER -->
+  <div class="marquee-banner">
+    <div class="marquee-track">
+      <span class="marquee-content">
+        🇺🇸 Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond 🇺🇸 &nbsp;&nbsp;&nbsp;&nbsp;
+        🇺🇸 Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond 🇺🇸 &nbsp;&nbsp;&nbsp;&nbsp;
+      </span>
+    </div>
+  </div>
+
   <!-- HEADER -->
   <div class="header">
-    <!-- Floating Bubbles -->
     <div class="bubble"></div>
     <div class="bubble"></div>
     <div class="bubble"></div>
@@ -521,34 +1248,18 @@
     <div class="logo-container">
       <img src="https://dopeleeprezzed-oss.github.io/dopelee-form/logo.png" alt="The Legacy Lounge">
     </div>
-    <h1>THE LEGACY LOUNGE™</h1>
-    <p class="tagline">Luxury • Legacy • Keepsakes</p>
-  </div>
-
-  <!-- PARTNER BANNER -->
-  <div class="partner-banner">
-    <h2 id="partnerName">Proudly Serving Our Military Community</h2>
-    <p id="partnerTagline">Intentional Experiences for Celebrations, Remembrance, and Beyond</p>
-  </div>
-
-  <!-- LOADING -->
-  <div id="loadingState" class="loading">
-    Loading products...
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="container" id="mainContent" style="display:none;">
     
-    <!-- INTRO -->
-    <div class="intro-section">
-      <h3>🖤 Preserving What Matters Most</h3>
-      <p>
-       Meaningful moments deserve more than storage. 
-       We give your memories a place to live and be experienced.
-      </p>
+    <!-- Preserving What Matters Most - moved here -->
+    <div class="header-message">
+      <h2>🤎 Preserving What Matters Most</h2>
+      <p>Meaningful moments deserve more than storage. We give your memories a place to live and be experienced.</p>
     </div>
+  </div>
+
+  <!-- INTRO VIDEO SECTION -->
+  <div class="container">
     
-    <!-- INTRO VIDEO - Who We Are -->
+    <!-- INTRO VIDEO -->
     <div class="video-container">
       <iframe 
         src="https://www.youtube.com/embed/BBil4qK5gck" 
@@ -559,49 +1270,53 @@
         allowfullscreen>
       </iframe>
     </div>
+  </div>
 
-    <!-- PRODUCTS - Now loaded from Supabase -->
+  <!-- LOADING -->
+  <div id="loadingState" class="loading">Loading products...</div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container" id="mainContent" style="display:none;">
+
+    <!-- PRODUCTS - Compact overlay cards like main site -->
     <div class="products-grid" id="productsGrid"></div>
 
-    <!-- VIP EXPERIENCES SECTION -->
+  </div>
+
+  <!-- VIP EXPERIENCES SECTION - Always visible -->
+  <div class="container">
     <div class="vip-section">
       <h3>🎁 VIP Experiences</h3>
-      <p>
-        Beyond keepsakes, we curate premium, personalized gift experiences for your special events. 
-        From weddings to corporate gatherings, we handle every detail so your guests receive 
-        something truly meaningful and memorable.
-      </p>
+      <p>Beyond keepsakes, we curate premium, personalized gift experiences for your special events.</p>
       
       <div class="vip-grid">
         <div class="vip-card">
           <div class="icon">💍</div>
           <h4>Weddings</h4>
-          <p>Custom luxury gift bags for bridal parties, guests, and VIPs. Elegant keepsakes that match your wedding theme.</p>
+          <p>Custom luxury gift bags for bridal parties, guests, and VIPs.</p>
         </div>
         
         <div class="vip-card">
           <div class="icon">🏢</div>
           <h4>Corporate Events</h4>
-          <p>Premium branded gifts for clients, employees, and stakeholders that elevate your brand.</p>
+          <p>Premium branded gifts for clients, employees, and stakeholders.</p>
         </div>
         
         <div class="vip-card">
           <div class="icon">🥂</div>
           <h4>Swag & Celebrations</h4>
-          <p>High-end swag bags for parties, conferences, birthdays, anniversaries, and special occasions.</p>
+          <p>High-end swag bags for parties, conferences, and special occasions.</p>
         </div>
       </div>
       
-      <!-- IMPORTANT SHIPPING DISCLAIMER -->
       <div class="vip-disclaimer">
-        <p>⚠️ <strong>Please Note:</strong> VIP Experience services including custom gift bags, banners, event favors, and party packages are available for <strong>local pickup and U.S. domestic shipping only</strong>. International shipping is not available for these items.</p>
+        <p>⚠️ <strong>Please Note:</strong> VIP Experience services are available for <strong>local pickup and U.S. domestic shipping only</strong>.</p>
       </div>
       
       <div class="vip-cta">
         <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" class="btn-vip" target="_blank">Request VIP Quote →</a>
       </div>
     </div>
-
   </div>
 
   <!-- FOOTER -->
@@ -610,12 +1325,10 @@
     <p>Luxury • Legacy • Keepsakes</p>
     <p style="margin-top: 1rem;">
       <a href="https://www.dopeleeprezzedbys.com" target="_blank">Website</a> • 
-      <a href="/cdn-cgi/l/email-protection#137a7d757c53777c63767f767663617669697677716a603d707c7e">Email</a> • 
+      <a href="/cdn-cgi/l/email-protection#b2dbdcd4ddf2d6ddc2d7ded7d7c2c0d7c8c8d7d6d0cbc19cd1dddf">Email</a> • 
       <a href="tel:8165301520">816-530-1520</a>
     </p>
-    <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">
-      © 2026 Dopelee Prezzed by S LLC
-    </p>
+    <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.7;">© 2026 Dopelee Prezzed by S LLC</p>
   </div>
 
   <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -629,7 +1342,6 @@
     let partnerData = null;
     let partnerId = null;
     
-    // GET PARTNER ID FROM URL
     const urlParams = new URLSearchParams(window.location.search);
     partnerId = urlParams.get('partner') || urlParams.get('id');
     
@@ -661,7 +1373,7 @@
     }
     
     // ═══════════════════════════════════════════════════════════════
-    // LOAD PRODUCTS FROM SUPABASE
+    // LOAD PRODUCTS - COMPACT OVERLAY CARDS (MATCHES MAIN SITE)
     // ═══════════════════════════════════════════════════════════════
     async function loadProducts() {
       const grid = document.getElementById('productsGrid');
@@ -677,7 +1389,6 @@
         const products = await response.json();
         
         if (!products || products.length === 0 || products.error) {
-          console.warn('No products found in database');
           grid.innerHTML = '<p style="text-align:center; color:#888;">Products coming soon...</p>';
           showContent();
           return;
@@ -685,30 +1396,68 @@
         
         grid.innerHTML = '';
         
+        // Store products globally so we can access them by ID
+        window.productsData = {};
+        
         products.forEach(product => {
-          const card = document.createElement('div');
-          card.className = 'product-card';
+          // Use PX price if available, otherwise regular price
+          const displayPrice = product.px_price || product.price;
           
           // Build order link with partner tracking
           const orderLink = partnerId 
             ? `${product.square_link}?partner=${partnerId}` 
             : product.square_link;
           
+          // Get use cases
+          const useCases = product.use_cases || 'Weddings,Anniversaries,Graduations,Memorials,Celebrations';
+          
+          // Use thumbnail or main image
+          const imageUrl = product.thumbnail_url || product.image_url;
+          
+          // Store product data globally for easy access
+          window.productsData[product.id] = {
+            imageUrl: product.image_url,
+            name: product.name,
+            description: product.description || '',
+            price: displayPrice,
+            shopLink: orderLink,
+            musicUrl: product.music_url || '',
+            useCases: useCases,
+            productId: product.id,
+            productImages: product.product_images || []
+          };
+          
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          
           card.innerHTML = `
-            <img src="${product.image_url}" alt="${product.name}" class="product-image" onerror="this.style.display='none'">
-            <div class="product-content">
-              <h4>${product.name}</h4>
-              <p>${product.description}</p>
-              <div class="product-price">${product.price}</div>
-              <a href="${orderLink}" class="btn-order" target="_blank">
-                Order Now →
-              </a>
+            <img src="${imageUrl}" alt="${product.name}" class="product-bg">
+            <div class="product-overlay">
+              <div class="product-badge">WHERE MEMORY LIVES</div>
+              <div class="product-name">${product.name}</div>
+              <button class="product-enter-btn" data-product-id="${product.id}">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                ENTER THE EXPERIENCE
+              </button>
             </div>
           `;
+          
           grid.appendChild(card);
         });
         
-        console.log(`✅ Loaded ${products.length} products from Supabase`);
+        // Add click listeners to all buttons
+        document.querySelectorAll('.product-enter-btn').forEach(btn => {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const productId = this.getAttribute('data-product-id');
+            const p = window.productsData[productId];
+            if (p) {
+              openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages);
+            }
+          });
+        });
+        
+        console.log(`✅ PX Landing: Loaded ${products.length} products (compact overlay cards)`);
         showContent();
         
       } catch (err) {
@@ -719,37 +1468,201 @@
     }
     
     // ═══════════════════════════════════════════════════════════════
-    // SHOW CONTENT
+    // VIDEO MODAL FUNCTIONS
+    // ═══════════════════════════════════════════════════════════════
+    let modalCarouselIndex = 0;
+    
+    function openVideoModal(imageUrl, name, description, price, shopLink, musicUrl, useCases, productId, productImages) {
+      console.log('🎬 Opening modal for:', name);
+      
+      const modal = document.getElementById('videoModal');
+      if (!modal) return;
+      
+      // Set product info
+      document.getElementById('modalProductName').textContent = name;
+      document.getElementById('modalProductPrice').textContent = price;
+      document.getElementById('modalShopBtn').href = shopLink;
+      
+      // Set section title and emoji based on product
+      const sectionTitleEl = document.getElementById('modalSectionTitle');
+      const sectionEmojiEl = document.getElementById('modalSectionEmoji');
+      const sectionData = {
+        'Hand-Crafted Wood Keepsake': { title: 'Perfect For Life\'s Moments', emoji: '🌳' },
+        'Custom Slate Keepsake': { title: 'More Than A Memorial', emoji: '🤎' },
+        'Hand-Crafted Metal Ornaments': { title: 'Celebrate What Matters', emoji: '✨' },
+        'Glass Display Keepsake': { title: 'Honor Their Legacy', emoji: '💫' },
+        'Custom Photo Lookbook': { title: 'Tell Their Story', emoji: '📖' },
+        'Legacy Archive Upgrade': { title: 'Preserve Your Legacy', emoji: '🏛️' }
+      };
+      const data = sectionData[name.trim()] || { title: 'More Than A Memorial', emoji: '🤎' };
+      if (sectionTitleEl) sectionTitleEl.textContent = data.title;
+      if (sectionEmojiEl) sectionEmojiEl.textContent = data.emoji;
+      
+      // Set use cases
+      const useCasesContainer = document.getElementById('modalUseCases');
+      if (useCasesContainer) {
+        const useCasesArray = useCases ? useCases.split(',') : ['Weddings', 'Anniversaries', 'Graduations', 'Memorials', 'Celebrations'];
+        useCasesContainer.innerHTML = useCasesArray.map(uc => 
+          `<span class="use-case-tag">${uc.trim()}</span>`
+        ).join('');
+      }
+      
+      // Set music
+      const audio = document.getElementById('modalAudio');
+      const musicTitle = document.getElementById('musicTitle');
+      const musicSection = document.getElementById('musicSection');
+      
+      if (audio && musicTitle) {
+        if (musicUrl && musicUrl !== '' && musicUrl !== 'null' && musicUrl !== 'undefined') {
+          audio.src = musicUrl;
+          musicTitle.textContent = name + ' Theme';
+          if (musicSection) musicSection.style.display = 'block';
+          
+          audio.onerror = () => { musicTitle.textContent = 'Theme Song Coming Soon'; };
+          audio.onloadedmetadata = () => {
+            const durationEl = document.getElementById('musicDuration');
+            if (durationEl) durationEl.textContent = formatTime(audio.duration);
+          };
+          audio.ontimeupdate = () => {
+            const progressFill = document.getElementById('musicProgressFill');
+            const currentTimeEl = document.getElementById('musicCurrentTime');
+            if (progressFill && audio.duration) progressFill.style.width = (audio.currentTime / audio.duration) * 100 + '%';
+            if (currentTimeEl) currentTimeEl.textContent = formatTime(audio.currentTime);
+          };
+        } else {
+          musicTitle.textContent = 'Coming Soon';
+          audio.src = '';
+          if (musicSection) musicSection.style.display = 'none';
+        }
+      }
+      
+      // Reset music player state
+      const musicPlayBtn = document.getElementById('musicPlayBtn');
+      const musicPlayIcon = document.getElementById('musicPlayIcon');
+      if (musicPlayBtn) musicPlayBtn.classList.remove('playing');
+      if (musicPlayIcon) musicPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      
+      const progressFill = document.getElementById('musicProgressFill');
+      const currentTimeEl = document.getElementById('musicCurrentTime');
+      if (progressFill) progressFill.style.width = '0%';
+      if (currentTimeEl) currentTimeEl.textContent = '0:00';
+      
+      // Load carousel images
+      const carouselContainer = document.getElementById('modalCarouselContainer');
+      const carouselDots = document.getElementById('modalCarouselDots');
+      const prevBtn = document.getElementById('modalCarouselPrev');
+      const nextBtn = document.getElementById('modalCarouselNext');
+      
+      if (productImages && productImages.length > 0) {
+        carouselContainer.innerHTML = productImages.map((img, index) => `
+          <div class="carousel-slide">
+            <img src="${img}" alt="${name} - Image ${index + 1}" />
+          </div>
+        `).join('');
+        
+        if (productImages.length > 1) {
+          if (prevBtn) prevBtn.style.display = 'flex';
+          if (nextBtn) nextBtn.style.display = 'flex';
+          if (carouselDots) {
+            carouselDots.innerHTML = productImages.map((_, index) => `
+              <div class="carousel-dot ${index === 0 ? 'active' : ''}" onclick="goToModalSlide(${index})"></div>
+            `).join('');
+          }
+        } else {
+          if (prevBtn) prevBtn.style.display = 'none';
+          if (nextBtn) nextBtn.style.display = 'none';
+          if (carouselDots) carouselDots.innerHTML = '';
+        }
+        
+        modalCarouselIndex = 0;
+        carouselContainer.style.transform = 'translateX(0)';
+      } else {
+        carouselContainer.innerHTML = `<div class="carousel-slide"><img src="${imageUrl}" alt="${name}" /></div>`;
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+        if (carouselDots) carouselDots.innerHTML = '';
+      }
+      
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeVideoModal() {
+      const modal = document.getElementById('videoModal');
+      const audio = document.getElementById('modalAudio');
+      
+      if (audio) { audio.pause(); audio.currentTime = 0; }
+      
+      const musicPlayBtn = document.getElementById('musicPlayBtn');
+      const musicPlayIcon = document.getElementById('musicPlayIcon');
+      const progressFill = document.getElementById('musicProgressFill');
+      const currentTimeEl = document.getElementById('musicCurrentTime');
+      
+      if (musicPlayBtn) musicPlayBtn.classList.remove('playing');
+      if (musicPlayIcon) musicPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      if (progressFill) progressFill.style.width = '0%';
+      if (currentTimeEl) currentTimeEl.textContent = '0:00';
+      
+      modalCarouselIndex = 0;
+      
+      if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+    }
+    
+    function moveModalCarousel(direction) {
+      const container = document.getElementById('modalCarouselContainer');
+      const dots = document.querySelectorAll('#modalCarouselDots .carousel-dot');
+      const totalSlides = container.children.length;
+      
+      modalCarouselIndex = (modalCarouselIndex + direction + totalSlides) % totalSlides;
+      container.style.transform = `translateX(-${modalCarouselIndex * 100}%)`;
+      
+      dots.forEach((dot, index) => { dot.classList.toggle('active', index === modalCarouselIndex); });
+    }
+    
+    function goToModalSlide(index) {
+      const container = document.getElementById('modalCarouselContainer');
+      const dots = document.querySelectorAll('#modalCarouselDots .carousel-dot');
+      
+      modalCarouselIndex = index;
+      container.style.transform = `translateX(-${modalCarouselIndex * 100}%)`;
+      
+      dots.forEach((dot, i) => { dot.classList.toggle('active', i === modalCarouselIndex); });
+    }
+    
+    function toggleMusic() {
+      const audio = document.getElementById('modalAudio');
+      const btn = document.getElementById('musicPlayBtn');
+      const icon = document.getElementById('musicPlayIcon');
+      
+      if (!audio || !audio.src) return;
+      
+      if (audio.paused) {
+        audio.play();
+        btn.classList.add('playing');
+        icon.innerHTML = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+      } else {
+        audio.pause();
+        btn.classList.remove('playing');
+        icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+      }
+    }
+    
+    function formatTime(seconds) {
+      if (!seconds || isNaN(seconds)) return '0:00';
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeVideoModal(); });
+    
+    // ═══════════════════════════════════════════════════════════════
+    // SHOW CONTENT & INIT
     // ═══════════════════════════════════════════════════════════════
     function showContent() {
       document.getElementById('loadingState').style.display = 'none';
       document.getElementById('mainContent').style.display = 'block';
     }
     
-    // ═══════════════════════════════════════════════════════════════
-    // UPDATE CTA WITH PARTNER TRACKING
-    // ═══════════════════════════════════════════════════════════════
-    function setupCTA() {
-      if (partnerId) {
-        const ctaBtn = document.getElementById('ctaButton');
-        ctaBtn.href = `${FORM_URL}?partner=${partnerId}`;
-      }
-    }
-    
-    // ═══════════════════════════════════════════════════════════════
-    // INITIALIZE
-    // ═══════════════════════════════════════════════════════════════
     async function init() {
-      console.log('🏠 Legacy Lounge Loading...', partnerId ? `Partner: ${partnerId}` : 'No partner');
-      
-      await loadPartnerData();
-      await loadProducts();
-      setupCTA();
-    }
-    
-    // Start the app
-    init();
-  </script>
-
-</body>
-</html>
+      console.log('🏠 PX Legacy Lounge Loading...', partner
