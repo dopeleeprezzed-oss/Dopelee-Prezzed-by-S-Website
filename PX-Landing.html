@@ -348,27 +348,90 @@
         font-size: 0.9rem;
       }
       
-      /* VIP modal mobile */
-      .vip-modal-content {
-        padding: 1.75rem 1.25rem;
-        border-radius: 16px;
+      /* VIP modal mobile - proper contained modal box */
+      .vip-modal-overlay {
+        padding: 16px;
+        align-items: flex-start;
+        padding-top: 5vh;
       }
       
-      .vip-modal-header h2 {
+      .vip-modal-content {
+        padding: 1.5rem 1.25rem;
+        border-radius: 16px;
+        max-height: 85vh;
+        border: 2px solid var(--accent-gold);
+        box-shadow: 0 0 60px rgba(212, 175, 55, 0.15);
+      }
+      
+      .vip-modal-close {
+        top: 10px;
+        right: 14px;
         font-size: 1.5rem;
       }
       
+      .vip-modal-badge {
+        font-size: 0.7rem;
+        padding: 6px 16px;
+        letter-spacing: 3px;
+        margin-bottom: 1rem;
+      }
+      
+      .vip-modal-header {
+        margin-bottom: 1.25rem;
+      }
+      
+      .vip-modal-header h2 {
+        font-size: 1.35rem;
+      }
+      
       .vip-modal-header p {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        line-height: 1.5;
       }
       
       .vip-modal-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
       }
       
       .vip-modal-card {
-        padding: 1.25rem;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-align: left;
+      }
+      
+      .vip-modal-card .icon {
+        font-size: 1.8rem;
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+      
+      .vip-modal-card h4 {
+        font-size: 0.95rem;
+        margin-bottom: 2px;
+      }
+      
+      .vip-modal-card p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+      }
+      
+      .vip-modal-disclaimer {
+        padding: 0.75rem 1rem;
+        margin-bottom: 1.25rem;
+      }
+      
+      .vip-modal-disclaimer p {
+        font-size: 0.78rem;
+      }
+      
+      .btn-vip-modal {
+        padding: 0.9rem;
+        font-size: 1rem;
+        border-radius: 10px;
       }
       
       /* FOOTER MOBILE - CLEAN CENTERED STACK */
@@ -380,16 +443,23 @@
       .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 1.75rem;
+        gap: 0;
       }
       
-      .footer-left, .footer-right {
-        text-align: center;
+      /* Reorder: brand center first, then socials, then contact */
+      .footer-left { order: 2; }
+      .footer-center { order: 1; }
+      .footer-right { order: 3; display: none; }
+      
+      .footer-center {
+        padding-bottom: 1.25rem;
+        margin-bottom: 1.25rem;
+        border-bottom: 1px solid rgba(212, 175, 55, 0.15);
       }
       
       .footer-brand {
-        font-size: 1.1rem;
-        letter-spacing: 1px;
+        font-size: 1rem;
+        letter-spacing: 2px;
       }
       
       .footer-tagline {
@@ -397,33 +467,39 @@
       }
       
       .footer-social {
-        gap: 0.75rem;
+        gap: 0.6rem;
         justify-content: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
       }
       
       .footer-social a {
-        width: 38px;
-        height: 38px;
+        width: 34px;
+        height: 34px;
       }
       
       .footer-social svg {
-        width: 16px;
-        height: 16px;
+        width: 14px;
+        height: 14px;
       }
       
       .footer-copyright {
-        font-size: 0.75rem;
+        font-size: 0.7rem;
+        margin-top: 0.25rem;
+      }
+      
+      .footer-left {
+        text-align: center;
       }
       
       .footer-contact {
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
         align-items: center;
-        gap: 0.5rem;
+        gap: 1.5rem;
       }
       
       .footer-contact a {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
       }
     }
     
@@ -2068,7 +2144,7 @@
       <!-- Left - Contact -->
       <div class="footer-left">
         <div class="footer-contact">
-          <a href="/cdn-cgi/l/email-protection#b3daddd5dcf3d7dcc3d6dfd6d6c3c1d6c9c9d6d7d1cac09dd0dcde">Email</a>
+          <a href="mailto:dopeleeprezzedbys@gmail.com">dopeleeprezzedbys@gmail.com</a>
           <a href="tel:8165301520">816-530-1520</a>
         </div>
       </div>
@@ -2107,7 +2183,7 @@
     </div>
   </footer>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  <script>
     // ═══════════════════════════════════════════════════════════════
     // CONFIGURATION
     // ═══════════════════════════════════════════════════════════════
