@@ -748,6 +748,10 @@ function renderDashboard(partner, orders) {
   let totalSales = 0;
   let totalEarned = 0;
   let thisMonthOrders = 0;
+  let thisMonthSales = 0;
+  let thisMonthCommission = 0;
+  let pendingCommission = 0;
+  let paidCommission = 0;
   const currentMonth = new Date().getMonth();
   const currentYear = new Date().getFullYear();
   
@@ -763,12 +767,23 @@ function renderDashboard(partner, orders) {
   // Second pass: calculate commissions at the tier rate
   orders.forEach(order => {
     const orderTotal = parseFloat(order.order_total) || 0;
-    const commission = orderTotal * tier.rate;
+    const taxAmount = parseFloat(order.tax_amount) || 0;
+    const preTaxAmount = orderTotal - taxAmount;
+    const commission = parseFloat(order.partner_commission) || (preTaxAmount * tier.rate);
     totalEarned += commission;
+    
+    // Track paid vs pending
+    if (order.commission_paid) {
+      paidCommission += commission;
+    } else {
+      pendingCommission += commission;
+    }
     
     const orderDate = new Date(order.created_at);
     if (orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear) {
       thisMonthOrders++;
+      thisMonthSales += preTaxAmount;
+      thisMonthCommission += commission;
     }
   });
 
@@ -866,6 +881,43 @@ function renderDashboard(partner, orders) {
           <p>${orders.length}</p>
           <small>orders</small>
         </div>
+      </div>
+      
+      <!-- THIS MONTH BREAKDOWN -->
+      <div style="background:rgba(211,251,27,0.1);border:1px solid rgba(211,251,27,0.3);border-radius:12px;padding:20px;margin-top:20px;">
+        <h3 style="margin:0 0 15px;color:#d3fb1b;font-size:18px;">📅 This Month's Earnings</h3>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;text-align:center;">
+          <div>
+            <p style="margin:0;font-size:28px;font-weight:700;color:#d3fb1b;">$${thisMonthCommission.toFixed(2)}</p>
+            <p style="margin:5px 0 0;font-size:13px;color:#b8bac0;">Commission Earned</p>
+          </div>
+          <div>
+            <p style="margin:0;font-size:28px;font-weight:700;color:#0ff0b8;">$${thisMonthSales.toFixed(2)}</p>
+            <p style="margin:5px 0 0;font-size:13px;color:#b8bac0;">In Sales</p>
+          </div>
+          <div>
+            <p style="margin:0;font-size:28px;font-weight:700;color:#fff;">${thisMonthOrders}</p>
+            <p style="margin:5px 0 0;font-size:13px;color:#b8bac0;">Orders</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- PAYOUT STATUS -->
+      <div style="background:rgba(52,97,250,0.1);border:1px solid rgba(52,97,250,0.3);border-radius:12px;padding:20px;margin-top:20px;">
+        <h3 style="margin:0 0 15px;color:#3461fa;font-size:18px;">💵 Payout Status</h3>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+          <div style="text-align:center;padding:15px;background:rgba(0,0,0,0.3);border-radius:10px;">
+            <p style="margin:0;font-size:24px;font-weight:700;color:#fd26fd;">$${pendingCommission.toFixed(2)}</p>
+            <p style="margin:5px 0 0;font-size:13px;color:#b8bac0;">Pending Payout</p>
+          </div>
+          <div style="text-align:center;padding:15px;background:rgba(0,0,0,0.3);border-radius:10px;">
+            <p style="margin:0;font-size:24px;font-weight:700;color:#0ff0b8;">$${paidCommission.toFixed(2)}</p>
+            <p style="margin:5px 0 0;font-size:13px;color:#b8bac0;">Already Paid</p>
+          </div>
+        </div>
+        <p style="margin:15px 0 0;font-size:13px;color:#b8bac0;text-align:center;">
+          💡 Commissions are paid monthly. Questions? Call <a href="tel:8165301520" style="color:#0ff0b8;">816-530-1520</a>
+        </p>
       </div>
     </div>
   `;
