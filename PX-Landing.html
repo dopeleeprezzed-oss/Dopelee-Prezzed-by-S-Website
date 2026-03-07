@@ -3465,441 +3465,11 @@
   </script>
 </body>
 </html>
-<!-- MOBILE FIX INJECTED -->
+
 <style>
-@media (max-width: 768px) {
-  .recognition-modal {
-    padding: 60px 16px 40px 16px !important;
-    box-sizing: border-box !important;
-    overflow-x: hidden !important;
-  }
-  .recognition-modal-content {
-    margin: 0 auto !important;
-    padding: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  .recognition-modal-close {
-    position: fixed !important;
-    top: 12px !important;
-    right: 12px !important;
-    width: 40px !important;
-    height: 40px !important;
-    font-size: 1.2rem !important;
-    z-index: 10002 !important;
-    background: #000 !important;
-  }
-  .recognition-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1.25rem !important;
-    padding: 0 !important;
-    width: 100% !important;
-  }
-  .recognition-card {
-    width: 100% !important;
-    box-sizing: border-box !important;
-    padding: 1rem !important;
-    margin: 0 !important;
-  }
-  .recognition-tier-badge {
-    top: 0.75rem !important;
-    right: 0.75rem !important;
-    font-size: 0.6rem !important;
-    padding: 4px 8px !important;
-  }
-  .recognition-card h3 {
-    font-size: 1rem !important;
-    padding-right: 80px !important;
-    line-height: 1.3 !important;
-  }
-  .recognition-modal-header {
-    padding: 1rem 0 1.5rem !important;
-  }
-  .recognition-modal-header h2 {
-    font-size: 1.4rem !important;
-  }
-  .bulk-row {
-    font-size: 0.78rem !important;
-  }
-}
-</style>
+
 <style>
-/* ═══════════════════════════════════════
-   RECOGNITION CARDS - NEW SPLIT LAYOUT
-   Matches the Wood Keepsake modal style
-═══════════════════════════════════════ */
-.rec-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  padding: 0;
-}
 
-.rec-item {
-  display: flex;
-  flex-direction: row;
-  background: #1a1a1a;
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 16px;
-  overflow: hidden;
-  min-height: 180px;
-}
-
-.rec-item.premium {
-  border-color: var(--accent-gold);
-  background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, #1a1a1a 100%);
-}
-
-.rec-image-wrap {
-  position: relative;
-  width: 140px;
-  min-width: 140px;
-  flex-shrink: 0;
-}
-
-.rec-image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.rec-no-img {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 3rem;
-  background: #111;
-}
-
-.rec-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-.rec-details {
-  padding: 1rem;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  overflow: hidden;
-}
-
-.rec-details h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.3;
-  margin: 0;
-}
-
-.rec-desc {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.rec-includes {
-  font-size: 0.8rem;
-  color: var(--accent-cyan);
-  font-weight: 600;
-  margin: 0;
-}
-
-.rec-price {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #fff;
-}
-
-.rec-upgrade {
-  background: rgba(212,175,55,0.15);
-  color: var(--accent-gold);
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.rec-bulk {
-  border-top: 1px solid rgba(255,255,255,0.08);
-  padding-top: 0.5rem;
-  margin-top: 0.25rem;
-}
-
-.rec-bulk-title {
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-}
-
-.rec-bulk-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  padding: 3px 0;
-  gap: 8px;
-}
-
-.rec-bulk-row span:last-child {
-  color: var(--accent-cyan);
-  font-weight: 700;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* Mobile — already works since it's a column layout */
-@media (max-width: 480px) {
-  .rec-image-wrap {
-    width: 120px;
-    min-width: 120px;
-  }
-  .rec-details h3 {
-    font-size: 0.92rem;
-  }
-  .rec-price {
-    font-size: 1.4rem;
-  }
-}
-</style>
-<style>
-/* ═══════════════════════════════════════
-   AWARD CARDS — CLEAN LIST WITH LIGHTBOX
-═══════════════════════════════════════ */
-.aw-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0;
-  width: 100%;
-}
-
-.aw-card {
-  display: flex;
-  flex-direction: row;
-  background: #1a1a1a;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 14px;
-  overflow: hidden;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.aw-card.premium {
-  border-color: var(--accent-gold);
-  background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, #1a1a1a 60%);
-}
-
-/* IMAGE COLUMN */
-.aw-img-col {
-  position: relative;
-  width: 130px;
-  min-width: 130px;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.aw-thumb {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: opacity 0.2s;
-}
-
-.aw-thumb:active {
-  opacity: 0.85;
-}
-
-.aw-zoom-hint {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(0,0,0,0.7);
-  color: #fff;
-  font-size: 0.6rem;
-  text-align: center;
-  padding: 4px;
-  letter-spacing: 0.3px;
-}
-
-.aw-no-img {
-  width: 100%;
-  height: 100%;
-  min-height: 140px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2.5rem;
-  background: #111;
-}
-
-.aw-badge {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  padding: 3px 8px;
-  border-radius: 20px;
-  font-size: 0.55rem;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-}
-
-/* INFO COLUMN */
-.aw-info {
-  flex: 1;
-  padding: 0.85rem 0.9rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  overflow: hidden;
-  min-width: 0;
-}
-
-.aw-name {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.3;
-  margin: 0;
-}
-
-.aw-desc {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin: 0;
-}
-
-.aw-incl {
-  font-size: 0.75rem;
-  color: var(--accent-cyan);
-  font-weight: 600;
-  margin: 0;
-}
-
-.aw-price {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1;
-}
-
-.aw-upgrade {
-  background: rgba(212,175,55,0.15);
-  color: var(--accent-gold);
-  padding: 5px 8px;
-  border-radius: 6px;
-  font-size: 0.7rem;
-  font-weight: 600;
-}
-
-.aw-bulk {
-  border-top: 1px solid rgba(255,255,255,0.08);
-  padding-top: 0.4rem;
-  margin-top: 0.1rem;
-}
-
-.aw-bulk-label {
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  letter-spacing: 1.2px;
-  font-weight: 700;
-  margin-bottom: 0.3rem;
-  text-transform: uppercase;
-}
-
-.aw-bulk-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  padding: 2px 0;
-  gap: 6px;
-}
-
-.aw-bulk-row span:last-child {
-  color: var(--accent-cyan);
-  font-weight: 700;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-/* ═══════════════════════════════════
-   LIGHTBOX — FULL SCREEN IMAGE ZOOM
-═══════════════════════════════════ */
-#awardLightbox {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.97);
-  z-index: 99999;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-#awardLightbox.active {
-  display: flex;
-}
-
-#awardLightbox .lb-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 44px;
-  height: 44px;
-  background: rgba(255,255,255,0.1);
-  border: 2px solid var(--accent-gold);
-  border-radius: 50%;
-  color: var(--accent-gold);
-  font-size: 1.3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 100000;
-}
-
-#awardLightbox .lb-title {
-  position: absolute;
-  bottom: 24px;
-  left: 0; right: 0;
-  text-align: center;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 0 60px;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
-}
-
-#awardLightbox img {
-  max-width: 95vw;
-  max-height: 82vh;
-  object-fit: contain;
-  border-radius: 12px;
-  box-shadow: 0 0 60px rgba(212,175,55,0.2);
-  touch-action: pinch-zoom;
-}
-</style>
 
 <!-- LIGHTBOX HTML -->
 <div id="awardLightbox">
@@ -3928,176 +3498,207 @@ document.getElementById('awardLightbox').addEventListener('click', function(e) {
 });
 </script>
 <style>
-/* ═══════════════════════════════════════
-   AWARD CARDS v3 — IMAGE ON TOP, CLASSY
-═══════════════════════════════════════ */
+
+<style>
+/* ══════════════════════════════════════════
+   RECOGNITION MODAL — COMPLETE MOBILE FIX
+══════════════════════════════════════════ */
+
+/* Force modal to contain everything */
+.recognition-modal {
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+.recognition-modal-content {
+  box-sizing: border-box !important;
+  overflow-x: hidden !important;
+}
+
+/* AWARD CARDS — image on top, full width */
 .aw-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 0;
-  width: 100%;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.25rem !important;
+  padding: 0 !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 .aw-card {
-  background: #1a1a1a;
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 16px;
-  overflow: hidden;
-  width: 100%;
-  box-sizing: border-box;
-  position: relative;
+  display: flex !important;
+  flex-direction: column !important;
+  background: #1a1a1a !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  position: relative !important;
 }
 
 .aw-card.premium {
-  border-color: var(--accent-gold);
-  box-shadow: 0 0 30px rgba(212,175,55,0.15);
+  border-color: var(--accent-gold) !important;
+  box-shadow: 0 0 20px rgba(212,175,55,0.15) !important;
 }
 
-/* BADGE — top left over image */
+/* Badge sits top-left over image */
 .aw-card .aw-badge {
-  position: absolute;
-  top: 14px;
-  left: 14px;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  z-index: 10;
+  position: absolute !important;
+  top: 12px !important;
+  left: 12px !important;
+  padding: 5px 12px !important;
+  border-radius: 20px !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 1px !important;
+  text-transform: uppercase !important;
+  z-index: 10 !important;
 }
 
-/* IMAGE — full width on top, tappable */
+/* Image — full width, tappable */
 .aw-img-top {
-  position: relative;
-  width: 100%;
-  cursor: pointer;
-  overflow: hidden;
-  border-radius: 16px 16px 0 0;
+  position: relative !important;
+  width: 100% !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
 }
 
 .aw-img-top img {
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.3s ease;
+  width: 100% !important;
+  height: 200px !important;
+  object-fit: cover !important;
+  display: block !important;
 }
 
-.aw-img-top:active img {
-  transform: scale(0.98);
-}
-
-/* CLASSY OVERLAY */
+/* Classy tap overlay */
 .aw-view-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
-  padding: 20px 16px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%) !important;
+  padding: 18px 16px 10px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
 }
 
-.aw-view-icon {
-  font-size: 1rem;
-}
+.aw-view-icon { font-size: 0.9rem !important; }
 
 .aw-view-text {
-  color: rgba(255,255,255,0.9);
-  font-size: 0.75rem;
-  font-style: italic;
-  letter-spacing: 0.8px;
-  font-family: 'Playfair Display', serif;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+  color: rgba(255,255,255,0.88) !important;
+  font-size: 0.72rem !important;
+  font-style: italic !important;
+  font-family: 'Playfair Display', serif !important;
+  letter-spacing: 0.5px !important;
 }
 
-/* DETAILS BELOW IMAGE */
+/* Details section */
 .aw-info {
-  padding: 1.1rem 1.1rem 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
+  padding: 1rem !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
 }
 
 .aw-name {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1.3;
-  margin: 0;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  line-height: 1.3 !important;
+  margin: 0 !important;
 }
 
 .aw-desc {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin: 0;
+  font-size: 0.8rem !important;
+  color: var(--text-muted) !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
 }
 
 .aw-incl {
-  font-size: 0.82rem;
-  color: var(--accent-cyan);
-  font-weight: 600;
-  margin: 0;
+  font-size: 0.8rem !important;
+  color: var(--accent-cyan) !important;
+  font-weight: 600 !important;
+  margin: 0 !important;
 }
 
 .aw-price {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #fff;
-  line-height: 1;
-  margin: 0.2rem 0;
+  font-size: 1.7rem !important;
+  font-weight: 700 !important;
+  color: #fff !important;
+  line-height: 1 !important;
 }
 
 .aw-upgrade {
-  background: rgba(212,175,55,0.15);
-  border: 1px solid rgba(212,175,55,0.3);
-  color: var(--accent-gold);
-  padding: 7px 12px;
-  border-radius: 8px;
-  font-size: 0.78rem;
-  font-weight: 600;
+  background: rgba(212,175,55,0.15) !important;
+  border: 1px solid rgba(212,175,55,0.3) !important;
+  color: var(--accent-gold) !important;
+  padding: 6px 10px !important;
+  border-radius: 8px !important;
+  font-size: 0.76rem !important;
+  font-weight: 600 !important;
 }
 
 .aw-bulk {
-  border-top: 1px solid rgba(255,255,255,0.08);
-  padding-top: 0.6rem;
-  margin-top: 0.2rem;
+  border-top: 1px solid rgba(255,255,255,0.08) !important;
+  padding-top: 0.5rem !important;
 }
 
 .aw-bulk-label {
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-  text-transform: uppercase;
+  font-size: 0.6rem !important;
+  color: var(--text-muted) !important;
+  letter-spacing: 1.5px !important;
+  font-weight: 700 !important;
+  margin-bottom: 0.35rem !important;
 }
 
 .aw-bulk-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  padding: 4px 0;
-  gap: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  font-size: 0.78rem !important;
+  color: var(--text-muted) !important;
+  padding: 3px 0 !important;
+  gap: 8px !important;
+  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
 }
 
-.aw-bulk-row:last-child {
-  border-bottom: none;
-}
+.aw-bulk-row:last-child { border-bottom: none !important; }
 
 .aw-bulk-row span:last-child {
-  color: var(--accent-cyan);
-  font-weight: 700;
-  white-space: nowrap;
-  flex-shrink: 0;
+  color: var(--accent-cyan) !important;
+  font-weight: 700 !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+/* Modal padding on mobile */
+@media (max-width: 768px) {
+  .recognition-modal {
+    padding: 0 !important;
+  }
+  .recognition-modal-content {
+    padding: 0 16px 40px !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+  }
+  .recognition-modal-header {
+    padding: 60px 0 1.5rem !important;
+  }
+  .recognition-modal-close {
+    position: fixed !important;
+    top: 12px !important;
+    right: 12px !important;
+    width: 42px !important;
+    height: 42px !important;
+    background: rgba(0,0,0,0.9) !important;
+    z-index: 10002 !important;
+  }
 }
 </style>
