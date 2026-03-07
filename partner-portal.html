@@ -715,17 +715,51 @@ async function loadPartnerDashboard() {
     
     const partner = partnerData[0];
     
-    const ordersResponse = await fetch(
-      `${SUPABASE_URL}/rest/v1/orders?partner_id=eq.${partnerId}&select=*&order=created_at.desc&limit=50`,
-      {
-        headers: {
-          'apikey': SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
-        }
-      }
-    );
+    // Check if this is the PX partner - if so, pull from px_sales table
+    const isPXPartner = partnerId === 'PX' || partner.partner_id === 'PX' || partner.name?.includes('Fort Leavenworth') || partner.name?.includes('PX');
     
-    const orders = await ordersResponse.json() || [];
+    let orders = [];
+    
+    if (isPXPartner) {
+      // PX Partner - pull from px_sales table
+      const pxSalesResponse = await fetch(
+        `${SUPABASE_URL}/rest/v1/px_sales?select=*&order=order_date.desc&limit=50`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        }
+      );
+      
+      const pxSales = await pxSalesResponse.json() || [];
+      
+      // Transform px_sales to match orders format for renderDashboard
+      orders = pxSales.map(sale => ({
+        order_id: sale.id,
+        order_total: parseFloat(sale.sale_amount || 0) + parseFloat(sale.tax_amount || 0),
+        tax_amount: sale.tax_amount || 0,
+        product_type: sale.product_name || sale.product_type,
+        created_at: sale.order_date || sale.created_at,
+        partner_commission: sale.commission_amount,
+        commission_paid: sale.commission_paid || false,
+        customer_name: sale.customer_name,
+        status: sale.status || 'Completed'
+      }));
+    } else {
+      // Regular partner - pull from orders table
+      const ordersResponse = await fetch(
+        `${SUPABASE_URL}/rest/v1/orders?partner_id=eq.${partnerId}&select=*&order=created_at.desc&limit=50`,
+        {
+          headers: {
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+          }
+        }
+      );
+      
+      orders = await ordersResponse.json() || [];
+    }
     
     renderDashboard(partner, orders);
     
