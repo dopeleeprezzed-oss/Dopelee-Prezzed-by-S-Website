@@ -716,7 +716,11 @@ async function loadPartnerDashboard() {
     const partner = partnerData[0];
     
     // Check if this is the PX partner - if so, pull from px_sales table
-    const isPXPartner = partnerId === 'PX' || partner.partner_id === 'PX' || partner.name?.includes('Fort Leavenworth') || partner.name?.includes('PX');
+    const isPXPartner = partnerId === 'de71d40d-688c-4544-b0f7-215591adafb5' || 
+                        partner.partner_id === 'de71d40d-688c-4544-b0f7-215591adafb5' || 
+                        partner.business_name?.includes('Fort Leavenworth') || 
+                        partner.business_name?.includes('Exchange Service') ||
+                        partner.business_name?.includes('PX');
     
     let orders = [];
     
