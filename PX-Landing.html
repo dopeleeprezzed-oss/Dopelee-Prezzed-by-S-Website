@@ -3398,9 +3398,9 @@
             <div class="aw-card ${tier.cardClass}">
               <div class="aw-badge ${tier.class}-badge">${tier.label}</div>
               ${award.image_url ? `
-                <div class="aw-img-top" onclick="openAwardLightbox('${safeImg}', '${safeName}')">
-                  <img src="${award.image_url}" alt="${award.name}">
-                  <div class="aw-view-overlay">
+                <div class="aw-img-top">
+                  <img src="${award.image_url}" alt="${award.name}" style="cursor:pointer;" onclick="openAwardLightbox('${safeImg}', '${safeName}')">
+                  <div class="aw-view-overlay" onclick="openAwardLightbox('${safeImg}', '${safeName}')" style="cursor:pointer;">
                     <span class="aw-view-icon">🔍</span>
                     <span class="aw-view-text">Tap to View Full Image</span>
                   </div>
