@@ -3463,242 +3463,27 @@
       }
     });
   </script>
+  <!-- AWARD LIGHTBOX -->
+  <div id="awardLightbox" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.97);z-index:99999;flex-direction:column;align-items:center;justify-content:center;">
+    <button onclick="closeAwardLightbox()" style="position:absolute;top:16px;right:16px;width:44px;height:44px;background:rgba(0,0,0,0.8);border:2px solid #d4af37;border-radius:50%;color:#d4af37;font-size:1.3rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:100000;">✕</button>
+    <img id="awardLightboxImg" src="" alt="" style="max-width:95vw;max-height:82vh;object-fit:contain;border-radius:12px;touch-action:pinch-zoom;">
+    <div id="awardLightboxTitle" style="position:absolute;bottom:24px;left:0;right:0;text-align:center;color:#fff;font-size:1rem;font-weight:600;padding:0 60px;"></div>
+  </div>
+  <script>
+  function openAwardLightbox(src, name) {
+    var lb = document.getElementById('awardLightbox');
+    document.getElementById('awardLightboxImg').src = src;
+    document.getElementById('awardLightboxTitle').textContent = name;
+    lb.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+  function closeAwardLightbox() {
+    document.getElementById('awardLightbox').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  document.getElementById('awardLightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeAwardLightbox();
+  });
+  </script>
 </body>
 </html>
-
-<style>
-
-<style>
-
-
-<!-- LIGHTBOX HTML -->
-<div id="awardLightbox">
-  <button class="lb-close" onclick="closeAwardLightbox()">✕</button>
-  <img id="awardLightboxImg" src="" alt="">
-  <div class="lb-title" id="awardLightboxTitle"></div>
-</div>
-
-<script>
-function openAwardLightbox(src, name) {
-  const lb = document.getElementById('awardLightbox');
-  document.getElementById('awardLightboxImg').src = src;
-  document.getElementById('awardLightboxTitle').textContent = name;
-  lb.classList.add('active');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeAwardLightbox() {
-  document.getElementById('awardLightbox').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
-// Close on background tap
-document.getElementById('awardLightbox').addEventListener('click', function(e) {
-  if (e.target === this) closeAwardLightbox();
-});
-</script>
-<style>
-
-<style>
-/* ══════════════════════════════════════════
-   RECOGNITION MODAL — COMPLETE MOBILE FIX
-══════════════════════════════════════════ */
-
-/* Force modal to contain everything */
-.recognition-modal {
-  box-sizing: border-box !important;
-  overflow-x: hidden !important;
-}
-
-.recognition-modal-content {
-  box-sizing: border-box !important;
-  overflow-x: hidden !important;
-}
-
-/* AWARD CARDS — image on top, full width */
-.aw-list {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 1.25rem !important;
-  padding: 0 !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  overflow: hidden !important;
-}
-
-.aw-card {
-  display: flex !important;
-  flex-direction: column !important;
-  background: #1a1a1a !important;
-  border: 1px solid rgba(255,255,255,0.12) !important;
-  border-radius: 16px !important;
-  overflow: hidden !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
-  position: relative !important;
-}
-
-.aw-card.premium {
-  border-color: var(--accent-gold) !important;
-  box-shadow: 0 0 20px rgba(212,175,55,0.15) !important;
-}
-
-/* Badge sits top-left over image */
-.aw-card .aw-badge {
-  position: absolute !important;
-  top: 12px !important;
-  left: 12px !important;
-  padding: 5px 12px !important;
-  border-radius: 20px !important;
-  font-size: 0.65rem !important;
-  font-weight: 700 !important;
-  letter-spacing: 1px !important;
-  text-transform: uppercase !important;
-  z-index: 10 !important;
-}
-
-/* Image — full width, tappable */
-.aw-img-top {
-  position: relative !important;
-  width: 100% !important;
-  cursor: pointer !important;
-  overflow: hidden !important;
-}
-
-.aw-img-top img {
-  width: 100% !important;
-  height: 200px !important;
-  object-fit: cover !important;
-  display: block !important;
-}
-
-/* Classy tap overlay */
-.aw-view-overlay {
-  position: absolute !important;
-  bottom: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%) !important;
-  padding: 18px 16px 10px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  gap: 6px !important;
-}
-
-.aw-view-icon { font-size: 0.9rem !important; }
-
-.aw-view-text {
-  color: rgba(255,255,255,0.88) !important;
-  font-size: 0.72rem !important;
-  font-style: italic !important;
-  font-family: 'Playfair Display', serif !important;
-  letter-spacing: 0.5px !important;
-}
-
-/* Details section */
-.aw-info {
-  padding: 1rem !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0.35rem !important;
-  box-sizing: border-box !important;
-  width: 100% !important;
-}
-
-.aw-name {
-  font-size: 1.05rem !important;
-  font-weight: 700 !important;
-  color: #fff !important;
-  line-height: 1.3 !important;
-  margin: 0 !important;
-}
-
-.aw-desc {
-  font-size: 0.8rem !important;
-  color: var(--text-muted) !important;
-  line-height: 1.5 !important;
-  margin: 0 !important;
-}
-
-.aw-incl {
-  font-size: 0.8rem !important;
-  color: var(--accent-cyan) !important;
-  font-weight: 600 !important;
-  margin: 0 !important;
-}
-
-.aw-price {
-  font-size: 1.7rem !important;
-  font-weight: 700 !important;
-  color: #fff !important;
-  line-height: 1 !important;
-}
-
-.aw-upgrade {
-  background: rgba(212,175,55,0.15) !important;
-  border: 1px solid rgba(212,175,55,0.3) !important;
-  color: var(--accent-gold) !important;
-  padding: 6px 10px !important;
-  border-radius: 8px !important;
-  font-size: 0.76rem !important;
-  font-weight: 600 !important;
-}
-
-.aw-bulk {
-  border-top: 1px solid rgba(255,255,255,0.08) !important;
-  padding-top: 0.5rem !important;
-}
-
-.aw-bulk-label {
-  font-size: 0.6rem !important;
-  color: var(--text-muted) !important;
-  letter-spacing: 1.5px !important;
-  font-weight: 700 !important;
-  margin-bottom: 0.35rem !important;
-}
-
-.aw-bulk-row {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  font-size: 0.78rem !important;
-  color: var(--text-muted) !important;
-  padding: 3px 0 !important;
-  gap: 8px !important;
-  border-bottom: 1px solid rgba(255,255,255,0.04) !important;
-}
-
-.aw-bulk-row:last-child { border-bottom: none !important; }
-
-.aw-bulk-row span:last-child {
-  color: var(--accent-cyan) !important;
-  font-weight: 700 !important;
-  white-space: nowrap !important;
-  flex-shrink: 0 !important;
-}
-
-/* Modal padding on mobile */
-@media (max-width: 768px) {
-  .recognition-modal {
-    padding: 0 !important;
-  }
-  .recognition-modal-content {
-    padding: 0 16px 40px !important;
-    margin: 0 auto !important;
-    max-width: 100% !important;
-  }
-  .recognition-modal-header {
-    padding: 60px 0 1.5rem !important;
-  }
-  .recognition-modal-close {
-    position: fixed !important;
-    top: 12px !important;
-    right: 12px !important;
-    width: 42px !important;
-    height: 42px !important;
-    background: rgba(0,0,0,0.9) !important;
-    z-index: 10002 !important;
-  }
-}
-</style>
