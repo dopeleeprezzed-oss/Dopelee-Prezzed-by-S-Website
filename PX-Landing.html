@@ -1653,14 +1653,47 @@
       padding: 0 1.5rem 2rem;
       position: relative;
     }
+
+    @media (max-width: 768px) {
+      .recognition-modal-content {
+        margin: 0;
+        padding: 0 1rem 2rem;
+        width: 100%;
+      }
+
+      .recognition-modal-header {
+        padding: 4rem 1rem 1.5rem;
+      }
+
+      .recognition-modal-header h2 {
+        font-size: 1.5rem;
+      }
+
+      .recognition-modal-header p {
+        font-size: 0.9rem;
+      }
+
+      .recognition-minimum-badge {
+        padding: 10px 18px;
+        gap: 8px;
+      }
+
+      .recognition-minimum-badge .number {
+        font-size: 1.5rem;
+      }
+
+      .recognition-minimum-badge .text {
+        font-size: 0.82rem;
+      }
+    }
     
     .recognition-modal-close {
       position: fixed;
-      top: 20px;
-      right: 25px;
+      top: 16px;
+      right: 16px;
       width: 45px;
       height: 45px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.85);
       border: 2px solid var(--accent-gold);
       border-radius: 50%;
       color: var(--accent-gold);
@@ -1734,7 +1767,7 @@
       .recognition-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
-        padding: 0 10px;
+        padding: 0;
       }
     }
     
