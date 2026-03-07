@@ -3385,30 +3385,34 @@
           2: { class: 'classic', label: 'CLASSIC', cardClass: '' }
         };
         
-        let html = '<div class="rec-list">';
+        let html = '<div class="aw-list">';
         
         awards.forEach((award, index) => {
           const tier = tierBadges[index] || tierBadges[2];
           const hasGoldUpgrade = award.gold_upgrade_price && award.gold_upgrade_price > 0;
           const price = award.price || (award.price_amount ? '$' + award.price_amount : '');
+          const imgHtml = award.image_url 
+            ? `<img src="${award.image_url}" alt="${award.name}" class="aw-thumb" onclick="openAwardLightbox('${award.image_url}', '${award.name.replace(/'/g, "\'")}')">
+               <div class="aw-zoom-hint">👆 Tap to enlarge</div>`
+            : '<div class="aw-no-img">🏆</div>';
           
           html += `
-            <div class="rec-item ${tier.cardClass}">
-              <div class="rec-image-wrap">
-                ${award.image_url ? `<img src="${award.image_url}" alt="${award.name}">` : '<div class="rec-no-img">🏆</div>'}
-                <div class="rec-badge ${tier.class}-badge">${tier.label}</div>
+            <div class="aw-card ${tier.cardClass}">
+              <div class="aw-img-col">
+                ${imgHtml}
+                <div class="aw-badge ${tier.class}-badge">${tier.label}</div>
               </div>
-              <div class="rec-details">
-                <h3>${award.name}</h3>
-                <p class="rec-desc">${award.description || ''}</p>
-                <p class="rec-includes">✓ Includes display stand</p>
-                <div class="rec-price">${price}</div>
-                ${hasGoldUpgrade ? `<div class="rec-upgrade">✨ Gold Engraving Upgrade: +$${award.gold_upgrade_price}</div>` : ''}
-                <div class="rec-bulk">
-                  <div class="rec-bulk-title">BULK PRICING</div>
-                  ${award.bulk_price_15 ? `<div class="rec-bulk-row"><span>15-24 units (10% off)</span><span>$${Number(award.bulk_price_15).toFixed(2)}</span></div>` : ''}
-                  ${award.bulk_price_25 ? `<div class="rec-bulk-row"><span>25-49 units (15% off)</span><span>$${Number(award.bulk_price_25).toFixed(2)}</span></div>` : ''}
-                  ${award.bulk_price_50 ? `<div class="rec-bulk-row"><span>50+ units (20% off)</span><span>$${Number(award.bulk_price_50).toFixed(2)}</span></div>` : ''}
+              <div class="aw-info">
+                <h3 class="aw-name">${award.name}</h3>
+                <p class="aw-desc">${award.description || ''}</p>
+                <p class="aw-incl">✓ Includes display stand</p>
+                <div class="aw-price">${price}</div>
+                ${hasGoldUpgrade ? `<div class="aw-upgrade">✨ Gold Engraving: +$${award.gold_upgrade_price}</div>` : ''}
+                <div class="aw-bulk">
+                  <div class="aw-bulk-label">BULK PRICING</div>
+                  ${award.bulk_price_15 ? `<div class="aw-bulk-row"><span>15-24 units (10% off)</span><span>$${Number(award.bulk_price_15).toFixed(2)}</span></div>` : ''}
+                  ${award.bulk_price_25 ? `<div class="aw-bulk-row"><span>25-49 units (15% off)</span><span>$${Number(award.bulk_price_25).toFixed(2)}</span></div>` : ''}
+                  ${award.bulk_price_50 ? `<div class="aw-bulk-row"><span>50+ units (20% off)</span><span>$${Number(award.bulk_price_50).toFixed(2)}</span></div>` : ''}
                 </div>
               </div>
             </div>
@@ -3670,3 +3674,253 @@
   }
 }
 </style>
+<style>
+/* ═══════════════════════════════════════
+   AWARD CARDS — CLEAN LIST WITH LIGHTBOX
+═══════════════════════════════════════ */
+.aw-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0;
+  width: 100%;
+}
+
+.aw-card {
+  display: flex;
+  flex-direction: row;
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.aw-card.premium {
+  border-color: var(--accent-gold);
+  background: linear-gradient(135deg, rgba(212,175,55,0.12) 0%, #1a1a1a 60%);
+}
+
+/* IMAGE COLUMN */
+.aw-img-col {
+  position: relative;
+  width: 130px;
+  min-width: 130px;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.aw-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+.aw-thumb:active {
+  opacity: 0.85;
+}
+
+.aw-zoom-hint {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.7);
+  color: #fff;
+  font-size: 0.6rem;
+  text-align: center;
+  padding: 4px;
+  letter-spacing: 0.3px;
+}
+
+.aw-no-img {
+  width: 100%;
+  height: 100%;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  background: #111;
+}
+
+.aw-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+/* INFO COLUMN */
+.aw-info {
+  flex: 1;
+  padding: 0.85rem 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.aw-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.aw-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.aw-incl {
+  font-size: 0.75rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  margin: 0;
+}
+
+.aw-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.aw-upgrade {
+  background: rgba(212,175,55,0.15);
+  color: var(--accent-gold);
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.aw-bulk {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 0.4rem;
+  margin-top: 0.1rem;
+}
+
+.aw-bulk-label {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  letter-spacing: 1.2px;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+}
+
+.aw-bulk-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  padding: 2px 0;
+  gap: 6px;
+}
+
+.aw-bulk-row span:last-child {
+  color: var(--accent-cyan);
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════
+   LIGHTBOX — FULL SCREEN IMAGE ZOOM
+═══════════════════════════════════ */
+#awardLightbox {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.97);
+  z-index: 99999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#awardLightbox.active {
+  display: flex;
+}
+
+#awardLightbox .lb-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid var(--accent-gold);
+  border-radius: 50%;
+  color: var(--accent-gold);
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100000;
+}
+
+#awardLightbox .lb-title {
+  position: absolute;
+  bottom: 24px;
+  left: 0; right: 0;
+  text-align: center;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0 60px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+}
+
+#awardLightbox img {
+  max-width: 95vw;
+  max-height: 82vh;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 0 60px rgba(212,175,55,0.2);
+  touch-action: pinch-zoom;
+}
+</style>
+
+<!-- LIGHTBOX HTML -->
+<div id="awardLightbox">
+  <button class="lb-close" onclick="closeAwardLightbox()">✕</button>
+  <img id="awardLightboxImg" src="" alt="">
+  <div class="lb-title" id="awardLightboxTitle"></div>
+</div>
+
+<script>
+function openAwardLightbox(src, name) {
+  const lb = document.getElementById('awardLightbox');
+  document.getElementById('awardLightboxImg').src = src;
+  document.getElementById('awardLightboxTitle').textContent = name;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAwardLightbox() {
+  document.getElementById('awardLightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close on background tap
+document.getElementById('awardLightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeAwardLightbox();
+});
+</script>
