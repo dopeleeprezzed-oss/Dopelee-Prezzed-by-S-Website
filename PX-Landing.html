@@ -3385,26 +3385,31 @@
           2: { class: 'classic', label: 'CLASSIC', cardClass: '' }
         };
         
-        let html = '<div class="recognition-grid">';
+        let html = '<div class="rec-list">';
         
         awards.forEach((award, index) => {
           const tier = tierBadges[index] || tierBadges[2];
           const hasGoldUpgrade = award.gold_upgrade_price && award.gold_upgrade_price > 0;
+          const price = award.price || (award.price_amount ? '$' + award.price_amount : '');
           
           html += `
-            <div class="recognition-card ${tier.cardClass}">
-              <div class="recognition-tier-badge ${tier.class}-badge">${tier.label}</div>
-              ${award.image_url ? `<img src="${award.image_url}" alt="${award.name}" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-bottom:15px;">` : ''}
-              <h3>${award.name}</h3>
-              <p class="description">${award.description || ''}</p>
-              <p class="includes">✓ Includes display stand</p>
-              <div class="recognition-price-main">${award.price || '$' + award.price_amount}</div>
-              ${hasGoldUpgrade ? `<div class="recognition-upgrade">✨ Upgrade to Gold Engraving: +$${award.gold_upgrade_price}</div>` : ''}
-              <div class="recognition-bulk-prices">
-                <h4>Bulk Pricing</h4>
-                ${award.bulk_price_15 ? `<div class="bulk-row"><span>15-24 units (10% off)</span><span class="bulk-price">$${Number(award.bulk_price_15).toFixed(2)}</span></div>` : ''}
-                ${award.bulk_price_25 ? `<div class="bulk-row"><span>25-49 units (15% off)</span><span class="bulk-price">$${Number(award.bulk_price_25).toFixed(2)}</span></div>` : ''}
-                ${award.bulk_price_50 ? `<div class="bulk-row"><span>50+ units (20% off)</span><span class="bulk-price">$${Number(award.bulk_price_50).toFixed(2)}</span></div>` : ''}
+            <div class="rec-item ${tier.cardClass}">
+              <div class="rec-image-wrap">
+                ${award.image_url ? `<img src="${award.image_url}" alt="${award.name}">` : '<div class="rec-no-img">🏆</div>'}
+                <div class="rec-badge ${tier.class}-badge">${tier.label}</div>
+              </div>
+              <div class="rec-details">
+                <h3>${award.name}</h3>
+                <p class="rec-desc">${award.description || ''}</p>
+                <p class="rec-includes">✓ Includes display stand</p>
+                <div class="rec-price">${price}</div>
+                ${hasGoldUpgrade ? `<div class="rec-upgrade">✨ Gold Engraving Upgrade: +$${award.gold_upgrade_price}</div>` : ''}
+                <div class="rec-bulk">
+                  <div class="rec-bulk-title">BULK PRICING</div>
+                  ${award.bulk_price_15 ? `<div class="rec-bulk-row"><span>15-24 units (10% off)</span><span>$${Number(award.bulk_price_15).toFixed(2)}</span></div>` : ''}
+                  ${award.bulk_price_25 ? `<div class="rec-bulk-row"><span>25-49 units (15% off)</span><span>$${Number(award.bulk_price_25).toFixed(2)}</span></div>` : ''}
+                  ${award.bulk_price_50 ? `<div class="rec-bulk-row"><span>50+ units (20% off)</span><span>$${Number(award.bulk_price_50).toFixed(2)}</span></div>` : ''}
+                </div>
               </div>
             </div>
           `;
@@ -3508,6 +3513,160 @@
   }
   .bulk-row {
     font-size: 0.78rem !important;
+  }
+}
+</style>
+<style>
+/* ═══════════════════════════════════════
+   RECOGNITION CARDS - NEW SPLIT LAYOUT
+   Matches the Wood Keepsake modal style
+═══════════════════════════════════════ */
+.rec-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 0;
+}
+
+.rec-item {
+  display: flex;
+  flex-direction: row;
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 180px;
+}
+
+.rec-item.premium {
+  border-color: var(--accent-gold);
+  background: linear-gradient(135deg, rgba(212,175,55,0.1) 0%, #1a1a1a 100%);
+}
+
+.rec-image-wrap {
+  position: relative;
+  width: 140px;
+  min-width: 140px;
+  flex-shrink: 0;
+}
+
+.rec-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rec-no-img {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  background: #111;
+}
+
+.rec-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.rec-details {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  overflow: hidden;
+}
+
+.rec-details h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+  margin: 0;
+}
+
+.rec-desc {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.rec-includes {
+  font-size: 0.8rem;
+  color: var(--accent-cyan);
+  font-weight: 600;
+  margin: 0;
+}
+
+.rec-price {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.rec-upgrade {
+  background: rgba(212,175,55,0.15);
+  color: var(--accent-gold);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.rec-bulk {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.rec-bulk-title {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.rec-bulk-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: 3px 0;
+  gap: 8px;
+}
+
+.rec-bulk-row span:last-child {
+  color: var(--accent-cyan);
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Mobile — already works since it's a column layout */
+@media (max-width: 480px) {
+  .rec-image-wrap {
+    width: 120px;
+    min-width: 120px;
+  }
+  .rec-details h3 {
+    font-size: 0.92rem;
+  }
+  .rec-price {
+    font-size: 1.4rem;
   }
 }
 </style>
