@@ -818,14 +818,14 @@ function renderPXDashboard(partner, sales, products) {
     monthOptions = `<option value="${currentKey}">${monthNames[now.getMonth()]} ${now.getFullYear()}</option>`;
   }
 
-  // ── ALL-TIME TOTALS ──
+  // All-time totals — always RECOMPUTE commission from sale_amount * 13%
   let allTimeNet = 0, allTimeGross = 0, allTimeCommission = 0;
   sales.forEach(s => {
     const net = parseFloat(s.sale_amount) || 0;
     const tax = parseFloat(s.tax_amount) || 0;
     allTimeNet += net;
     allTimeGross += (net + tax);
-    allTimeCommission += parseFloat(s.commission_amount) || (net * COMMISSION_RATE);
+    allTimeCommission += net * 0.13; // always recompute
   });
 
   const html = `
@@ -884,10 +884,14 @@ function renderPXDashboard(partner, sales, products) {
 
     <!-- PRICE LIST -->
     <div class="card" style="max-width:800px;margin:0 auto 30px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px;">
-        <h2 style="margin:0;">🏷️ Current PX Price List</h2>
-        ${pricesLastUpdated ? `<span style="font-size:13px;color:#0ff0b8;font-style:italic;">✓ Prices last updated: ${pricesLastUpdated}</span>` : ''}
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:6px;">
+        <div>
+          <h2 style="margin:0 4px 0 0;display:inline;">🏷️ Current PX Price List</h2>
+          ${pricesLastUpdated ? `<span style="font-size:12px;color:#0ff0b8;font-style:italic;display:block;margin-top:4px;">✓ Prices last updated: ${pricesLastUpdated}</span>` : ''}
+        </div>
+        <button onclick="downloadPXPriceList()" style="background:rgba(212,175,55,0.15);border:2px solid #d4af37;color:#d4af37;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;">⬇️ Download PDF</button>
       </div>
+      <p style="font-size:13px;color:#555;margin:0 0 16px;">Tap any category to expand</p>
       ${renderPXPriceList(catMap)}
     </div>
 
@@ -937,14 +941,15 @@ function renderPXMonthly(sales) {
     return k === selectedKey;
   });
 
-  // Summary totals
+  // Summary totals — always RECOMPUTE commission from sale_amount * 13%
+  // Never trust stored commission_amount (may have been written incorrectly by webhook)
   let monthNet = 0, monthGross = 0, monthCommission = 0;
   filtered.forEach(s => {
     const net = parseFloat(s.sale_amount) || 0;
     const tax = parseFloat(s.tax_amount) || 0;
     monthNet += net;
     monthGross += (net + tax);
-    monthCommission += parseFloat(s.commission_amount) || (net * COMMISSION_RATE);
+    monthCommission += net * 0.13; // always recompute, 13% of net
   });
 
   // Summary HTML
@@ -985,7 +990,7 @@ function renderPXMonthly(sales) {
     productMap[name].qty += parseInt(s.quantity) || 1;
     const net = parseFloat(s.sale_amount) || 0;
     productMap[name].net += net;
-    productMap[name].commission += parseFloat(s.commission_amount) || (net * COMMISSION_RATE);
+    productMap[name].commission += net * 0.13; // always recompute
   });
 
   const rows = Object.entries(productMap)
@@ -1032,34 +1037,133 @@ function renderPXPriceList(catMap) {
   }
 
   const catColors = {
+    'Certificate Frame': '#d3fb1b',
+    'Display Case':      '#d4af37',
     'Engraving Service': '#0ff0b8',
-    'Display Case': '#d4af37',
-    'Ornament': '#3461fa',
-    'Shadow Box': '#fd26fd',
-    'Journal': '#d3fb1b',
-    'Tumbler': '#0a95a8',
-    'Keychain': '#0ff0b8',
+    'Everyday Item':     '#0a95a8',
+    'Ornament':          '#3461fa',
+    'Photo Lookbook':    '#fd26fd',
+    'Recognition Award': '#0ff0b8',
+    'Slate Keepsake':    '#b8bac0',
+    'Wood Keepsake':     '#d4af37',
   };
 
-  return cats.map(cat => {
+  const catIcons = {
+    'Certificate Frame': '🖼️',
+    'Display Case':      '🗄️',
+    'Engraving Service': '✍️',
+    'Everyday Item':     '🎁',
+    'Ornament':          '🎄',
+    'Photo Lookbook':    '📖',
+    'Recognition Award': '🏆',
+    'Slate Keepsake':    '🪨',
+    'Wood Keepsake':     '🪵',
+  };
+
+  return cats.map((cat, idx) => {
     const color = catColors[cat] || '#0ff0b8';
+    const icon = catIcons[cat] || '📦';
     const items = catMap[cat];
+    const accordionId = `acc-cat-${idx}`;
+
     const rows = items.map(p => `
-      <tr>
-        <td style="padding:10px 8px;">${p.name}</td>
-        <td style="text-align:right;padding:10px 8px;font-weight:700;color:#fff;">$${parseFloat(p.px_price || 0).toFixed(2)}</td>
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+        <td style="padding:9px 10px;font-size:14px;">${p.name}</td>
+        <td style="text-align:right;padding:9px 10px;font-weight:700;color:#fff;font-size:14px;white-space:nowrap;">$${parseFloat(p.px_price || 0).toFixed(2)}</td>
       </tr>
     `).join('');
 
     return `
-      <div style="margin-bottom:22px;">
-        <h4 style="margin:0 0 10px;font-size:14px;font-weight:700;color:${color};letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:6px;">${cat}</h4>
-        <table style="width:100%;border-collapse:collapse;">
-          <tbody>${rows}</tbody>
-        </table>
+      <div style="border:1px solid rgba(255,255,255,0.1);border-radius:10px;margin-bottom:8px;overflow:hidden;">
+        <!-- ACCORDION HEADER -->
+        <div onclick="toggleAccordion('${accordionId}')"
+             style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;cursor:pointer;background:rgba(255,255,255,0.04);user-select:none;">
+          <span style="font-weight:700;font-size:15px;color:${color};">${icon} ${cat} <span style="font-size:12px;color:#555;font-weight:400;">(${items.length})</span></span>
+          <span id="${accordionId}-arrow" style="color:${color};font-size:18px;transition:transform 0.25s;">▸</span>
+        </div>
+        <!-- ACCORDION BODY -->
+        <div id="${accordionId}" style="display:none;padding:0 6px 6px;">
+          <table style="width:100%;border-collapse:collapse;">
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
       </div>
     `;
   }).join('');
+}
+
+function toggleAccordion(id) {
+  const body = document.getElementById(id);
+  const arrow = document.getElementById(id + '-arrow');
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'block';
+  arrow.style.transform = isOpen ? '' : 'rotate(90deg)';
+}
+
+function downloadPXPriceList() {
+  // Build printable HTML for the price list
+  const cats = document.querySelectorAll('[id^="acc-cat-"]');
+  if (cats.length === 0) {
+    alert('Price list not loaded yet. Please wait a moment and try again.');
+    return;
+  }
+
+  // Gather data from rendered accordion tables
+  let tableRows = '';
+  let prevCat = '';
+  document.querySelectorAll('[id^="acc-cat-"]').forEach(div => {
+    const header = div.previousElementSibling;
+    const catName = header ? header.querySelector('span').textContent.replace(/\(\d+\)/, '').trim() : '';
+    if (catName !== prevCat) {
+      tableRows += `<tr class="cat-header"><td colspan="2">${catName}</td></tr>`;
+      prevCat = catName;
+    }
+    div.querySelectorAll('tbody tr').forEach(row => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length >= 2) {
+        tableRows += `<tr><td>${cells[0].textContent.trim()}</td><td>${cells[1].textContent.trim()}</td></tr>`;
+      }
+    });
+  });
+
+  const today = new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+  const printHTML = `<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>PX Price List – The Legacy Lounge™</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 40px; color: #111; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .subtitle { font-size: 13px; color: #555; margin: 0 0 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #111; color: #fff; padding: 8px 10px; text-align: left; }
+  th:last-child { text-align: right; }
+  td { padding: 7px 10px; border-bottom: 1px solid #eee; }
+  td:last-child { text-align: right; font-weight: 700; }
+  tr.cat-header td { background: #f5f5f5; font-weight: 800; font-size: 13px; color: #333; padding: 10px 10px 6px; border-bottom: 2px solid #ddd; letter-spacing: 0.5px; text-transform: uppercase; }
+  .footer { margin-top: 30px; font-size: 11px; color: #999; text-align: center; }
+  @media print { body { margin: 20px; } }
+</style>
+</head>
+<body>
+<h1>🏷️ The Legacy Lounge™ — PX Price List</h1>
+<p class="subtitle">Fort Leavenworth PX &nbsp;|&nbsp; Effective: ${today} &nbsp;|&nbsp; Questions? Call 816-530-1520</p>
+<table>
+  <thead><tr><th>Product</th><th>Price</th></tr></thead>
+  <tbody>${tableRows}</tbody>
+</table>
+<div class="footer">Dopelee Prezzed by S LLC &nbsp;•&nbsp; www.dopeleeprezzedbys.com &nbsp;•&nbsp; All prices subject to change.</div>
+</body>
+</html>`;
+
+  const blob = new Blob([printHTML], { type: 'text/html' });
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url, '_blank');
+  if (win) {
+    win.onload = () => { win.print(); };
+  }
 }
 
 // ═══════════════════════════════════════════════════════════
