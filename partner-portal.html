@@ -739,7 +739,7 @@ async function loadPartnerDashboard() {
           { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
         ),
         fetch(
-          `${SUPABASE_URL}/rest/v1/products?is_px_only=eq.true&select=name,px_price,product_category,price_updated_at&order=product_category.asc,name.asc`,
+          `${SUPABASE_URL}/rest/v1/products?show_on_website=eq.false&select=name,px_price,product_category,price_updated_at&order=product_category.asc,name.asc`,
           { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
         )
       ]);
