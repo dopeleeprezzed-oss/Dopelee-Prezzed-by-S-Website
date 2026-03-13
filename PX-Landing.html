@@ -172,6 +172,17 @@
       100% { transform: translateX(-50%); }
     }
     
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(1.3); }
+    }
+
+    @media (max-width: 600px) {
+      .playlist-grid {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
     @media (max-width: 768px) {
       .top-bar {
         flex-direction: column;
@@ -2768,6 +2779,69 @@
     </div>
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════════
+       LEGACY LOUNGE PLAYLIST
+  ════════════════════════════════════════════════════════════ -->
+  <div class="container" style="margin:2.5rem auto;">
+    <div style="text-align:center;margin-bottom:1.5rem;">
+      <p style="font-size:0.7rem;letter-spacing:3px;color:#d4af37;font-weight:700;text-transform:uppercase;margin:0 0 6px;">Now Playing</p>
+      <h2 style="font-family:'Playfair Display',serif;font-size:1.8rem;background:linear-gradient(90deg,#d4af37,#f5d76e,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:0 0 4px;">The Legacy Lounge™ Playlist</h2>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.45);margin:0;">Music curated for your Legacy experience</p>
+    </div>
+
+    <div class="playlist-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;max-width:860px;margin:0 auto;">
+      
+      <!-- TRACK 1 -->
+      <div style="background:linear-gradient(145deg,#0d0d0d,#1a1a1a);border:1px solid rgba(212,175,55,0.25);border-radius:16px;overflow:hidden;position:relative;">
+        <div style="position:absolute;top:12px;left:14px;z-index:2;display:flex;align-items:center;gap:6px;">
+          <span style="width:7px;height:7px;background:#d4af37;border-radius:50%;display:inline-block;animation:pulse 2s infinite;"></span>
+          <span style="font-size:0.6rem;color:#d4af37;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Track 01</span>
+        </div>
+        <div style="padding-top:44px;">
+          <iframe 
+            src="https://www.youtube.com/embed/vDOxyDmRO34?si=CFvGLRjJfuV6vEhe" 
+            title="Legacy Lounge Playlist - Track 1"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="width:100%;height:200px;display:block;">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- TRACK 2 -->
+      <div style="background:linear-gradient(145deg,#0d0d0d,#1a1a1a);border:1px solid rgba(212,175,55,0.25);border-radius:16px;overflow:hidden;position:relative;">
+        <div style="position:absolute;top:12px;left:14px;z-index:2;display:flex;align-items:center;gap:6px;">
+          <span style="width:7px;height:7px;background:#0ff0b8;border-radius:50%;display:inline-block;animation:pulse 2s infinite 0.5s;"></span>
+          <span style="font-size:0.6rem;color:#0ff0b8;font-weight:700;letter-spacing:2px;text-transform:uppercase;">Track 02</span>
+        </div>
+        <div style="padding-top:44px;">
+          <iframe 
+            src="https://www.youtube.com/embed/Fq1KurRRbVc?si=lsD16jQRfPWgpgF1" 
+            title="Legacy Lounge Playlist - Track 2"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            style="width:100%;height:200px;display:block;">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SHOP HEADER
+  ════════════════════════════════════════════════════════════ -->
+  <div style="text-align:center;padding:2.5rem 1rem 1rem;max-width:700px;margin:0 auto;">
+    <p style="font-size:0.7rem;letter-spacing:3px;color:#0ff0b8;font-weight:700;text-transform:uppercase;margin:0 0 8px;">The Legacy Lounge™ at Fort Leavenworth PX</p>
+    <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin:0 0 10px;line-height:1.2;">Shop Our Keepsake Collection</h2>
+    <p style="color:rgba(255,255,255,0.5);font-size:0.9rem;margin:0 0 1.5rem;line-height:1.6;">Every piece is handcrafted with purpose built to carry your story, your service, and your legacy forward.</p>
+    <div style="width:60px;height:2px;background:linear-gradient(90deg,#d4af37,#0ff0b8);margin:0 auto;border-radius:2px;"></div>
+  </div>
+
   <!-- LOADING -->
   <div id="loadingState" class="loading">Loading products...</div>
 
@@ -2779,10 +2853,18 @@
 
   </div>
 
+
   <!-- ═══════════════════════════════════════════════════════════════
        LEGACY RECOGNITION TEASER - Opens Modal
   ═══════════════════════════════════════════════════════════════ -->
   <div class="container">
+
+    <!-- RECOGNITION QUESTION PROMPT -->
+    <div style="text-align:center;margin-bottom:1.25rem;padding:0 1rem;">
+      <p style="font-family:'Playfair Display',serif;font-size:1.35rem;color:rgba(255,255,255,0.85);font-style:italic;margin:0 0 6px;line-height:1.5;">Are you looking to honor someone who has given everything for this country?</p>
+      <p style="font-size:0.8rem;color:#d4af37;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin:0;">Recognition starts here</p>
+    </div>
+
     <div class="recognition-teaser" onclick="openRecognitionModal()">
       <div class="recognition-teaser-glow"></div>
       <div class="recognition-teaser-content">
@@ -2790,7 +2872,7 @@
         <h3>Legacy Recognition</h3>
         <p>Custom engraved awards for schools, units, and military ceremonies</p>
         <div class="recognition-teaser-cta">
-          <span>View Pricing</span>
+          <span>Enter Your Recognition Experience</span>
           <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
         </div>
       </div>
@@ -2801,6 +2883,13 @@
        VIP TEASER - Opens Modal
   ═══════════════════════════════════════════════════════════════ -->
   <div class="container">
+
+    <!-- VIP QUESTION PROMPT -->
+    <div style="text-align:center;margin-bottom:1.25rem;padding:0 1rem;">
+      <p style="font-family:'Playfair Display',serif;font-size:1.35rem;color:rgba(255,255,255,0.85);font-style:italic;margin:0 0 6px;line-height:1.5;">Do you have a celebration, milestone, or moment that deserves something truly unforgettable?</p>
+      <p style="font-size:0.8rem;color:#0ff0b8;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin:0;">Your experience awaits</p>
+    </div>
+
     <div class="vip-teaser" onclick="openVIPModal()">
       <div class="vip-teaser-glow"></div>
       <div class="vip-teaser-content">
@@ -2808,7 +2897,7 @@
         <h3>VIP Experiences</h3>
         <p>Premium, personalized gift experiences for your special events</p>
         <div class="vip-teaser-cta">
-          <span>Discover More</span>
+          <span>Enter Your VIP Experience</span>
           <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
         </div>
       </div>
@@ -2822,7 +2911,7 @@
     <div class="community-voice-section">
       <div class="community-badge">🎖️ YOUR VOICE MATTERS</div>
       <h3>Share Your Words</h3>
-      <p>Submit your favorite saying, motto, or phrase. We'll feature it on a custom keepsake that your fellow service members can purchase. This is YOUR community — let your voice be heard.</p>
+      <p>Submit your favorite saying, motto, or phrase. We'll feature it on a custom keepsake that your fellow service members can purchase. This is YOUR community let your voice be heard.</p>
       <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/Share%20your%20words.html" class="btn-community" id="communityFormBtn" target="_blank">
         <span>✍️</span> Submit Your Saying
       </a>
@@ -2843,7 +2932,7 @@
         <div class="featured-info">
           <h4>Your Saying Could Be Here</h4>
           <p class="featured-quote">"Submit your favorite military saying or motto and see it featured on a custom keepsake."</p>
-          <p class="featured-author">— The Legacy Lounge Community</p>
+          <p class="featured-author"> The Legacy Lounge Community</p>
           <a href="#" class="btn-featured-shop" style="opacity: 0.5; pointer-events: none;">Shop This Item →</a>
         </div>
       </div>
