@@ -2738,8 +2738,8 @@
   <div class="marquee-banner">
     <div class="marquee-track">
       <span class="marquee-content">
-        🇺🇸 Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond 🇺🇸 &nbsp;&nbsp;&nbsp;&nbsp;
-        🇺🇸 Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond 🇺🇸 &nbsp;&nbsp;&nbsp;&nbsp;
+        ✦ Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond ✦ &nbsp;&nbsp;&nbsp;&nbsp;
+        ✦ Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Intentional Experiences for Celebrations, Remembrance, and Beyond ✦ &nbsp;&nbsp;&nbsp;&nbsp;
       </span>
     </div>
   </div>
@@ -2944,7 +2944,7 @@
   ═══════════════════════════════════════════════════════════════ -->
   <div class="vip-modal-overlay" id="vipModal" onclick="closeVIPModal(event)">
     <div class="vip-modal-content" onclick="event.stopPropagation()">
-      <button class="vip-modal-close" onclick="closeVIPModal()">&times;</button>
+      <button class="vip-modal-close" onclick="closeVIPModalForced()">&times;</button>
       
       <div class="vip-modal-header">
         <div class="vip-modal-badge">✦ VIP ✦</div>
@@ -2977,7 +2977,7 @@
       </div>
       
       <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" class="btn-vip-modal" target="_blank">
-        Request VIP Quote →
+        Request Your VIP Experience
       </a>
     </div>
   </div>
@@ -3533,7 +3533,16 @@
     }
     
     function closeVIPModal(event) {
-      if (event && event.target !== event.currentTarget) return;
+      // Only close if clicking the overlay background, not the content inside
+      if (event && event.target !== document.getElementById('vipModal')) return;
+      const modal = document.getElementById('vipModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function closeVIPModalForced() {
       const modal = document.getElementById('vipModal');
       if (modal) {
         modal.classList.remove('active');
