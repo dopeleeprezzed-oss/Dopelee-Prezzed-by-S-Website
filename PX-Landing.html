@@ -1482,9 +1482,10 @@
     
     .vip-teaser-content {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+      text-align: center;
+      gap: 1.25rem;
       position: relative;
       z-index: 1;
     }
@@ -1497,22 +1498,40 @@
       font-size: 0.75rem;
       font-weight: 700;
       letter-spacing: 2px;
+      display: inline-block;
     }
     
     .vip-teaser h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
+      font-size: 2rem;
       color: #f5d76e;
       margin: 0;
-      flex-shrink: 0;
     }
     
     .vip-teaser p {
       color: #b8bac0;
-      flex: 1;
-      min-width: 200px;
       margin: 0;
       font-size: 1rem;
+    }
+    
+    .vip-teaser-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 2px solid var(--accent-gold);
+      color: var(--accent-gold);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+    
+    .vip-teaser:hover .vip-teaser-cta {
+      background: linear-gradient(135deg, var(--accent-gold), #f5d76e);
+      color: #000;
+      transform: translateY(-2px);
     }
     
     /* ═══════════════════════════════════════════════════════════════
@@ -1567,9 +1586,10 @@
     
     .recognition-teaser-content {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 2rem;
-      flex-wrap: wrap;
+      text-align: center;
+      gap: 1.25rem;
       position: relative;
       z-index: 1;
     }
@@ -1584,44 +1604,42 @@
       font-weight: 700;
       letter-spacing: 2px;
       text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+      display: inline-block;
     }
     
     .recognition-teaser h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.6rem;
+      font-size: 2rem;
       background: linear-gradient(90deg, var(--accent-gold), #f5d76e, var(--accent-gold));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin: 0;
-      flex-shrink: 0;
     }
     
     .recognition-teaser p {
       color: #b8bac0;
-      flex: 1;
-      min-width: 200px;
       margin: 0;
       font-size: 1rem;
     }
     
     .recognition-teaser-cta {
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 8px;
       background: linear-gradient(135deg, var(--accent-gold), #f5d76e);
       color: #000;
-      padding: 10px 20px;
-      border-radius: 25px;
+      padding: 12px 28px;
+      border-radius: 50px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       transition: all 0.3s ease;
       box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
     }
     
     .recognition-teaser:hover .recognition-teaser-cta {
       box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
-      transform: translateX(5px);
+      transform: translateY(-2px);
     }
     
     @media (max-width: 768px) {
@@ -1629,12 +1647,10 @@
         padding: 1.5rem;
       }
       .recognition-teaser-content {
-        flex-direction: column;
-        text-align: center;
         gap: 1rem;
       }
       .recognition-teaser h3 {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
       }
     }
     
