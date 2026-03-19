@@ -3732,12 +3732,13 @@
                    style="display:block;text-align:center;background:linear-gradient(135deg,#d4af37,#f5d76e);color:#000;font-weight:800;font-size:0.82rem;letter-spacing:0.5px;padding:10px 16px;border-radius:50px;text-decoration:none;margin:10px 0;">
                   Buy Single Unit
                 </a>` : ''}
+                ${(award.bulk_price_15 || award.bulk_price_25 || award.bulk_price_50) ? `
                 <div class="aw-bulk">
                   <div class="aw-bulk-label">BULK PRICING</div>
                   ${award.bulk_price_15 ? `<div class="aw-bulk-row"><span>15 to 24 units (10% off)</span><span>$${Number(award.bulk_price_15).toFixed(2)}</span></div>` : ''}
                   ${award.bulk_price_25 ? `<div class="aw-bulk-row"><span>25 to 49 units (15% off)</span><span>$${Number(award.bulk_price_25).toFixed(2)}</span></div>` : ''}
                   ${award.bulk_price_50 ? `<div class="aw-bulk-row"><span>50 or more units (20% off)</span><span>$${Number(award.bulk_price_50).toFixed(2)}</span></div>` : ''}
-                </div>
+                </div>` : ''}
               </div>
             </div>
           `;
