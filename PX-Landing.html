@@ -3048,23 +3048,7 @@
         </div>
       </div>
 
-      <!-- CALLOUTS -->
-      <div class="recognition-callouts">
-        <div class="recognition-callout payment">
-          <span class="icon">💳</span>
-          <div>
-            <strong>Payment in Full Required</strong>
-            <p>All orders require full payment upfront. Credit cards only.</p>
-          </div>
-        </div>
-        <div class="recognition-callout pickup">
-          <span class="icon">📍</span>
-          <div>
-            <strong>In-Store Pickup Only</strong>
-            <p>Orders available at The Legacy Lounge inside the Fort Leavenworth PX</p>
-          </div>
-        </div>
-      </div>
+
 
       <!-- LEAD TIMES -->
       <div class="recognition-lead-times">
@@ -3080,31 +3064,15 @@
       <!-- CTA -->
       <div class="recognition-cta">
 
-        <p style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;text-align:center;margin:0 0 6px;">Ready to place your order?</p>
-        <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);text-align:center;margin:0 0 24px;">Choose the path that fits your needs below</p>
 
-        <!-- PATH 1: SINGLE UNIT -->
-        <div style="background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.35);border-radius:16px;padding:1.5rem;margin-bottom:16px;">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-            <div style="width:36px;height:36px;min-width:36px;background:linear-gradient(135deg,#d4af37,#f5d76e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:1rem;">1</div>
-            <div>
-              <p style="margin:0;color:#d4af37;font-weight:700;font-size:0.95rem;">Purchasing Just One?</p>
-              <p style="margin:0;color:rgba(255,255,255,0.4);font-size:0.78rem;">Select your award and purchase directly online</p>
-            </div>
-          </div>
-          <div id="singleUnitLinks" style="display:flex;flex-direction:column;gap:8px;">
-            <p style="color:rgba(255,255,255,0.4);font-size:0.82rem;text-align:center;">Loading prices...</p>
-          </div>
-        </div>
+
+
 
         <!-- PATH 2: BULK ORDER -->
         <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.5rem;margin-bottom:20px;">
-          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-            <div style="width:36px;height:36px;min-width:36px;background:rgba(212,175,55,0.15);border:2px solid #d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#d4af37;font-size:1rem;">2</div>
-            <div>
-              <p style="margin:0;color:#fff;font-weight:700;font-size:0.95rem;">Ordering 15 or More Units?</p>
-              <p style="margin:0;color:rgba(255,255,255,0.4);font-size:0.78rem;">Bulk pricing available — we invoice you directly</p>
-            </div>
+          <div style="margin-bottom:14px;">
+              <p style="margin:0;color:#fff;font-weight:700;font-size:1rem;">Ordering 15 or More Units?</p>
+              <p style="margin:2px 0 0;color:rgba(255,255,255,0.4);font-size:0.82rem;">Bulk pricing available. We invoice you directly.</p>
           </div>
 
           <!-- HOW IT WORKS STEPS -->
@@ -3759,11 +3727,16 @@
                 <p class="aw-incl">✓ Includes display stand</p>
                 <div class="aw-price">${price}</div>
                 ${hasGoldUpgrade ? `<div class="aw-upgrade">✨ Gold Engraving Upgrade: +$${award.gold_upgrade_price}</div>` : ''}
+                ${award.square_link ? `
+                <a href="${award.square_link}" 
+                   style="display:block;text-align:center;background:linear-gradient(135deg,#d4af37,#f5d76e);color:#000;font-weight:800;font-size:0.82rem;letter-spacing:0.5px;padding:10px 16px;border-radius:50px;text-decoration:none;margin:10px 0;">
+                  Buy Single Unit
+                </a>` : ''}
                 <div class="aw-bulk">
                   <div class="aw-bulk-label">BULK PRICING</div>
-                  ${award.bulk_price_15 ? `<div class="aw-bulk-row"><span>15-24 units (10% off)</span><span>$${Number(award.bulk_price_15).toFixed(2)}</span></div>` : ''}
-                  ${award.bulk_price_25 ? `<div class="aw-bulk-row"><span>25-49 units (15% off)</span><span>$${Number(award.bulk_price_25).toFixed(2)}</span></div>` : ''}
-                  ${award.bulk_price_50 ? `<div class="aw-bulk-row"><span>50+ units (20% off)</span><span>$${Number(award.bulk_price_50).toFixed(2)}</span></div>` : ''}
+                  ${award.bulk_price_15 ? `<div class="aw-bulk-row"><span>15 to 24 units (10% off)</span><span>$${Number(award.bulk_price_15).toFixed(2)}</span></div>` : ''}
+                  ${award.bulk_price_25 ? `<div class="aw-bulk-row"><span>25 to 49 units (15% off)</span><span>$${Number(award.bulk_price_25).toFixed(2)}</span></div>` : ''}
+                  ${award.bulk_price_50 ? `<div class="aw-bulk-row"><span>50 or more units (20% off)</span><span>$${Number(award.bulk_price_50).toFixed(2)}</span></div>` : ''}
                 </div>
               </div>
             </div>
