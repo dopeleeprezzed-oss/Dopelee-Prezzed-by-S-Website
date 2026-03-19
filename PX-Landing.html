@@ -3079,19 +3079,65 @@
 
       <!-- CTA -->
       <div class="recognition-cta">
-        <p style="font-family:'Playfair Display',serif;font-size:1.2rem;color:#fff;margin:0 0 6px;">Ready to honor someone who has earned it?</p>
-        <p style="font-size:0.85rem;color:rgba(255,255,255,0.5);margin:0 0 20px;">Start your bulk recognition order below. We will reach out to confirm details and get you scheduled.</p>
-        <div class="recognition-cta-buttons">
-          <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=recognition" 
-             class="recognition-cta-btn primary" 
-             style="font-size:1rem;padding:16px 30px;background:linear-gradient(135deg,#d4af37,#f5d76e);color:#000;font-weight:800;letter-spacing:1px;text-transform:uppercase;border-radius:50px;text-decoration:none;display:inline-block;">
+
+        <p style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#fff;text-align:center;margin:0 0 6px;">Ready to place your order?</p>
+        <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);text-align:center;margin:0 0 24px;">Choose the path that fits your needs below</p>
+
+        <!-- PATH 1: SINGLE UNIT -->
+        <div style="background:rgba(212,175,55,0.07);border:1px solid rgba(212,175,55,0.35);border-radius:16px;padding:1.5rem;margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:36px;height:36px;min-width:36px;background:linear-gradient(135deg,#d4af37,#f5d76e);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#000;font-size:1rem;">1</div>
+            <div>
+              <p style="margin:0;color:#d4af37;font-weight:700;font-size:0.95rem;">Purchasing Just One?</p>
+              <p style="margin:0;color:rgba(255,255,255,0.4);font-size:0.78rem;">Select your award and purchase directly online</p>
+            </div>
+          </div>
+          <div id="singleUnitLinks" style="display:flex;flex-direction:column;gap:8px;">
+            <p style="color:rgba(255,255,255,0.4);font-size:0.82rem;text-align:center;">Loading prices...</p>
+          </div>
+        </div>
+
+        <!-- PATH 2: BULK ORDER -->
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:1.5rem;margin-bottom:20px;">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="width:36px;height:36px;min-width:36px;background:rgba(212,175,55,0.15);border:2px solid #d4af37;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;color:#d4af37;font-size:1rem;">2</div>
+            <div>
+              <p style="margin:0;color:#fff;font-weight:700;font-size:0.95rem;">Ordering 15 or More Units?</p>
+              <p style="margin:0;color:rgba(255,255,255,0.4);font-size:0.78rem;">Bulk pricing available — we invoice you directly</p>
+            </div>
+          </div>
+
+          <!-- HOW IT WORKS STEPS -->
+          <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:#d4af37;font-weight:700;font-size:0.8rem;min-width:20px;">01</span>
+              <p style="margin:0;color:rgba(255,255,255,0.6);font-size:0.82rem;">Fill out the order form with your award type, quantity, and recipient details</p>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:#d4af37;font-weight:700;font-size:0.8rem;min-width:20px;">02</span>
+              <p style="margin:0;color:rgba(255,255,255,0.6);font-size:0.82rem;">We review your order and reach out to confirm everything</p>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:#d4af37;font-weight:700;font-size:0.8rem;min-width:20px;">03</span>
+              <p style="margin:0;color:rgba(255,255,255,0.6);font-size:0.82rem;">We send you a Square invoice — no payment until we confirm together</p>
+            </div>
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <span style="color:#d4af37;font-weight:700;font-size:0.8rem;min-width:20px;">04</span>
+              <p style="margin:0;color:rgba(255,255,255,0.6);font-size:0.82rem;">Once payment is received we begin production and keep you updated</p>
+            </div>
+          </div>
+
+          <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=recognition"
+             style="display:block;text-align:center;background:linear-gradient(135deg,#d4af37,#f5d76e);color:#000;font-weight:800;font-size:0.95rem;letter-spacing:1px;text-transform:uppercase;padding:14px 28px;border-radius:50px;text-decoration:none;">
             Start Your Bulk Order
           </a>
         </div>
-        <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
           <a href="tel:8165301520" class="recognition-cta-btn secondary">📞 816-530-1520</a>
           <a href="mailto:info@dopeleeprezzedbysllc.com" class="recognition-cta-btn secondary">📧 Email Us</a>
         </div>
+
       </div>
     </div>
   </div>
@@ -3596,12 +3642,70 @@
       
       // Load awards from Supabase
       await loadRecognitionAwards();
+
+      // Load single unit prices dynamically from Supabase
+      await loadSingleUnitPrices();
     }
     
     function closeRecognitionModal() {
       const modal = document.getElementById('recognitionModal');
       modal.classList.remove('active');
       document.body.style.overflow = '';
+    }
+
+    // Square links mapped by product name keyword
+    const SINGLE_UNIT_LINKS = {
+      'Slate': { url: 'https://square.link/u/59gdiSXZ', desc: 'Hand-crafted slate with custom engraving' },
+      'Wood Award': { url: 'https://square.link/u/An1XAf3z', desc: 'Handcrafted live edge wood with engraved plate' },
+      'Medallion': { url: 'https://square.link/u/wZ64hGot', desc: 'Full-color front with laser engraved back' }
+    };
+
+    async function loadSingleUnitPrices() {
+      const container = document.getElementById('singleUnitLinks');
+      if (!container) return;
+
+      try {
+        const response = await fetch(
+          `${SUPABASE_URL}/rest/v1/products?product_category=eq.Recognition Award&name=like.*Single*&is_px_only=eq.true&is_active=eq.true&select=name,px_price,description&order=name.asc`,
+          { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+        );
+
+        const products = await response.json();
+
+        // Filter to only base singles (no gold plate, no engraved back variants for the modal display)
+        const singles = products.filter(p =>
+          p.name.includes('Single') &&
+          !p.name.includes('Gold Plate') &&
+          !p.name.includes('Engraved Back')
+        );
+
+        if (!singles || singles.length === 0) {
+          container.innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:0.82rem;text-align:center;">Contact us for single unit pricing.</p>';
+          return;
+        }
+
+        container.innerHTML = singles.map(p => {
+          const price = parseFloat(p.px_price).toFixed(2);
+          // Match Square link by keyword
+          const linkData = Object.entries(SINGLE_UNIT_LINKS).find(([key]) => p.name.includes(key));
+          const url = linkData ? linkData[1].url : '#';
+          const desc = linkData ? linkData[1].desc : (p.description || '');
+
+          return `
+            <a href="${url}"
+               style="display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.5);border:1px solid rgba(212,175,55,0.2);border-radius:10px;padding:13px 16px;text-decoration:none;">
+              <div>
+                <p style="margin:0;color:#f5f0e8;font-weight:700;font-size:0.88rem;">${p.name.replace(' - Single', '').replace(' - Floating Frame Display', '')}</p>
+                <p style="margin:2px 0 0;color:rgba(255,255,255,0.35);font-size:0.72rem;">${desc}</p>
+              </div>
+              <span style="color:#d4af37;font-weight:900;font-size:0.95rem;white-space:nowrap;margin-left:10px;">$${price}</span>
+            </a>
+          `;
+        }).join('');
+
+      } catch (e) {
+        container.innerHTML = '<p style="color:rgba(255,255,255,0.4);font-size:0.82rem;text-align:center;">Contact us for single unit pricing.</p>';
+      }
     }
     
     async function loadRecognitionAwards() {
