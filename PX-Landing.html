@@ -2662,6 +2662,7 @@
       <div class="modal-info-side">
         <h2 class="modal-product-name" id="modalProductName"></h2>
         <p class="modal-product-price" id="modalProductPrice"></p>
+        <p id="modalProductDesc" style="font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.7;margin:8px 0 0;display:none;"></p>
         
         <div class="modal-divider"></div>
         
@@ -2716,15 +2717,13 @@
         
         <!-- LEGACY ARCHIVE UPGRADE -->
         <div class="modal-section">
-          <div class="modal-section-title"><span>📱</span> Preserve It Beyond the Moment</div>
-          <p style="font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 1rem; font-weight: 300;">
-            Every keepsake tells a story. The Legacy Archive Upgrade transforms your memories into something that lasts forever.
+          <div class="modal-section-title"><span>📱</span> The Legacy Archive Upgrade</div>
+          <p style="font-size: 0.88rem; line-height: 1.8; color: rgba(255,255,255,0.7); margin-bottom: 1rem; font-weight: 300;">
+            Turn any digital memory into part of the gift. Photos, voicemails, videos — attached to your keepsake through a custom QR code and preserved for the next generation.
           </p>
-          <div style="margin: 1rem 0; padding: 1rem; background: rgba(212, 175, 55, 0.08); border-left: 3px solid var(--accent-gold); border-radius: 8px;">
-            <p style="font-size: 0.8rem; color: var(--accent-gold); margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Capsule • Starting at $45</p>
-            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0 0 0.8rem 0;">QR-linked memory capsule for photos, videos, or voice notes.</p>
-            <p style="font-size: 0.8rem; color: var(--accent-gold); margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Showcase • Starting at $100</p>
-            <p style="font-size: 0.75rem; color: rgba(255,255,255,0.7); margin: 0;">Custom-designed page showcasing your memories beautifully.</p>
+          <div style="padding:0.85rem 1rem;background:rgba(212,175,55,0.08);border-left:3px solid var(--accent-gold);border-radius:8px;margin-bottom:1rem;">
+            <p style="font-size:0.8rem;color:var(--accent-gold);margin:0 0 3px;font-weight:700;">Legacy Capsule — Starting at $45</p>
+            <p style="font-size:0.8rem;color:var(--accent-gold);margin:0;font-weight:700;">Legacy Showcase — Starting at $100</p>
           </div>
           <button class="legacy-archive-btn" onclick="window.open('https://square.link/u/uBvKtldH', '_blank')">
             Explore Legacy Archive Upgrade
@@ -3369,6 +3368,15 @@
       document.getElementById('modalProductName').textContent = name;
       document.getElementById('modalProductPrice').textContent = price;
       document.getElementById('modalShopBtn').href = shopLink;
+
+      // Show description if available
+      const descEl = document.getElementById('modalProductDesc');
+      if (description && descEl) {
+        descEl.textContent = description;
+        descEl.style.display = 'block';
+      } else if (descEl) {
+        descEl.style.display = 'none';
+      }
       
       // Set section title and emoji based on product
       const sectionTitleEl = document.getElementById('modalSectionTitle');
