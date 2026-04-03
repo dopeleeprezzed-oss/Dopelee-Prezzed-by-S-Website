@@ -3858,20 +3858,21 @@
 </div>
 
 <script>
-  // Show popup after 5 seconds — only once per session
-  window.addEventListener('load', function() {
-    // Clear old dismissed state so popup shows fresh
+  // Show popup on page load after 6 seconds AND via button
+  window.addEventListener('DOMContentLoaded', function() {
     var overlay = document.getElementById('emailPopupOverlay');
     if (!overlay) return;
-    
     if (!sessionStorage.getItem('emailPopupDismissed')) {
       setTimeout(function() {
         overlay.style.display = 'flex';
-        overlay.style.alignItems = 'center';
-        overlay.style.justifyContent = 'center';
-      }, 5000);
+      }, 6000);
     }
   });
+
+  function openEmailPopup() {
+    var overlay = document.getElementById('emailPopupOverlay');
+    if (overlay) overlay.style.display = 'flex';
+  }
 
   document.getElementById('emailPopupOverlay').addEventListener('click', function(e) {
     if (e.target === this) closeEmailPopup();
@@ -3920,6 +3921,12 @@
     }
   }
 </script>
+
+
+<!-- FLOATING EMAIL CAPTURE BUTTON -->
+<button onclick="openEmailPopup()" style="position:fixed;bottom:24px;left:24px;z-index:9998;background:linear-gradient(135deg,#d4af37,#f5d76e);color:#000;border:none;border-radius:50px;padding:12px 20px;font-weight:700;font-size:0.78rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;box-shadow:0 4px 20px rgba(212,175,55,0.4);">
+  💛 Join Our Community
+</button>
 
 </body>
 </html>
