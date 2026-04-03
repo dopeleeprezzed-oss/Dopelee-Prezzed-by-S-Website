@@ -3825,5 +3825,98 @@
     if (e.target === this) closeAwardLightbox();
   });
   </script>
+
+<!-- EMAIL CAPTURE POPUP -->
+<div id="emailPopupOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:99999;align-items:center;justify-content:center;padding:1rem;">
+  <div style="background:#0d0a00;border:1px solid rgba(212,175,55,0.4);border-radius:20px;max-width:400px;width:100%;padding:2rem;position:relative;box-shadow:0 0 60px rgba(212,175,55,0.15);">
+
+    <button onclick="closeEmailPopup()" style="position:absolute;top:14px;right:16px;background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.3rem;cursor:pointer;line-height:1;">✕</button>
+
+    <div id="popupFormArea">
+      <div style="text-align:center;margin-bottom:1.5rem;">
+        <div style="font-size:0.65rem;color:#d4af37;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">THE LEGACY LOUNGE</div>
+        <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:#fff;margin:0 0 8px;line-height:1.3;">Stay Connected<br>to Your Legacy</h3>
+        <p style="color:rgba(255,255,255,0.45);font-size:0.78rem;line-height:1.6;margin:0;">Be the first to know about new keepsakes, exclusive offers, and events at The Legacy Lounge inside Fort Leavenworth PX.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <input id="popupName" type="text" placeholder="Your name" style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:0.88rem;outline:none;font-family:sans-serif;">
+        <input id="popupEmail" type="email" placeholder="Your email address" style="width:100%;padding:13px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:0.88rem;outline:none;font-family:sans-serif;">
+        <button onclick="submitEmailPopup()" id="popupSubmitBtn" style="width:100%;padding:14px;background:linear-gradient(135deg,#d4af37,#f5d76e);border:none;border-radius:50px;color:#000;font-weight:700;font-size:0.85rem;letter-spacing:1px;text-transform:uppercase;cursor:pointer;">
+          Join The Legacy Community
+        </button>
+      </div>
+      <p style="text-align:center;margin-top:10px;font-size:0.7rem;color:rgba(255,255,255,0.2);">We respect your privacy. No spam, ever.</p>
+    </div>
+
+    <div id="popupSuccess" style="display:none;text-align:center;padding:1.5rem 0;">
+      <div style="font-size:2.5rem;margin-bottom:10px;">💛</div>
+      <p style="font-family:'Playfair Display',serif;color:#d4af37;font-size:1.2rem;margin-bottom:6px;">You are in!</p>
+      <p style="color:rgba(255,255,255,0.45);font-size:0.82rem;">Welcome to The Legacy Community.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Show popup after 8 seconds — only once per session
+  window.addEventListener('load', function() {
+    if (!sessionStorage.getItem('emailPopupDismissed')) {
+      setTimeout(function() {
+        var overlay = document.getElementById('emailPopupOverlay');
+        if (overlay) {
+          overlay.style.display = 'flex';
+        }
+      }, 8000);
+    }
+  });
+
+  document.getElementById('emailPopupOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeEmailPopup();
+  });
+
+  function closeEmailPopup() {
+    document.getElementById('emailPopupOverlay').style.display = 'none';
+    sessionStorage.setItem('emailPopupDismissed', 'true');
+  }
+
+  async function submitEmailPopup() {
+    var name = document.getElementById('popupName').value.trim();
+    var email = document.getElementById('popupEmail').value.trim();
+    if (!email) { alert('Please enter your email address.'); return; }
+
+    var btn = document.getElementById('popupSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Joining...';
+
+    try {
+      await fetch('https://dyehxtiozfwlexkbalvn.supabase.co/rest/v1/community_members', {
+        method: 'POST',
+        headers: {
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs',
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          name: name || 'PX Landing Visitor',
+          email: email,
+          source: 'px-landing-popup',
+          created_at: new Date().toISOString()
+        })
+      });
+
+      document.getElementById('popupFormArea').style.display = 'none';
+      document.getElementById('popupSuccess').style.display = 'block';
+      sessionStorage.setItem('emailPopupDismissed', 'true');
+      setTimeout(function() { closeEmailPopup(); }, 3000);
+
+    } catch(err) {
+      console.error('Popup error:', err);
+      btn.disabled = false;
+      btn.textContent = 'Join The Legacy Community';
+    }
+  }
+</script>
+
 </body>
 </html>
