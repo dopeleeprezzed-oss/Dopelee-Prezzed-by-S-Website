@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="googlebot" content="noindex, nofollow">
+<meta http-equiv="X-Robots-Tag" content="noindex, nofollow">
+<title>Legacy Shadow Box Portal — Kent</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  :root {
+    --gold: #d4af37;
+    --gold-light: #f5d76e;
+    --bg: #0a0a0a;
+    --bg-card: #111;
+    --border: rgba(212,175,55,0.2);
+    --text: #fff;
+    --text-muted: rgba(255,255,255,0.45);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* LOGIN SCREEN */
+  #loginScreen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background: radial-gradient(ellipse at 50% 0%, rgba(212,175,55,0.08) 0%, transparent 60%);
+  }
+
+  .login-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+  }
+
+  .login-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+
+  .login-sub {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .login-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .login-desc {
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  input[type="password"], input[type="text"], input[type="email"], textarea, select {
+    width: 100%;
+    padding: 13px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s;
+    margin-bottom: 12px;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    border-color: rgba(212,175,55,0.5);
+  }
+
+  input::placeholder, textarea::placeholder {
+    color: rgba(255,255,255,0.25);
+  }
+
+  .btn-gold {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 50px;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-gold:hover { opacity: 0.9; }
+  .btn-gold:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .login-error {
+    color: #ff6b6b;
+    font-size: 0.8rem;
+    margin-top: 10px;
+    display: none;
+  }
+
+  /* MAIN PORTAL */
+  #portalScreen { display: none; }
+
+  .header {
+    background: #000;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-left h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+  }
+
+  .header-left p {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .logout-btn {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  /* STATS */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  /* ORDERS */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+  }
+
+  .refresh-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .order-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+  }
+
+  .order-card:hover { border-color: rgba(212,175,55,0.4); }
+
+  .order-card.status-ready {
+    border-color: rgba(0,255,0,0.3);
+    background: rgba(0,255,0,0.03);
+  }
+
+  .order-card.status-completed {
+    opacity: 0.5;
+  }
+
+  .order-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .order-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text);
+  }
+
+  .order-id {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .status-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+  }
+
+  .status-pending { background: rgba(212,175,55,0.15); color: var(--gold); }
+  .status-in-progress { background: rgba(100,149,237,0.15); color: #6495ed; }
+  .status-ready { background: rgba(0,200,100,0.15); color: #00c864; }
+  .status-completed { background: rgba(255,255,255,0.08); color: var(--text-muted); }
+
+  .order-details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .detail-item {
+    font-size: 0.8rem;
+  }
+
+  .detail-label {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+
+  .detail-value {
+    color: var(--text);
+  }
+
+  .order-notes {
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 12px;
+  }
+
+  .notes-label {
+    font-size: 0.68rem;
+    color: var(--gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .note-item {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    line-height: 1.5;
+  }
+
+  .note-item:last-child { border-bottom: none; }
+
+  .note-author {
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .order-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn-sm {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    border: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-sm:hover { opacity: 0.85; }
+
+  .btn-ready {
+    background: linear-gradient(135deg, #00c864, #00e070);
+    color: #000;
+  }
+
+  .btn-progress {
+    background: rgba(100,149,237,0.2);
+    color: #6495ed;
+    border: 1px solid rgba(100,149,237,0.3) !important;
+  }
+
+  .btn-note {
+    background: rgba(212,175,55,0.15);
+    color: var(--gold);
+    border: 1px solid rgba(212,175,55,0.3) !important;
+  }
+
+  .btn-photo {
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.15) !important;
+  }
+
+  /* ADD NOTE AREA */
+  .note-area {
+    display: none;
+    margin-top: 10px;
+  }
+
+  .note-area textarea {
+    margin-bottom: 8px;
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  .note-area-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .btn-send {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .btn-cancel {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* PHOTO MODAL */
+  .photo-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .photo-modal.open { display: flex; }
+
+  .photo-modal img {
+    max-width: 90vw;
+    max-height: 90vh;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+
+  .photo-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  /* EMPTY STATE */
+  .empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+  }
+
+  .empty-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .empty-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--text); margin-bottom: 6px; }
+
+  /* LOADING */
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: repeat(3, 1fr); }
+    .order-details { grid-template-columns: 1fr; }
+    .header { flex-direction: column; gap: 10px; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo">The Legacy Lounge™</div>
+    <div class="login-sub">Partner Portal</div>
+    <h2 class="login-title">Welcome, Kent</h2>
+    <p class="login-desc">Sign in to view and manage your shadow box orders from Dopelee Prezzed by S.</p>
+    <input type="password" id="loginPassword" placeholder="Enter your access code" onkeydown="if(event.key==='Enter') login()">
+    <button class="btn-gold" onclick="login()">Access Portal</button>
+    <p class="login-error" id="loginError">Incorrect access code. Please try again.</p>
+  </div>
+</div>
+
+<!-- MAIN PORTAL -->
+<div id="portalScreen">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>Shadow Box Orders</h1>
+      <p>Legacy Lounge™ Partner Portal — Kent Davis</p>
+    </div>
+    <div class="header-right">
+      <button class="logout-btn" onclick="logout()">Sign Out</button>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- STATS -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" id="statPending">—</div>
+        <div class="stat-label">Pending</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statProgress">—</div>
+        <div class="stat-label">In Progress</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="statReady">—</div>
+        <div class="stat-label">Ready</div>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="section-header">
+      <h2 class="section-title">Your Orders</h2>
+      <button class="refresh-btn" onclick="loadOrders()">↻ Refresh</button>
+    </div>
+
+    <div id="ordersContainer">
+      <div class="loading">Loading orders...</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PHOTO MODAL -->
+<div class="photo-modal" id="photoModal" onclick="closePhotoModal()">
+  <button class="photo-modal-close" onclick="closePhotoModal()">✕</button>
+  <img id="photoModalImg" src="" alt="Order photo">
+</div>
+
+<script>
+  const SUPABASE_URL = 'https://dyehxtiozfwlexkbalvn.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs';
+  const ACCESS_CODE = 'kent2025';
+  const KENT_EMAIL = 'wmkdavis63@gmail.com';
+
+  function login() {
+    const pwd = document.getElementById('loginPassword').value;
+    if (pwd === ACCESS_CODE) {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('portalScreen').style.display = 'block';
+      sessionStorage.setItem('kentAuth', 'true');
+      loadOrders();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  }
+
+  function logout() {
+    sessionStorage.removeItem('kentAuth');
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('portalScreen').style.display = 'none';
+    document.getElementById('loginPassword').value = '';
+  }
+
+  // Auto login if already authenticated
+  if (sessionStorage.getItem('kentAuth') === 'true') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('portalScreen').style.display = 'block';
+    loadOrders();
+  }
+
+  async function loadOrders() {
+    document.getElementById('ordersContainer').innerHTML = '<div class="loading">Loading orders...</div>';
+
+    try {
+      const response = await fetch(SUPABASE_URL + '/rest/v1/shadow_box_orders?order=created_at.desc', {
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY
+        }
+      });
+
+      if (!response.ok) throw new Error('Failed to load');
+
+      const orders = await response.json();
+
+      // Update stats
+      document.getElementById('statPending').textContent = orders.filter(o => o.status === 'Pending').length;
+      document.getElementById('statProgress').textContent = orders.filter(o => o.status === 'In Progress').length;
+      document.getElementById('statReady').textContent = orders.filter(o => o.status === 'Ready for Pickup').length;
+
+      if (orders.length === 0) {
+        document.getElementById('ordersContainer').innerHTML = `
+          <div class="empty-state">
+            <div class="empty-icon">📦</div>
+            <div class="empty-title">No orders yet</div>
+            <p>New shadow box orders will appear here.</p>
+          </div>`;
+        return;
+      }
+
+      document.getElementById('ordersContainer').innerHTML = orders.map(order => renderOrder(order)).join('');
+
+    } catch (error) {
+      console.error('Load orders error:', error);
+      document.getElementById('ordersContainer').innerHTML = '<div class="loading" style="color:#ff6b6b;">Could not load orders. Please refresh.</div>';
+    }
+  }
+
+  function renderOrder(order) {
+    const notes = order.notes ? JSON.parse(order.notes) : [];
+    const statusClass = {
+      'Pending': 'status-pending',
+      'In Progress': 'status-in-progress',
+      'Ready for Pickup': 'status-ready',
+      'Completed': 'status-completed'
+    }[order.status] || 'status-pending';
+
+    const cardClass = order.status === 'Ready for Pickup' ? 'order-card status-ready' :
+                      order.status === 'Completed' ? 'order-card status-completed' : 'order-card';
+
+    const notesHtml = notes.length > 0 ? `
+      <div class="order-notes">
+        <div class="notes-label">Notes</div>
+        ${notes.map(n => `<div class="note-item"><span class="note-author">${n.author}:</span> ${n.text} <span style="color:rgba(255,255,255,0.2);font-size:0.7rem;">— ${new Date(n.timestamp).toLocaleDateString()}</span></div>`).join('')}
+      </div>` : '';
+
+    const photoBtn = order.photo_url ? `<button class="btn-sm btn-photo" onclick="viewPhoto('${order.photo_url}')">📷 View Photo</button>` : '';
+
+    const actionBtns = order.status !== 'Completed' ? `
+      ${order.status === 'Pending' ? `<button class="btn-sm btn-progress" onclick="updateStatus('${order.id}', 'In Progress')">▶ Start Working</button>` : ''}
+      ${order.status === 'In Progress' ? `<button class="btn-sm btn-ready" onclick="updateStatus('${order.id}', 'Ready for Pickup')">✓ Mark Ready for Pickup</button>` : ''}
+      ${order.status === 'Ready for Pickup' ? `<button class="btn-sm btn-progress" onclick="updateStatus('${order.id}', 'Completed')">✓ Mark Completed</button>` : ''}
+      ${photoBtn}
+      <button class="btn-sm btn-note" onclick="toggleNoteArea('${order.id}')">💬 Add Note</button>
+    ` : `<span style="color:var(--text-muted);font-size:0.8rem;">✓ Completed</span>`;
+
+    return `
+      <div class="${cardClass}" id="order-${order.id}">
+        <div class="order-top">
+          <div>
+            <div class="order-name">${order.customer_name || 'Walk-in Customer'}</div>
+            <div class="order-id">Order #${order.id.slice(-6).toUpperCase()} · ${new Date(order.created_at).toLocaleDateString()}</div>
+          </div>
+          <span class="status-badge ${statusClass}">${order.status}</span>
+        </div>
+
+        <div class="order-details">
+          <div class="detail-item">
+            <div class="detail-label">Box Size</div>
+            <div class="detail-value">${order.box_size || '—'}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Drop Off Date</div>
+            <div class="detail-value">${order.drop_off_date || '—'}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Phone</div>
+            <div class="detail-value">${order.customer_phone || '—'}</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Gold Plate</div>
+            <div class="detail-value">${order.gold_plate ? 'Yes' : 'No'}</div>
+          </div>
+        </div>
+
+        ${order.special_instructions ? `
+          <div class="order-notes">
+            <div class="notes-label">Special Instructions</div>
+            <div class="note-item">${order.special_instructions}</div>
+          </div>` : ''}
+
+        ${notesHtml}
+
+        <div class="note-area" id="noteArea-${order.id}">
+          <textarea id="noteText-${order.id}" placeholder="Type your note here..."></textarea>
+          <div class="note-area-actions">
+            <button class="btn-send" onclick="addNote('${order.id}')">Send Note</button>
+            <button class="btn-cancel" onclick="toggleNoteArea('${order.id}')">Cancel</button>
+          </div>
+        </div>
+
+        <div class="order-actions">${actionBtns}</div>
+      </div>`;
+  }
+
+  async function updateStatus(orderId, newStatus) {
+    try {
+      const response = await fetch(SUPABASE_URL + '/rest/v1/shadow_box_orders?id=eq.' + orderId, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({
+          status: newStatus,
+          updated_at: new Date().toISOString(),
+          ready_at: newStatus === 'Ready for Pickup' ? new Date().toISOString() : null
+        })
+      });
+
+      if (response.ok || response.status === 204) {
+        loadOrders();
+      }
+    } catch (error) {
+      console.error('Update status error:', error);
+      alert('Could not update status. Please try again.');
+    }
+  }
+
+  function toggleNoteArea(orderId) {
+    const area = document.getElementById('noteArea-' + orderId);
+    area.style.display = area.style.display === 'block' ? 'none' : 'block';
+  }
+
+  async function addNote(orderId) {
+    const text = document.getElementById('noteText-' + orderId).value.trim();
+    if (!text) { alert('Please enter a note.'); return; }
+
+    try {
+      // Get current notes
+      const getRes = await fetch(SUPABASE_URL + '/rest/v1/shadow_box_orders?id=eq.' + orderId + '&select=notes', {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+      });
+      const data = await getRes.json();
+      const currentNotes = data[0]?.notes ? JSON.parse(data[0].notes) : [];
+      currentNotes.push({ author: 'Kent', text: text, timestamp: new Date().toISOString() });
+
+      const patchRes = await fetch(SUPABASE_URL + '/rest/v1/shadow_box_orders?id=eq.' + orderId, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ notes: JSON.stringify(currentNotes), updated_at: new Date().toISOString() })
+      });
+
+      if (patchRes.ok || patchRes.status === 204) {
+        document.getElementById('noteText-' + orderId).value = '';
+        loadOrders();
+      }
+    } catch (error) {
+      console.error('Add note error:', error);
+      alert('Could not add note. Please try again.');
+    }
+  }
+
+  function viewPhoto(url) {
+    document.getElementById('photoModalImg').src = url;
+    document.getElementById('photoModal').classList.add('open');
+  }
+
+  function closePhotoModal() {
+    document.getElementById('photoModal').classList.remove('open');
+    document.getElementById('photoModalImg').src = '';
+  }
+
+  // Auto refresh every 2 minutes
+  setInterval(function() {
+    if (sessionStorage.getItem('kentAuth') === 'true') loadOrders();
+  }, 120000);
+</script>
+
+</body>
+</html>
