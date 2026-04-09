@@ -28,6 +28,156 @@
     min-height: 100vh;
   }
 
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0;
+  }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.2s;
+  }
+
+  .tab-btn.active {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* COMMISSION */
+  .commission-header {
+    background: linear-gradient(135deg, rgba(212,175,55,0.12), rgba(212,175,55,0.04));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .commission-total {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .commission-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 6px;
+  }
+
+  .commission-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .commission-row:last-child { border-bottom: none; }
+
+  .commission-row-left { display: flex; flex-direction: column; gap: 3px; }
+
+  .commission-size {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+  }
+
+  .commission-detail {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .commission-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .commission-status {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-left: 10px;
+  }
+
+  .commission-status.paid {
+    background: rgba(0,255,0,0.12);
+    color: #4cff82;
+  }
+
+  .commission-status.unpaid {
+    background: rgba(212,175,55,0.15);
+    color: var(--gold);
+  }
+
+  .rate-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .rate-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+  }
+
+  .rate-table th {
+    text-align: left;
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 6px 0 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rate-table td {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text);
+  }
+
+  .rate-table tr:last-child td { border-bottom: none; }
+
+  .rate-table .rate-pay {
+    color: var(--gold);
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    text-align: right;
+  }
+
   /* LOGIN SCREEN */
   #loginScreen {
     min-height: 100vh;
@@ -524,14 +674,114 @@
       </div>
     </div>
 
-    <!-- ORDERS -->
-    <div class="section-header">
-      <h2 class="section-title">Your Orders</h2>
-      <button class="refresh-btn" onclick="loadOrders()">↻ Refresh</button>
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('orders')">📦 Orders</button>
+      <button class="tab-btn" onclick="switchTab('commission')">💰 My Earnings</button>
+      <button class="tab-btn" onclick="switchTab('rates')">📋 Pay Rates</button>
     </div>
 
-    <div id="ordersContainer">
-      <div class="loading">Loading orders...</div>
+    <!-- ORDERS TAB -->
+    <div class="tab-content active" id="tab-orders">
+      <div class="section-header">
+        <h2 class="section-title">Your Orders</h2>
+        <button class="refresh-btn" onclick="loadOrders()">↻ Refresh</button>
+      </div>
+      <div id="ordersContainer">
+        <div class="loading">Loading orders...</div>
+      </div>
+    </div>
+
+    <!-- COMMISSION TAB -->
+    <div class="tab-content" id="tab-commission">
+      <div class="section-header">
+        <h2 class="section-title">My Earnings</h2>
+        <button class="refresh-btn" onclick="loadCommission()">↻ Refresh</button>
+      </div>
+
+      <!-- Total owed -->
+      <div class="commission-header">
+        <div class="commission-total" id="commissionTotal">$0.00</div>
+        <div class="commission-label">Total Earned — All Orders</div>
+        <div style="margin-top:12px;display:flex;gap:20px;justify-content:center;flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <div style="font-size:1.4rem;font-weight:700;color:#4cff82;font-family:'Playfair Display',serif;" id="commissionPaid">$0.00</div>
+            <div style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:3px;">Paid Out</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-size:1.4rem;font-weight:700;color:var(--gold);font-family:'Playfair Display',serif;" id="commissionOwed">$0.00</div>
+            <div style="font-size:0.68rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:3px;">Pending Payout</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Per-order breakdown -->
+      <div class="rate-card">
+        <div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;">Order Breakdown</div>
+        <div id="commissionList">
+          <div class="loading">Loading earnings...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAY RATES TAB -->
+    <div class="tab-content" id="tab-rates">
+      <div class="section-header">
+        <h2 class="section-title">Pay Rates</h2>
+      </div>
+
+      <div class="rate-card">
+        <div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;">Base Pay Per Box (includes up to 4 items)</div>
+        <table class="rate-table">
+          <thead>
+            <tr>
+              <th>Box Size</th>
+              <th style="text-align:right;">Your Pay</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>11 × 14</td>
+              <td class="rate-pay">$27.75</td>
+            </tr>
+            <tr>
+              <td>16 × 20</td>
+              <td class="rate-pay">$32.00</td>
+            </tr>
+            <tr>
+              <td>22 × 28</td>
+              <td class="rate-pay">$36.50</td>
+            </tr>
+            <tr>
+              <td>24 × 36</td>
+              <td class="rate-pay">$41.00</td>
+            </tr>
+            <tr>
+              <td>32 × 40 (Jacket)</td>
+              <td class="rate-pay">$45.50</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="rate-card">
+        <div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.75rem;">Additional Items</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:0.95rem;color:var(--text);">Each item beyond 4</div>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-top:3px;">Per extra item added to the box</div>
+          </div>
+          <div style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--gold);font-weight:700;">+$3.00</div>
+        </div>
+      </div>
+
+      <div class="rate-card" style="background:rgba(212,175,55,0.06);">
+        <div style="font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:0.75rem;">Example</div>
+        <div style="font-size:0.88rem;color:var(--text);line-height:1.8;">
+          22×28 box with <strong style="color:var(--gold);">6 items</strong><br>
+          Base pay: <strong style="color:var(--gold);">$36.50</strong> + 2 extra items × $3.00 = <strong style="color:var(--gold);">$42.50</strong>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -548,6 +798,116 @@
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs';
   const ACCESS_CODE = 'kent2025';
   const KENT_EMAIL = 'wmkdavis63@gmail.com';
+
+  // Pay rate lookup by box size
+  const PAY_RATES = {
+    '11x14':   27.75,
+    '11 x 14': 27.75,
+    '11×14':   27.75,
+    '16x20':   32.00,
+    '16 x 20': 32.00,
+    '16×20':   32.00,
+    '22x28':   36.50,
+    '22 x 28': 36.50,
+    '22×28':   36.50,
+    '24x36':   41.00,
+    '24 x 36': 41.00,
+    '24×36':   41.00,
+    '30x40':   45.50,
+    '30 x 40': 45.50,
+    '32x40':   45.50,
+    '32 x 40': 45.50,
+    '32×40':   45.50,
+  };
+
+  function getPayForOrder(order) {
+    const sizeRaw = (order.box_size || '').toLowerCase().replace(/\s+/g,'').replace('(jacket)','').trim();
+    // Try exact match first
+    for (const [key, val] of Object.entries(PAY_RATES)) {
+      if (key.toLowerCase().replace(/\s+/g,'') === sizeRaw) return val;
+    }
+    // Fallback: partial match
+    for (const [key, val] of Object.entries(PAY_RATES)) {
+      if (sizeRaw.includes(key.toLowerCase().replace(/\s+/g,''))) return val;
+    }
+    return null;
+  }
+
+  function calcOrderEarnings(order) {
+    const base = getPayForOrder(order);
+    if (base === null) return null;
+    const itemCount = parseInt(order.item_count) || 4;
+    const extraItems = Math.max(0, itemCount - 4);
+    return base + (extraItems * 3.00);
+  }
+
+  function switchTab(tab) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    event.target.classList.add('active');
+    if (tab === 'commission') loadCommission();
+  }
+
+  async function loadCommission() {
+    document.getElementById('commissionList').innerHTML = '<div class="loading">Loading earnings...</div>';
+
+    try {
+      const response = await fetch(SUPABASE_URL + '/rest/v1/shadow_box_orders?order=created_at.desc', {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+      });
+
+      if (!response.ok) throw new Error('Failed to load');
+      const orders = await response.json();
+
+      // Only count completed or in-progress (not pending/cancelled)
+      const countable = orders.filter(o => o.status !== 'Pending');
+
+      let totalEarned = 0, totalPaid = 0, totalOwed = 0;
+      const rows = [];
+
+      for (const order of countable) {
+        const earned = calcOrderEarnings(order);
+        if (earned === null) continue;
+
+        const isPaid = order.commission_paid === true;
+        totalEarned += earned;
+        if (isPaid) totalPaid += earned;
+        else totalOwed += earned;
+
+        const itemCount = parseInt(order.item_count) || 4;
+        const extra = Math.max(0, itemCount - 4);
+        const dateStr = new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+        rows.push(`
+          <div class="commission-row">
+            <div class="commission-row-left">
+              <div class="commission-size">
+                ${order.customer_name || 'Customer'} — ${order.box_size || '?'}
+                <span class="commission-status ${isPaid ? 'paid' : 'unpaid'}">${isPaid ? 'Paid' : 'Pending'}</span>
+              </div>
+              <div class="commission-detail">
+                ${dateStr} · ${itemCount} item${itemCount !== 1 ? 's' : ''}${extra > 0 ? ' (+' + extra + ' extra)' : ''} · ${order.status}
+              </div>
+            </div>
+            <div class="commission-amount">$${earned.toFixed(2)}</div>
+          </div>
+        `);
+      }
+
+      document.getElementById('commissionTotal').textContent = '$' + totalEarned.toFixed(2);
+      document.getElementById('commissionPaid').textContent  = '$' + totalPaid.toFixed(2);
+      document.getElementById('commissionOwed').textContent  = '$' + totalOwed.toFixed(2);
+
+      document.getElementById('commissionList').innerHTML = rows.length > 0
+        ? rows.join('')
+        : '<div style="color:var(--text-muted);text-align:center;padding:2rem;">No completed orders yet.</div>';
+
+    } catch (error) {
+      console.error('Commission load error:', error);
+      document.getElementById('commissionList').innerHTML = '<div style="color:#ff6b6b;text-align:center;">Could not load earnings. Please refresh.</div>';
+    }
+  }
 
   function login() {
     const pwd = document.getElementById('loginPassword').value;
