@@ -28,6 +28,20 @@
             --cta-margin-top: 0.5rem;        
             
             /* Mobile Hero Spacing */
+
+            /* Announcement Banner */
+            --announce-info: linear-gradient(90deg, #1a1508, #2a1f0a, #1a1508);
+            --announce-info-border: #d4af37;
+            --announce-info-text: #f5d76e;
+            --announce-alert: linear-gradient(90deg, #1a0808, #2a0a0a, #1a0808);
+            --announce-alert-border: #ff4444;
+            --announce-alert-text: #ff6b6b;
+            --announce-success: linear-gradient(90deg, #081a0d, #0a2a12, #081a0d);
+            --announce-success-border: #0ff0b8;
+            --announce-success-text: #0ff0b8;
+            --announce-holiday: linear-gradient(90deg, #1a0818, #2a0a20, #1a0818);
+            --announce-holiday-border: #fd26fd;
+            --announce-holiday-text: #f5a0f5;
             --hero-mobile-padding-top: 8px;
             --hero-mobile-padding-bottom: 12px;
         }
@@ -3233,6 +3247,73 @@
   }
 }
 
+        /* ═══════════════════════════════════════════════════════════════
+           ANNOUNCEMENT BANNER — DYNAMIC FROM SUPABASE
+        ═══════════════════════════════════════════════════════════════ */
+        .announce-bar {
+            display: none;
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 1000;
+            border-bottom: 2px solid var(--announce-info-border);
+            background: var(--announce-info);
+            color: var(--announce-info-text);
+            animation: announceFadeIn 0.5s ease;
+        }
+
+        .announce-bar.active { display: block; }
+
+        .announce-bar.style-info {
+            background: var(--announce-info);
+            border-color: var(--announce-info-border);
+            color: var(--announce-info-text);
+        }
+
+        .announce-bar.style-alert {
+            background: var(--announce-alert);
+            border-color: var(--announce-alert-border);
+            color: var(--announce-alert-text);
+        }
+
+        .announce-bar.style-success {
+            background: var(--announce-success);
+            border-color: var(--announce-success-border);
+            color: var(--announce-success-text);
+        }
+
+        .announce-bar.style-holiday {
+            background: var(--announce-holiday);
+            border-color: var(--announce-holiday-border);
+            color: var(--announce-holiday-text);
+        }
+
+        .announce-bar .announce-close {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: inherit;
+            font-size: 1.1rem;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+            padding: 4px;
+        }
+
+        .announce-bar .announce-close:hover { opacity: 1; }
+
+        @keyframes announceFadeIn {
+            from { opacity: 0; transform: translateY(-100%); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
 </style>
 </head>
 <body>
@@ -3364,6 +3445,58 @@
     <div class="ticker">
         <p> Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available </p>
     </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- ANNOUNCEMENT BANNER — LOADED FROM SUPABASE                     -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div class="announce-bar" id="announceBanner">
+        <span id="announceMessage"></span>
+        <button class="announce-close" onclick="closeAnnouncement()">✕</button>
+    </div>
+
+    <script>
+    (function() {
+        const SUPABASE_URL = 'https://dyehxtiozfwlexkbalvn.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs';
+
+        async function loadAnnouncement() {
+            // Don't show if user dismissed it this session
+            if (sessionStorage.getItem('announce_dismissed')) return;
+
+            try {
+                const res = await fetch(SUPABASE_URL + '/rest/v1/site_announcements?is_active=eq.true&order=updated_at.desc&limit=1', {
+                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                if (!data || data.length === 0) return;
+
+                const announcement = data[0];
+                const banner = document.getElementById('announceBanner');
+                const message = document.getElementById('announceMessage');
+
+                message.textContent = announcement.message;
+
+                // Apply style
+                banner.className = 'announce-bar active style-' + (announcement.style || 'info');
+            } catch (err) {
+                console.log('Announcement load skipped:', err);
+            }
+        }
+
+        window.closeAnnouncement = function() {
+            document.getElementById('announceBanner').classList.remove('active');
+            sessionStorage.setItem('announce_dismissed', 'true');
+        };
+
+        // Load when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadAnnouncement);
+        } else {
+            loadAnnouncement();
+        }
+    })();
+    </script>
 
     <nav>
         <div class="nav-container">
@@ -3511,9 +3644,9 @@
                 <!-- Left: Contact -->
                 <div class="footer-contact">
                     <h4 class="footer-heading">Get In Touch</h4>
-                    <a href="/cdn-cgi/l/email-protection#70191e161f30141f00151c15150002150a0a15141209031c1c135e131f1d" class="footer-contact-link">
+                    <a href="mailto:info@dopeleeprezzedbysllc.com" class="footer-contact-link">
                         <span class="footer-contact-icon">✉</span>
-                        <span class="__cf_email__" data-cfemail="b6dfd8d0d9f6d2d9c6d3dad3d3c6c4d3ccccd3d2d4cfc5dadad598d5d9db">[email&#160;protected]</span>
+                        info@dopeleeprezzedbysllc.com
                     </a>
                     <a href="tel:8165301520" class="footer-contact-link">
                         <span class="footer-contact-icon">✆</span>
@@ -3577,7 +3710,7 @@
 
         <section class="luxury-products-section">
             <!-- Products loaded dynamically from Supabase -->
-            <div class="px-products-grid" id="mainProductsGrid">
+            <div class="products-grid" id="mainProductsGrid">
                 <!-- Loading state -->
                 <div id="productsLoading" style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #0ff0b8;">
                     Loading products...
@@ -3585,7 +3718,7 @@
             </div>
         </section>
 
-       <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+       <script>
 /* ═══════════════════════════════════════════════════════════════
    🧠 SMART PRODUCT SYSTEM - AI-Powered & Self-Optimizing
    WITH SUPABASE ANALYTICS TRACKING
@@ -3919,44 +4052,89 @@ const SmartRecommendations = {
             
             console.log('🧠 Smart System Active:', userContext);
             
-            // Render products — PX-STYLE CARDS
+            // Render products
             products.forEach((product) => {
                 const card = document.createElement('div');
-                card.className = 'px-product-card';
+                card.className = 'product-card';
 
+                // 🎨 Check if product has carousel images (for modal use)
+                const hasCarouselImages = product.product_images && product.product_images.length > 0;
+                
+                // 🧠 SMART: ALL products with experience type or youtube_id get overlay on FRONT
+                // Carousel only shows INSIDE modal when clicked
+                const shouldHaveOverlay = product.product_type === 'experience' || 
+                                         product.product_type === 'vip' ||
+                                         product.youtube_id ||
+                                         hasCarouselImages; // If has carousel, show overlay on front too!
+
+                // Debug logging
+                if (hasCarouselImages) {
+                  console.log('🎨 Product has carousel for modal:', product.name, '| Images:', product.product_images.length);
+                }
+                if (shouldHaveOverlay) {
+                  console.log('🎥 Experience product found:', product.name, '| Type:', product.product_type);
+                }
+
+                // 🧠 SMART: Get dynamic overlay text
+                const overlayContent = SmartOverlay.getOverlayText(product, userContext);
+                const smartUseCases = SmartOverlay.getUseCases(product);
+                
+                // Use thumbnail or main image for front
                 const thumbnailUrl = product.thumbnail_url || product.image_url;
-                const useCases = product.use_cases || 'Weddings,Anniversaries,Graduations,Memorials,Celebrations';
-
-                // Store product data for modal
-                if (!window.pxProductsData) window.pxProductsData = {};
-                window.pxProductsData[product.id] = {
-                    imageUrl: product.image_url, name: product.name, description: product.description || '',
-                    price: product.price, shopLink: product.square_link, musicUrl: product.music_url || '',
-                    useCases: useCases, productId: product.id, productImages: product.product_images || []
-                };
-
+                
                 card.innerHTML = `
-                    <img src="${thumbnailUrl}" alt="${product.name}" class="product-bg" onerror="this.src='https://via.placeholder.com/400x400/1a1a1a/d4af37?text=${encodeURIComponent(product.name)}'">
-                    <div class="px-product-overlay">
-                        <div class="px-product-badge">WHERE MEMORY LIVES</div>
-                        <div class="px-product-name">${product.name}</div>
-                        <button class="px-product-enter-btn" data-product-id="${product.id}">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                            ENTER THE EXPERIENCE
-                        </button>
+                   
+<div class="product-image">
+  ${
+      shouldHaveOverlay
+      ? `
+        <!-- OVERLAY (Front card - always single image) -->
+        <img src="${thumbnailUrl}" alt="${product.name}" class="product-img" />
+        <div class="video-play-overlay" 
+             data-youtube-id="${product.youtube_id || ''}"
+             data-name="${product.name}"
+             data-desc="${product.description || ''}"
+             data-price="${product.price}"
+             data-link="${product.square_link}"
+             data-image="${product.image_url}"
+             data-music="${product.music_url || ''}"
+             data-product-id="${product.id}"
+             data-variant="${overlayContent.variant}"
+             data-overlay-text="${overlayContent.prefix}"
+             data-button-text="${overlayContent.button}"
+             data-use-cases="${smartUseCases}"
+             data-product-images='${JSON.stringify(product.product_images || [])}'>
+          <div class="experience-text">${overlayContent.prefix}</div>
+          <div class="experience-title">${product.name}</div>
+          <button class="gold-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            ${overlayContent.button}
+          </button>
+        </div>
+      `
+      : `
+        <!-- REGULAR IMAGE (No overlay) -->
+        <img
+          src="${product.image_url}"
+          alt="${product.name}"
+          class="product-img"
+        />
+      `
+  }
+</div>
+
+
+                    <div class="product-content">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                        <p class="price">${product.price}</p>
+                        <a href="${product.square_link}" target="_blank" class="btn btn-block">
+                            Shop Now
+                        </a>
                     </div>
                 `;
 
                 grid.appendChild(card);
-            });
-
-            // Add click listeners for PX-style cards on main site
-            document.querySelectorAll('#mainProductsGrid .px-product-enter-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    const p = window.pxProductsData[this.getAttribute('data-product-id')];
-                    if (p) openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages);
-                });
             });
 
             console.log(
@@ -5125,7 +5303,7 @@ document.addEventListener('keydown', function(e) {
                     <a href="https://www.tiktok.com/@dopeleeprezzedbys" target="_blank" style="color: #888; transition: color 0.3s;"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
                 </div>
                 <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-                    <a href="/cdn-cgi/l/email-protection#51383f373e11353e21343d34342123342b2b34353328223d3d327f323e3c" style="color: #888; text-decoration: none; font-size: 0.85rem;"><span class="__cf_email__" data-cfemail="deb7b0b8b19ebab1aebbb2bbbbaeacbba4a4bbbabca7adb2b2bdf0bdb1b3">[email&#160;protected]</span></a>
+                    <a href="mailto:info@dopeleeprezzedbysllc.com" style="color: #888; text-decoration: none; font-size: 0.85rem;">info@dopeleeprezzedbysllc.com</a>
                     <span style="color: #444;">•</span>
                     <a href="tel:8165301520" style="color: #888; text-decoration: none; font-size: 0.85rem;">816-530-1520</a>
                 </div>
@@ -5193,7 +5371,7 @@ document.addEventListener('keydown', function(e) {
                 </div>
                 <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
                     <a href="tel:8165301520" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:30px;font-weight:700;font-size:1rem;text-decoration:none;background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);">📞 816-530-1520</a>
-                    <a href="/cdn-cgi/l/email-protection#4c25222a230c28233c292029293c3e29363629282e353f20202f622f2321" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:30px;font-weight:700;font-size:1rem;text-decoration:none;background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);">📧 Email Us</a>
+                    <a href="mailto:info@dopeleeprezzedbysllc.com" style="display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:30px;font-weight:700;font-size:1rem;text-decoration:none;background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2);">📧 Email Us</a>
                 </div>
             </div>
         </div>
@@ -5278,7 +5456,7 @@ document.addEventListener('keydown', function(e) {
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         
         // ========================================
         // HAMBURGER MENU
@@ -6043,4 +6221,24 @@ document.addEventListener('keydown', function(e) {
     });
     
     // Add Escape key handling for PX modals
-    document.addEventListener('k
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeRecognitionModal();
+            closePxVIPModal();
+            closeAwardLightbox();
+        }
+    });
+
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/69562b2c0feeb4197e36de51/1jds9h9td';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+    </script>
+
+</body>
+</html>
