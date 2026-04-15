@@ -3710,7 +3710,7 @@
 
         <section class="luxury-products-section">
             <!-- Products loaded dynamically from Supabase -->
-            <div class="products-grid" id="mainProductsGrid">
+            <div class="px-products-grid" id="mainProductsGrid">
                 <!-- Loading state -->
                 <div id="productsLoading" style="grid-column: 1 / -1; text-align: center; padding: 3rem; color: #0ff0b8;">
                     Loading products...
@@ -4052,89 +4052,44 @@ const SmartRecommendations = {
             
             console.log('🧠 Smart System Active:', userContext);
             
-            // Render products
+            // Render products — PX-STYLE CARDS
             products.forEach((product) => {
                 const card = document.createElement('div');
-                card.className = 'product-card';
+                card.className = 'px-product-card';
 
-                // 🎨 Check if product has carousel images (for modal use)
-                const hasCarouselImages = product.product_images && product.product_images.length > 0;
-                
-                // 🧠 SMART: ALL products with experience type or youtube_id get overlay on FRONT
-                // Carousel only shows INSIDE modal when clicked
-                const shouldHaveOverlay = product.product_type === 'experience' || 
-                                         product.product_type === 'vip' ||
-                                         product.youtube_id ||
-                                         hasCarouselImages; // If has carousel, show overlay on front too!
-
-                // Debug logging
-                if (hasCarouselImages) {
-                  console.log('🎨 Product has carousel for modal:', product.name, '| Images:', product.product_images.length);
-                }
-                if (shouldHaveOverlay) {
-                  console.log('🎥 Experience product found:', product.name, '| Type:', product.product_type);
-                }
-
-                // 🧠 SMART: Get dynamic overlay text
-                const overlayContent = SmartOverlay.getOverlayText(product, userContext);
-                const smartUseCases = SmartOverlay.getUseCases(product);
-                
-                // Use thumbnail or main image for front
                 const thumbnailUrl = product.thumbnail_url || product.image_url;
-                
+                const useCases = product.use_cases || 'Weddings,Anniversaries,Graduations,Memorials,Celebrations';
+
+                // Store product data for modal
+                if (!window.pxProductsData) window.pxProductsData = {};
+                window.pxProductsData[product.id] = {
+                    imageUrl: product.image_url, name: product.name, description: product.description || '',
+                    price: product.price, shopLink: product.square_link, musicUrl: product.music_url || '',
+                    useCases: useCases, productId: product.id, productImages: product.product_images || []
+                };
+
                 card.innerHTML = `
-                   
-<div class="product-image">
-  ${
-      shouldHaveOverlay
-      ? `
-        <!-- OVERLAY (Front card - always single image) -->
-        <img src="${thumbnailUrl}" alt="${product.name}" class="product-img" />
-        <div class="video-play-overlay" 
-             data-youtube-id="${product.youtube_id || ''}"
-             data-name="${product.name}"
-             data-desc="${product.description || ''}"
-             data-price="${product.price}"
-             data-link="${product.square_link}"
-             data-image="${product.image_url}"
-             data-music="${product.music_url || ''}"
-             data-product-id="${product.id}"
-             data-variant="${overlayContent.variant}"
-             data-overlay-text="${overlayContent.prefix}"
-             data-button-text="${overlayContent.button}"
-             data-use-cases="${smartUseCases}"
-             data-product-images='${JSON.stringify(product.product_images || [])}'>
-          <div class="experience-text">${overlayContent.prefix}</div>
-          <div class="experience-title">${product.name}</div>
-          <button class="gold-play-btn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            ${overlayContent.button}
-          </button>
-        </div>
-      `
-      : `
-        <!-- REGULAR IMAGE (No overlay) -->
-        <img
-          src="${product.image_url}"
-          alt="${product.name}"
-          class="product-img"
-        />
-      `
-  }
-</div>
-
-
-                    <div class="product-content">
-                        <h3>${product.name}</h3>
-                        <p>${product.description}</p>
-                        <p class="price">${product.price}</p>
-                        <a href="${product.square_link}" target="_blank" class="btn btn-block">
-                            Shop Now
-                        </a>
+                    <img src="${thumbnailUrl}" alt="${product.name}" class="product-bg" onerror="this.src='https://via.placeholder.com/400x400/1a1a1a/d4af37?text=${encodeURIComponent(product.name)}'">
+                    <div class="px-product-overlay">
+                        <div class="px-product-badge">WHERE MEMORY LIVES</div>
+                        <div class="px-product-name">${product.name}</div>
+                        <button class="px-product-enter-btn" data-product-id="${product.id}">
+                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            ENTER THE EXPERIENCE
+                        </button>
                     </div>
                 `;
 
                 grid.appendChild(card);
+            });
+
+            // Add click listeners for PX-style cards on main site
+            document.querySelectorAll('#mainProductsGrid .px-product-enter-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const p = window.pxProductsData[this.getAttribute('data-product-id')];
+                    if (p) openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages);
+                });
             });
 
             console.log(
