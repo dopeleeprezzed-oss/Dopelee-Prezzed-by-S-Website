@@ -2311,10 +2311,18 @@
         .px-marquee-track { display: inline-block; animation: tickerScroll 30s linear infinite; }
         .px-marquee-content { color: #f5d76e; font-size: 1rem; font-weight: 600; letter-spacing: 1px; }
         .px-products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        
+        /* CATEGORY TABS */
+        .category-tabs { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 1.5rem; padding: 0 1rem; }
+        .category-tab { background: rgba(212,175,55,0.06); border: 1.5px solid rgba(212,175,55,0.2); color: #b9b5a0; padding: 10px 22px; border-radius: 50px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; cursor: pointer; transition: all 0.3s ease; font-family: 'DM Sans', 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        .category-tab:hover { border-color: rgba(212,175,55,0.5); color: #d4af37; }
+        .category-tab.active { background: linear-gradient(135deg, #d4af37, #f5d76e); color: #000; border-color: #d4af37; font-weight: 700; box-shadow: 0 4px 15px rgba(212,175,55,0.3); }
+        @media (max-width: 768px) { .category-tab { padding: 8px 16px; font-size: 0.72rem; } }
         .px-product-card { position: relative; height: 380px; border-radius: 16px; overflow: hidden; border: 2px solid rgba(212, 175, 55, 0.3); transition: all 0.3s ease; }
         .px-product-card:hover { border-color: rgba(212, 175, 55, 0.6); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2); }
         .px-product-card .product-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
         .px-product-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.88) 100%); z-index: 1; }
+        .px-product-card[style*="--no-overlay"]::before { display: none; }
         .px-product-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 15px; z-index: 2; pointer-events: none; }
         .px-product-badge { font-size: 0.7rem; font-weight: 700; color: #d4af37; text-transform: uppercase; letter-spacing: 3px; background: rgba(0,0,0,0.7); padding: 10px 20px; border-radius: 30px; border: 1px solid rgba(212, 175, 55, 0.4); backdrop-filter: blur(10px); }
         .px-product-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; color: #fff; text-align: center; text-shadow: 0 2px 10px rgba(0,0,0,0.8); padding: 0 20px; }
@@ -3709,6 +3717,16 @@
         </section>
 
         <section class="luxury-products-section">
+            <!-- CATEGORY TABS -->
+            <div class="category-tabs" id="mainCategoryTabs" style="max-width:1200px;margin:0 auto 1.5rem;padding:0 2rem;">
+                <button class="category-tab active" onclick="filterProducts('mainProductsGrid', 'all', this, 'mainCategoryTabs')">All</button>
+                <button class="category-tab" onclick="filterProducts('mainProductsGrid', 'Keepsakes', this, 'mainCategoryTabs')">Keepsakes</button>
+                <button class="category-tab" onclick="filterProducts('mainProductsGrid', 'Signature Collection', this, 'mainCategoryTabs')">Signature Collection</button>
+                <button class="category-tab" onclick="filterProducts('mainProductsGrid', 'Awards & Recognition', this, 'mainCategoryTabs')">Awards</button>
+                <button class="category-tab" onclick="filterProducts('mainProductsGrid', 'Photo & Display', this, 'mainCategoryTabs')">Photo & Display</button>
+                <button class="category-tab" onclick="filterProducts('mainProductsGrid', 'Experiences', this, 'mainCategoryTabs')">Experiences</button>
+                <button class="category-tab" onclick="filterProducts('mainProductsGrid', 'Accessories', this, 'mainCategoryTabs')">Accessories</button>
+            </div>
             <!-- Products loaded dynamically from Supabase -->
             <div class="px-products-grid" id="mainProductsGrid">
                 <!-- Loading state -->
@@ -4056,6 +4074,7 @@ const SmartRecommendations = {
             products.forEach((product) => {
                 const card = document.createElement('div');
                 card.className = 'px-product-card';
+                card.setAttribute('data-category', product.product_category || '');
 
                 const thumbnailUrl = product.thumbnail_url || product.image_url;
                 const useCases = product.use_cases || 'Weddings,Anniversaries,Graduations,Memorials,Celebrations';
@@ -4126,6 +4145,34 @@ const SmartRecommendations = {
 // ═══════════════════════════════════════════════════════════════
 // VIDEO MODAL FUNCTIONS - LUXURY PRODUCT EXPERIENCE
 // ═══════════════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════════════
+// CATEGORY FILTER — USED BY BOTH MAIN SITE AND PX LANDING PAGE
+// ═══════════════════════════════════════════════════════════════
+function filterProducts(gridId, category, btn, tabContainerId) {
+    const grid = document.getElementById(gridId);
+    const tabContainer = document.getElementById(tabContainerId);
+    
+    // Update active tab
+    tabContainer.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    
+    // Filter cards
+    const cards = grid.querySelectorAll('.px-product-card');
+    let visibleCount = 0;
+    
+    cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+            card.style.display = '';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    // Smooth scroll to grid
+    grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
 
 function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl, useCases, productId, productImages = []) {
   console.log('🎬 Opening modal');
@@ -5126,125 +5173,19 @@ document.addEventListener('keydown', function(e) {
 
         <!-- PX PRODUCTS GRID -->
         <div style="max-width: 1200px; margin: 2rem auto; padding: 0 2rem;">
+            <!-- CATEGORY TABS -->
+            <div class="category-tabs" id="pxCategoryTabs">
+                <button class="category-tab active" onclick="filterProducts('pxProductsGrid', 'all', this, 'pxCategoryTabs')">All</button>
+                <button class="category-tab" onclick="filterProducts('pxProductsGrid', 'Keepsakes', this, 'pxCategoryTabs')">Keepsakes</button>
+                <button class="category-tab" onclick="filterProducts('pxProductsGrid', 'Signature Collection', this, 'pxCategoryTabs')">Signature Collection</button>
+                <button class="category-tab" onclick="filterProducts('pxProductsGrid', 'Awards & Recognition', this, 'pxCategoryTabs')">Awards</button>
+                <button class="category-tab" onclick="filterProducts('pxProductsGrid', 'Photo & Display', this, 'pxCategoryTabs')">Photo & Display</button>
+                <button class="category-tab" onclick="filterProducts('pxProductsGrid', 'Experiences', this, 'pxCategoryTabs')">Experiences</button>
+                <button class="category-tab" onclick="filterProducts('pxProductsGrid', 'Accessories', this, 'pxCategoryTabs')">Accessories</button>
+            </div>
+
             <div id="pxLoadingState" style="text-align: center; padding: 3rem; color: #0ff0b8;">Loading products...</div>
             <div class="px-products-grid" id="pxProductsGrid" style="display: none;"></div>
-        </div>
-
-        <!-- SOUNDS OF LEGACY TEASER -->
-        <div style="max-width: 1200px; margin: 2rem auto; padding: 0 2rem;">
-            <div style="text-align:center;margin-bottom:1.5rem;padding:0 1rem;">
-                <p style="font-family:'Playfair Display',serif;font-size:1.4rem;color:rgba(255,255,255,0.9);font-style:italic;margin:0 0 8px;line-height:1.5;">Have you ever wanted to turn your words into a song?</p>
-                <p style="font-family:'Playfair Display',serif;font-size:1.1rem;color:rgba(255,255,255,0.6);font-style:italic;margin:0 0 8px;line-height:1.5;">What if the greatest gift you could give someone already lives inside you?</p>
-                <p style="font-size:0.78rem;color:#d4af37;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin:0;">Your song starts here</p>
-            </div>
-            <div style="position:relative;border-radius:20px;overflow:hidden;margin-bottom:2rem;">
-                <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(212,175,55,0.25) 0%,transparent 65%);pointer-events:none;z-index:0;"></div>
-                <div style="position:absolute;inset:0;border-radius:20px;border:1px solid rgba(212,175,55,0.4);pointer-events:none;z-index:1;box-shadow:0 0 40px rgba(212,175,55,0.12),inset 0 0 40px rgba(212,175,55,0.04);"></div>
-                <div style="display:block;background:linear-gradient(160deg,rgba(212,175,55,0.1) 0%,rgba(0,0,0,0.6) 60%);padding:2.5rem 2rem;text-align:center;position:relative;z-index:2;">
-                    <div style="font-size:0.7rem;color:#d4af37;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:12px;">🎵 NEW 🎵 SOUNDS OF LEGACY</div>
-                    <h3 style="font-family:'Playfair Display',serif;font-size:2rem;color:#fff;margin:0 0 6px;font-weight:700;line-height:1.2;">Your Words. Your Song.<br>Their Legacy.</h3>
-                    <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;margin:12px auto 24px;line-height:1.7;max-width:480px;">We transform your most meaningful moments into a fully custom song. Written, produced, and embedded into your keepsake forever. Scan the piece. Hear the memory. Feel the love.</p>
-                    <div style="display:flex;flex-direction:column;gap:12px;max-width:360px;margin:0 auto 20px;">
-                        <a href="https://square.link/u/nZQHPj4g" style="display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,#d4af37,#f5d76e);color:#000;font-weight:800;font-size:0.85rem;letter-spacing:0.5px;padding:14px 24px;border-radius:50px;text-decoration:none;">
-                            <span>🎵 Digital Legacy</span>
-                            <span style="font-size:0.75rem;opacity:0.7;">Song • Song + Video</span>
-                        </a>
-                        <a href="https://square.link/u/CSfXEP9A" style="display:flex;align-items:center;justify-content:space-between;background:rgba(212,175,55,0.12);border:1px solid rgba(212,175,55,0.5);color:#d4af37;font-weight:800;font-size:0.85rem;letter-spacing:0.5px;padding:14px 24px;border-radius:50px;text-decoration:none;"></a>
-                    </div>
-                    <div style="display:flex;justify-content:center;gap:24px;flex-wrap:wrap;">
-                        <span style="color:rgba(255,255,255,0.35);font-size:0.75rem;letter-spacing:1px;">🎵 Digital -$99</span>
-                        <span style="color:rgba(255,255,255,0.35);font-size:0.75rem;letter-spacing:1px;">🎬 Visual -$150</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- GOLD DIVIDER -->
-        <div style="display:flex;align-items:center;gap:16px;padding:0 2rem;margin:0.5rem 0;">
-            <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(212,175,55,0.4));"></div>
-            <span style="color:#d4af37;font-size:10px;">✦</span>
-            <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(212,175,55,0.4));"></div>
-        </div>
-
-        <!-- RECOGNITION TEASER -->
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
-            <div style="text-align:center;margin-bottom:1.25rem;padding:0 1rem;">
-                <p style="font-family:'Playfair Display',serif;font-size:1.35rem;color:rgba(255,255,255,0.85);font-style:italic;margin:0 0 6px;line-height:1.5;">Is there someone in your unit, your family, or your life whose sacrifice deserves to be honored forever?</p>
-                <p style="font-size:0.8rem;color:#d4af37;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin:0;">Recognition starts here</p>
-            </div>
-            <div class="recognition-teaser" onclick="openRecognitionModal()" style="background: linear-gradient(135deg, #0d0a00 0%, #1a1508 50%, #0d0a00 100%); border: 2px solid #d4af37; border-radius: 16px; padding: 2rem 2.5rem; margin: 2rem 0; cursor: pointer; position: relative; overflow: hidden; transition: all 0.4s ease; text-align: center;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
-                    <div style="background: linear-gradient(135deg, #1a1a1a, #2a2a2a); border: 2px solid #d4af37; color: #d4af37; padding: 8px 16px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;">🏆 BULK ORDERS</div>
-                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; background: linear-gradient(90deg, #d4af37, #f5d76e, #d4af37); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0;">Legacy Recognition</h3>
-                    <div style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d4af37, #f5d76e); color: #000; padding: 12px 28px; border-radius: 50px; font-weight: 700; font-size: 0.95rem;">
-                        <span>Enter Your Recognition Experience</span>
-                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- GOLD DIVIDER -->
-        <div style="display:flex;align-items:center;gap:16px;padding:0 2rem;margin:0.5rem 0;">
-            <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(212,175,55,0.4));"></div>
-            <span style="color:#d4af37;font-size:10px;">✦</span>
-            <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(212,175,55,0.4));"></div>
-        </div>
-
-        <!-- VIP TEASER -->
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
-            <div style="text-align:center;margin-bottom:1.25rem;padding:0 1rem;">
-                <p style="font-family:'Playfair Display',serif;font-size:1.35rem;color:rgba(255,255,255,0.85);font-style:italic;margin:0 0 6px;line-height:1.5;">Is there someone in your life whose moment deserves to be unforgettable?</p>
-                <p style="font-size:0.8rem;color:#0ff0b8;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin:0;">Your experience awaits</p>
-            </div>
-            <div onclick="openPxVIPModal()" style="background: linear-gradient(135deg, #1a1508 0%, #0d0a00 100%); border: 2px solid #d4af37; border-radius: 16px; padding: 2rem 2.5rem; margin: 2rem 0; cursor: pointer; position: relative; overflow: hidden; transition: all 0.4s ease; text-align: center;">
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 1.25rem;">
-                    <div style="background: linear-gradient(135deg, #d4af37, #f5d76e); color: #000; padding: 8px 16px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;">✦ EXCLUSIVE ✦</div>
-                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: #f5d76e; margin: 0;">VIP Experiences</h3>
-                    <div style="display: inline-flex; align-items: center; gap: 8px; background: transparent; border: 2px solid #d4af37; color: #d4af37; padding: 12px 28px; border-radius: 50px; font-weight: 700; font-size: 0.95rem;">
-                        <span>Enter Your VIP Experience</span>
-                        <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- GOLD DIVIDER -->
-        <div style="display:flex;align-items:center;gap:16px;padding:0 2rem;margin:0.5rem 0;">
-            <div style="flex:1;height:1px;background:linear-gradient(to right,transparent,rgba(212,175,55,0.4));"></div>
-            <span style="color:#d4af37;font-size:10px;">✦</span>
-            <div style="flex:1;height:1px;background:linear-gradient(to left,transparent,rgba(212,175,55,0.4));"></div>
-        </div>
-
-        <!-- COMMUNITY VOICE SECTION -->
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
-            <div style="background: radial-gradient(ellipse at center, rgba(15, 240, 184, 0.1) 0%, transparent 60%), linear-gradient(180deg, #080a08 0%, #000 100%); border: 2px solid rgba(15, 240, 184, 0.4); border-radius: 20px; padding: 3rem 2rem; margin: 2rem 0; text-align: center;">
-                <div style="display: inline-block; background: linear-gradient(135deg, rgba(15, 240, 184, 0.2), rgba(15, 240, 184, 0.1)); border: 1px solid #0ff0b8; padding: 8px 20px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; letter-spacing: 2px; color: #0ff0b8; margin-bottom: 1.5rem;">🎖️ YOUR VOICE MATTERS</div>
-                <h3 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: #fff; margin-bottom: 1rem; background: linear-gradient(135deg, #fff, #0ff0b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Share Your Words</h3>
-                <p style="color: #b8bac0; font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; line-height: 1.8;">Submit your favorite saying, motto, or phrase. We'll feature it on a custom keepsake that your fellow service members can purchase. This is YOUR community. Let your voice be heard.</p>
-                <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/Share%20your%20words.html" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; padding: 1rem 2.5rem; background: linear-gradient(135deg, #0ff0b8, #7fffd4); color: #000; text-decoration: none; border-radius: 12px; font-weight: 700; font-size: 1.1rem;">
-                    <span>✍️</span> Submit Your Saying
-                </a>
-            </div>
-        </div>
-
-        <!-- FEATURED COMMUNITY ITEM -->
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 2rem;">
-            <div style="background: linear-gradient(145deg, #0a0a0a, #111); border: 2px solid rgba(212, 175, 55, 0.3); border-radius: 20px; padding: 2.5rem; margin: 2rem 0; position: relative;">
-                <div style="position: absolute; top: -12px; left: 30px; background: #000; padding: 4px 16px; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; color: #d4af37; border: 1px solid #d4af37; border-radius: 4px;">⭐ COMMUNITY SPOTLIGHT</div>
-                <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
-                    <div style="flex: 0 0 200px; height: 200px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05)); border: 2px dashed rgba(212, 175, 55, 0.3); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;">
-                        <span style="font-size: 3rem; opacity: 0.5;">🎖️</span>
-                        <p style="color: rgba(212, 175, 55, 0.6); font-size: 0.85rem; margin: 0;">Featured Item Coming Soon</p>
-                    </div>
-                    <div style="flex: 1; min-width: 250px;">
-                        <h4 style="font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #d4af37; margin-bottom: 1rem;">Your Saying Could Be Here</h4>
-                        <p style="font-style: italic; font-size: 1.1rem; color: #c9c9c9; line-height: 1.7; margin-bottom: 0.5rem;">"Submit your favorite military saying or motto and see it featured on a custom keepsake."</p>
-                        <p style="color: rgba(212, 175, 55, 0.7); font-size: 0.9rem; margin-bottom: 1.5rem;">- The Legacy Lounge Community</p>
-                        <a href="#" style="display: inline-block; padding: 0.75rem 1.5rem; background: transparent; border: 2px solid #d4af37; color: #d4af37; text-decoration: none; border-radius: 8px; font-weight: 600; font-size: 0.95rem; opacity: 0.5; pointer-events: none;">Shop This Item →</a>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- PX FOOTER -->
@@ -6008,6 +5949,7 @@ document.addEventListener('keydown', function(e) {
                 
                 const card = document.createElement('div');
                 card.className = 'px-product-card';
+                card.setAttribute('data-category', product.product_category || '');
                 card.innerHTML = `
                     <img src="${imageUrl}" alt="${product.name}" class="product-bg" onerror="this.src='https://via.placeholder.com/400x400/1a1a1a/d4af37?text=${encodeURIComponent(product.name)}'">
                     <div class="px-product-overlay">
@@ -6029,6 +5971,75 @@ document.addEventListener('keydown', function(e) {
                     const p = window.pxProductsData[this.getAttribute('data-product-id')];
                     if (p) openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages);
                 });
+            });
+
+            // ═══════════════════════════════════════════════════════════
+            // INJECT EXPERIENCE CARDS INTO THE GRID
+            // ═══════════════════════════════════════════════════════════
+            const experienceCards = [
+                {
+                    category: 'Experiences',
+                    badge: '🎵 SOUNDS OF LEGACY',
+                    name: 'Your Words. Your Song. Their Legacy.',
+                    desc: 'We transform your most meaningful moments into a fully custom song.',
+                    btnText: '🎵 Start Your Song',
+                    btnLink: 'https://square.link/u/nZQHPj4g',
+                    gradient: 'linear-gradient(135deg, rgba(212,175,55,0.15) 0%, rgba(0,0,0,0.9) 100%)',
+                    borderColor: '#d4af37'
+                },
+                {
+                    category: 'Experiences',
+                    badge: '✦ EXCLUSIVE ✦',
+                    name: 'VIP Experiences',
+                    desc: 'Curated luxury gifts for weddings, corporate events, and special occasions.',
+                    btnText: '✨ Enter VIP Experience',
+                    action: 'openPxVIPModal()',
+                    gradient: 'linear-gradient(135deg, rgba(245,215,110,0.1) 0%, rgba(0,0,0,0.9) 100%)',
+                    borderColor: '#f5d76e'
+                },
+                {
+                    category: 'Experiences',
+                    badge: '🎖️ YOUR VOICE MATTERS',
+                    name: 'Share Your Words',
+                    desc: 'Submit your favorite saying or motto. We\'ll feature it on a custom keepsake.',
+                    btnText: '✍️ Submit Your Saying',
+                    btnLink: 'https://dopeleeprezzed-oss.github.io/dopelee-form/Share%20your%20words.html',
+                    gradient: 'linear-gradient(135deg, rgba(15,240,184,0.1) 0%, rgba(0,0,0,0.9) 100%)',
+                    borderColor: '#0ff0b8'
+                },
+                {
+                    category: 'Awards & Recognition',
+                    badge: '🏆 BULK ORDERS',
+                    name: 'Legacy Recognition Awards',
+                    desc: 'Custom engraved awards for promotions, graduations, and ceremonies.',
+                    btnText: '🏆 Enter Recognition',
+                    action: 'openRecognitionModal()',
+                    gradient: 'linear-gradient(135deg, rgba(212,175,55,0.12) 0%, rgba(0,0,0,0.9) 100%)',
+                    borderColor: '#d4af37'
+                }
+            ];
+
+            experienceCards.forEach(exp => {
+                const expCard = document.createElement('div');
+                expCard.className = 'px-product-card';
+                expCard.setAttribute('data-category', exp.category);
+                expCard.style.cssText = `background:${exp.gradient};border-color:${exp.borderColor};`;
+
+                const btnHtml = exp.btnLink
+                    ? `<a href="${exp.btnLink}" target="_blank" class="px-product-enter-btn" style="text-decoration:none;pointer-events:auto;">${exp.btnText}</a>`
+                    : `<button class="px-product-enter-btn" onclick="${exp.action}" style="pointer-events:auto;">${exp.btnText}</button>`;
+
+                expCard.innerHTML = `
+                    <div class="px-product-overlay">
+                        <div class="px-product-badge" style="border-color:${exp.borderColor};color:${exp.borderColor};">${exp.badge}</div>
+                        <div class="px-product-name" style="font-size:1.3rem;">${exp.name}</div>
+                        <p style="color:rgba(255,255,255,0.5);font-size:0.8rem;text-align:center;padding:0 20px;margin:0;line-height:1.5;">${exp.desc}</p>
+                        ${btnHtml}
+                    </div>
+                `;
+                // Remove the dark overlay since these cards use gradient backgrounds
+                expCard.style.setProperty('--no-overlay', '1');
+                grid.appendChild(expCard);
             });
             
             if (loading) loading.style.display = 'none';
