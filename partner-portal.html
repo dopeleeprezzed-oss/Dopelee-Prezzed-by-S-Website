@@ -822,9 +822,10 @@ function renderPXDashboard(partner, sales, products) {
   let allTimeNet = 0, allTimeGross = 0, allTimeCommission = 0, allTimeDiscounts = 0;
   sales.forEach(s => {
     const net = parseFloat(s.sale_amount) || 0;
+    const tax = parseFloat(s.tax_amount) || 0;
     const discount = parseFloat(s.discount_amount) || 0;
     allTimeNet += net;
-    allTimeGross += net; // Gross = sale amounts (no tax added)
+    allTimeGross += (net + tax); // Gross = what the customer actually paid (incl. tax)
     allTimeDiscounts += discount;
     allTimeCommission += parseFloat(s.commission_amount) || 0; // use actual stored value
   });
@@ -946,8 +947,9 @@ function renderPXMonthly(sales) {
   let monthNet = 0, monthGross = 0, monthCommission = 0;
   filtered.forEach(s => {
     const net = parseFloat(s.sale_amount) || 0;
+    const tax = parseFloat(s.tax_amount) || 0;
     monthNet += net;
-    monthGross += net; // Gross = sale amounts (no tax added)
+    monthGross += (net + tax); // Gross = what the customer actually paid (incl. tax)
     monthCommission += parseFloat(s.commission_amount) || 0; // use actual stored value
   });
 
