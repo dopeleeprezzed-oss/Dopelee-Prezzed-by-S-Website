@@ -818,14 +818,15 @@ function renderPXDashboard(partner, sales, products) {
     monthOptions = `<option value="${currentKey}">${monthNames[now.getMonth()]} ${now.getFullYear()}</option>`;
   }
 
-  // All-time totals — always RECOMPUTE commission from sale_amount * 13%
-  let allTimeNet = 0, allTimeGross = 0, allTimeCommission = 0;
+  // All-time totals — use actual commission_amount from database
+  let allTimeNet = 0, allTimeGross = 0, allTimeCommission = 0, allTimeDiscounts = 0;
   sales.forEach(s => {
     const net = parseFloat(s.sale_amount) || 0;
-    const tax = parseFloat(s.tax_amount) || 0;
+    const discount = parseFloat(s.discount_amount) || 0;
     allTimeNet += net;
-    allTimeGross += (net + tax);
-    allTimeCommission += net * 0.13; // always recompute
+    allTimeGross += net; // Gross = sale amounts (no tax added)
+    allTimeDiscounts += discount;
+    allTimeCommission += parseFloat(s.commission_amount) || 0; // use actual stored value
   });
 
   const html = `
@@ -941,15 +942,13 @@ function renderPXMonthly(sales) {
     return k === selectedKey;
   });
 
-  // Summary totals — always RECOMPUTE commission from sale_amount * 13%
-  // Never trust stored commission_amount (may have been written incorrectly by webhook)
+  // Summary totals — use actual commission_amount from database
   let monthNet = 0, monthGross = 0, monthCommission = 0;
   filtered.forEach(s => {
     const net = parseFloat(s.sale_amount) || 0;
-    const tax = parseFloat(s.tax_amount) || 0;
     monthNet += net;
-    monthGross += (net + tax);
-    monthCommission += net * 0.13; // always recompute, 13% of net
+    monthGross += net; // Gross = sale amounts (no tax added)
+    monthCommission += parseFloat(s.commission_amount) || 0; // use actual stored value
   });
 
   // Summary HTML
@@ -990,7 +989,7 @@ function renderPXMonthly(sales) {
     productMap[name].qty += parseInt(s.quantity) || 1;
     const net = parseFloat(s.sale_amount) || 0;
     productMap[name].net += net;
-    productMap[name].commission += net * 0.13; // always recompute
+    productMap[name].commission += parseFloat(s.commission_amount) || 0; // use actual stored value
   });
 
   const rows = Object.entries(productMap)
