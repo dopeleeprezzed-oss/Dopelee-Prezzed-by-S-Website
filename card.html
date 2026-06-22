@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Dopelee Prezzed by S™ | Digital Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-wrapper {
+            width: 100%;
+            max-width: 420px;
+            min-height: 100vh;
+            padding: 0 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Top gold accent */
+        .card-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #d4af37, #f5d76e, #d4af37, transparent);
+        }
+
+        /* Subtle gold radial glow */
+        .card-glow {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* HEADER */
+        .card-header {
+            text-align: center;
+            padding: 2.5rem 1.5rem 1.5rem;
+            position: relative;
+        }
+
+        .card-logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 1rem;
+            border-radius: 16px;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+        }
+
+        .card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #d4af37;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .card-title {
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.5);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .card-business {
+            font-family: 'Playfair Display', serif;
+            font-size: 1rem;
+            color: #f5d76e;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .card-tagline {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.35);
+            margin-top: 6px;
+            font-style: italic;
+        }
+
+        /* SAVE CONTACT BUTTON */
+        .save-contact-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: calc(100% - 3rem);
+            margin: 0 auto 1.5rem;
+            padding: 16px 24px;
+            background: linear-gradient(135deg, #d4af37 0%, #f5d76e 50%, #d4af37 100%);
+            border: none;
+            border-radius: 14px;
+            color: #000;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 25px rgba(212, 175, 55, 0.4), 0 0 40px rgba(212, 175, 55, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .save-contact-btn:active {
+            transform: scale(0.97);
+        }
+
+        .save-contact-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #000;
+        }
+
+        /* DIVIDER */
+        .card-divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .card-divider-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.3), transparent);
+        }
+
+        .card-divider-dot {
+            color: #d4af37;
+            font-size: 8px;
+        }
+
+        /* CONTACT LINKS */
+        .card-contacts {
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-contact-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            transition: all 0.2s ease;
+        }
+
+        .card-contact-link:active {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        .card-contact-icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .card-contact-label {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .card-contact-value {
+            font-size: 0.92rem;
+            color: #fff;
+            font-weight: 500;
+            margin-top: 1px;
+        }
+
+        /* QUICK LINKS */
+        .card-links-title {
+            font-size: 0.7rem;
+            color: rgba(212, 175, 55, 0.6);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+            padding: 0 1.5rem;
+        }
+
+        .card-quick-links {
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-quick-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 10px;
+            background: rgba(212, 175, 55, 0.06);
+            border: 1px solid rgba(212, 175, 55, 0.15);
+            border-radius: 10px;
+            text-decoration: none;
+            color: #d4af37;
+            font-size: 0.78rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .card-quick-link:active {
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        .card-quick-link span {
+            font-size: 1rem;
+        }
+
+        /* SOCIAL LINKS */
+        .card-socials {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-social-link {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(212, 175, 55, 0.05);
+            color: #d4af37;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .card-social-link:active {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: #d4af37;
+        }
+
+        .card-social-link svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* FOOTER */
+        .card-footer {
+            text-align: center;
+            padding: 1.5rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            margin: 0 1.5rem;
+        }
+
+        .card-footer p {
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.2);
+        }
+
+        .card-footer a {
+            color: rgba(212, 175, 55, 0.5);
+            text-decoration: none;
+        }
+
+        /* VIDEO PLACEHOLDER - hidden until video is added */
+        .card-video {
+            display: none;
+            padding: 0 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-video.has-video {
+            display: block;
+        }
+
+        .card-video iframe {
+            width: 100%;
+            aspect-ratio: 16/9;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="card-wrapper">
+    <div class="card-glow"></div>
+
+    <!-- HEADER -->
+    <div class="card-header">
+        <img src="https://25zppb-bv.myshopify.com/cdn/shop/files/dopelee_prezzed_logo.png?v=1755138398&width=450" alt="Dopelee Prezzed by S" class="card-logo">
+        <div class="card-name">K. Smith</div>
+        <div class="card-title">CEO / Founder</div>
+        <div class="card-business">DOPELEE PREZZED BY S™</div>
+        <div class="card-tagline">Home of The Legacy Lounge™</div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:8px;line-height:1.5;">Located at Fort Leavenworth, Kansas<br>Inside the Exchange Mall</div>
+    </div>
+
+    <!-- SAVE CONTACT -->
+    <button class="save-contact-btn" onclick="saveContact()">
+        <svg viewBox="0 0 24 24"><path d="M19 7h-1V2H6v5H5c-1.1 0-2 .9-2 2v7h4v4h10v-4h4V9c0-1.1-.9-2-2-2zM8 4h8v3H8V4zm8 14H8v-4h8v4zm2-4v-2H6v2H5V9c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v5h-1z"/></svg>
+        Save Contact
+    </button>
+
+    <!-- DIVIDER -->
+    <div class="card-divider">
+        <div class="card-divider-line"></div>
+        <span class="card-divider-dot">✦</span>
+        <div class="card-divider-line"></div>
+    </div>
+
+    <!-- CONTACT INFO -->
+    <div class="card-contacts">
+        <a href="tel:8165301520" class="card-contact-link">
+            <div class="card-contact-icon">📞</div>
+            <div>
+                <div class="card-contact-label">Call or Text</div>
+                <div class="card-contact-value">816-530-1520</div>
+            </div>
+        </a>
+        <a href="mailto:info@dopeleeprezzedbysllc.com" class="card-contact-link">
+            <div class="card-contact-icon">✉️</div>
+            <div>
+                <div class="card-contact-label">Email</div>
+                <div class="card-contact-value">info@dopeleeprezzedbysllc.com</div>
+            </div>
+        </a>
+        <a href="https://www.dopeleeprezzedbys.com" target="_blank" class="card-contact-link">
+            <div class="card-contact-icon">🌐</div>
+            <div>
+                <div class="card-contact-label">Website</div>
+                <div class="card-contact-value">dopeleeprezzedbys.com</div>
+            </div>
+        </a>
+    </div>
+
+    <!-- VIDEO PLACEHOLDER (add YouTube ID to activate) -->
+    <div class="card-video" id="cardVideo">
+        <iframe id="cardVideoFrame" src="" title="About Us" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="card-links-title">Explore</div>
+    <div class="card-quick-links">
+        <a href="https://www.dopeleeprezzedbys.com/#products" class="card-quick-link">
+            <span>◆</span> Shop Collection
+        </a>
+        <a href="https://www.dopeleeprezzedbys.com/#gallery" class="card-quick-link">
+            <span>✦</span> Legacy Creations
+        </a>
+        <a href="https://www.dopeleeprezzedbys.com/#px" class="card-quick-link">
+            <span>★</span> Ft. Leavenworth
+        </a>
+        <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/contact.html" target="_blank" class="card-quick-link">
+            <span>↗</span> Contact Us
+        </a>
+        <a href="https://www.dopeleeprezzedbys.com/#vip" class="card-quick-link">
+            <span>✧</span> VIP Experiences
+        </a>
+        <a href="https://tr.ee/U07ytK" target="_blank" class="card-quick-link">
+            <span>🖤</span> Leave a Review
+        </a>
+    </div>
+
+    <!-- DIVIDER -->
+    <div class="card-divider">
+        <div class="card-divider-line"></div>
+        <span class="card-divider-dot">✦</span>
+        <div class="card-divider-line"></div>
+    </div>
+
+    <!-- SOCIALS -->
+    <div class="card-socials">
+        <a href="https://www.facebook.com/dopeleeprezzedbys" target="_blank" class="card-social-link" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </a>
+        <a href="https://www.instagram.com/dopeleeprezzedbys" target="_blank" class="card-social-link" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
+        <a href="https://www.pinterest.com/dopeleeprezzedbys" target="_blank" class="card-social-link" aria-label="Pinterest">
+            <svg viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12.017 24c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641 0 12.017 0z"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@dopeleeprezzedbys" target="_blank" class="card-social-link" aria-label="TikTok">
+            <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86 4.46V13.2a8.16 8.16 0 005.58 2.17v-3.45a4.85 4.85 0 01-1.99-2.64 4.83 4.83 0 01.99-2.59z"/></svg>
+        </a>
+        <a href="https://www.linkedin.com/company/dopelee-prezzed-by-s/" target="_blank" class="card-social-link" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="card-footer">
+        <p>© 2026 <a href="https://www.dopeleeprezzedbys.com">Dopelee Prezzed by S LLC</a></p>
+        <p style="margin-top:4px;">Kansas City, Missouri</p>
+    </div>
+</div>
+
+<script>
+function saveContact() {
+    var vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'FN:K. Smith - Dopelee Prezzed by S',
+        'N:Smith;K.;;;',
+        'ORG:Dopelee Prezzed by S LLC',
+        'TITLE:
+        'TEL;TYPE=CELL:+18165301520',
+        'EMAIL:info@dopeleeprezzedbysllc.com',
+        'URL:https://www.dopeleeprezzedbys.com',
+        'ADR;TYPE=WORK:;;Kansas City;MO;;;US',
+        'NOTE:Luxury Legacy Keepsakes - Handcrafted memorial pieces and custom gifts',
+        'X-SOCIALPROFILE;TYPE=facebook:https://www.facebook.com/dopeleeprezzedbys',
+        'X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/dopeleeprezzedbys',
+        'X-SOCIALPROFILE;TYPE=tiktok:https://www.tiktok.com/@dopeleeprezzedbys',
+        'X-SOCIALPROFILE;TYPE=pinterest:https://www.pinterest.com/dopeleeprezzedbys',
+        'X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/company/dopelee-prezzed-by-s/',
+        'END:VCARD'
+    ].join('\n');
+
+    var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = 'Dopelee_Prezzed_by_S.vcf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+
+// To add a video later, uncomment and set the YouTube ID:
+// document.getElementById('cardVideo').classList.add('has-video');
+// document.getElementById('cardVideoFrame').src = 'https://www.youtube.com/embed/YOUR_VIDEO_ID';
+</script>
+
+</body>
+</html>
