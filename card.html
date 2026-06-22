@@ -335,10 +335,10 @@
     </div>
 
     <!-- SAVE CONTACT -->
-    <button class="save-contact-btn" onclick="saveContact()">
+    <a href="dopelee.vcf" class="save-contact-btn" style="text-decoration:none;">
         <svg viewBox="0 0 24 24"><path d="M19 7h-1V2H6v5H5c-1.1 0-2 .9-2 2v7h4v4h10v-4h4V9c0-1.1-.9-2-2-2zM8 4h8v3H8V4zm8 14H8v-4h8v4zm2-4v-2H6v2H5V9c0-.55.45-1 1-1h12c.55 0 1 .45 1 1v5h-1z"/></svg>
         Save Contact
-    </button>
+    </a>
 
     <!-- DIVIDER -->
     <div class="card-divider">
@@ -434,38 +434,6 @@
 </div>
 
 <script>
-function saveContact() {
-    var vcard = [
-        'BEGIN:VCARD',
-        'VERSION:3.0',
-        'FN:K. Smith - Dopelee Prezzed by S',
-        'N:Smith;K.;;;',
-        'ORG:Dopelee Prezzed by S LLC',
-        'TITLE:
-        'TEL;TYPE=CELL:+18165301520',
-        'EMAIL:info@dopeleeprezzedbysllc.com',
-        'URL:https://www.dopeleeprezzedbys.com',
-        'ADR;TYPE=WORK:;;Kansas City;MO;;;US',
-        'NOTE:Luxury Legacy Keepsakes - Handcrafted memorial pieces and custom gifts',
-        'X-SOCIALPROFILE;TYPE=facebook:https://www.facebook.com/dopeleeprezzedbys',
-        'X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/dopeleeprezzedbys',
-        'X-SOCIALPROFILE;TYPE=tiktok:https://www.tiktok.com/@dopeleeprezzedbys',
-        'X-SOCIALPROFILE;TYPE=pinterest:https://www.pinterest.com/dopeleeprezzedbys',
-        'X-SOCIALPROFILE;TYPE=linkedin:https://www.linkedin.com/company/dopelee-prezzed-by-s/',
-        'END:VCARD'
-    ].join('\n');
-
-    var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
-    var url = URL.createObjectURL(blob);
-    var link = document.createElement('a');
-    link.href = url;
-    link.download = 'Dopelee_Prezzed_by_S.vcf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-}
-
 // To add a video later, uncomment and set the YouTube ID:
 // document.getElementById('cardVideo').classList.add('has-video');
 // document.getElementById('cardVideoFrame').src = 'https://www.youtube.com/embed/YOUR_VIDEO_ID';
