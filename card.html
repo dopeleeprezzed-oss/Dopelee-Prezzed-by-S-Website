@@ -328,9 +328,14 @@
     <div class="card-header">
         <img src="https://25zppb-bv.myshopify.com/cdn/shop/files/dopelee_prezzed_logo.png?v=1755138398&width=450" alt="Dopelee Prezzed by S" class="card-logo">
         <div class="card-name">K. Smith</div>
-        <div class="card-title"></div>
+        <div class="card-title">CEO / Founder</div>
         <div class="card-business">DOPELEE PREZZED BY S™</div>
         <div class="card-tagline">Home of The Legacy Lounge™</div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:10px;flex-wrap:wrap;">
+            <span style="font-size:0.68rem;color:#d4af37;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);padding:5px 12px;border-radius:20px;letter-spacing:0.5px;font-weight:600;">Custom Engraving</span>
+            <span style="font-size:0.68rem;color:#d4af37;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);padding:5px 12px;border-radius:20px;letter-spacing:0.5px;font-weight:600;">Luxury Keepsakes</span>
+            <span style="font-size:0.68rem;color:#d4af37;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);padding:5px 12px;border-radius:20px;letter-spacing:0.5px;font-weight:600;">Memorial Pieces</span>
+        </div>
         <div style="font-size:0.72rem;color:rgba(255,255,255,0.3);margin-top:8px;line-height:1.5;">Located at Fort Leavenworth, Kansas<br>Inside the Exchange Mall</div>
     </div>
 
@@ -407,6 +412,20 @@
         <div class="card-divider-line"></div>
     </div>
 
+    <!-- JOIN EMAIL LIST -->
+    <div style="padding:0 1.5rem;margin-bottom:1.5rem;">
+        <div id="emailFormArea" style="text-align:center;">
+            <p style="font-size:0.72rem;color:rgba(255,255,255,0.35);letter-spacing:1px;text-transform:uppercase;margin:0 0 10px;font-weight:600;">Stay Connected</p>
+            <div style="display:flex;gap:8px;">
+                <input id="cardEmailInput" type="email" placeholder="Your email" style="flex:1;padding:12px 14px;background:rgba(255,255,255,0.04);border:1px solid rgba(212,175,55,0.2);border-radius:10px;color:#fff;font-size:0.88rem;outline:none;">
+                <button onclick="joinEmailList()" id="cardEmailBtn" style="padding:12px 18px;background:linear-gradient(135deg,#d4af37,#f5d76e);border:none;border-radius:10px;color:#000;font-weight:700;font-size:0.8rem;cursor:pointer;white-space:nowrap;">Join</button>
+            </div>
+        </div>
+        <div id="emailSuccessArea" style="display:none;text-align:center;padding:12px 0;">
+            <p style="color:#d4af37;font-size:0.9rem;margin:0;">💛 You're in! Welcome to The Legacy Community.</p>
+        </div>
+    </div>
+
     <!-- SOCIALS -->
     <div class="card-socials">
         <a href="https://www.facebook.com/dopeleeprezzedbys" target="_blank" class="card-social-link" aria-label="Facebook">
@@ -434,6 +453,42 @@
 </div>
 
 <script>
+var SUPABASE_URL = 'https://dyehxtiozfwlexkbalvn.supabase.co';
+var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs';
+
+async function joinEmailList() {
+    var email = document.getElementById('cardEmailInput').value.trim();
+    if (!email) { alert('Please enter your email.'); return; }
+
+    var btn = document.getElementById('cardEmailBtn');
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+        await fetch(SUPABASE_URL + '/rest/v1/community_members', {
+            method: 'POST',
+            headers: {
+                'apikey': SUPABASE_KEY,
+                'Authorization': 'Bearer ' + SUPABASE_KEY,
+                'Content-Type': 'application/json',
+                'Prefer': 'return=minimal'
+            },
+            body: JSON.stringify({
+                name: 'Card Visitor',
+                email: email,
+                source: 'digital-card',
+                created_at: new Date().toISOString()
+            })
+        });
+        document.getElementById('emailFormArea').style.display = 'none';
+        document.getElementById('emailSuccessArea').style.display = 'block';
+    } catch(err) {
+        btn.disabled = false;
+        btn.textContent = 'Join';
+        alert('Something went wrong. Please try again.');
+    }
+}
+
 // To add a video later, uncomment and set the YouTube ID:
 // document.getElementById('cardVideo').classList.add('has-video');
 // document.getElementById('cardVideoFrame').src = 'https://www.youtube.com/embed/YOUR_VIDEO_ID';
