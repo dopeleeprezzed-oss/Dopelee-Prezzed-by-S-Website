@@ -2447,9 +2447,11 @@
             .gallery-item { margin-bottom: 10px; }
             .gallery-item-info { padding: 10px 12px; }
             .gallery-item-title { font-size: 0.82rem; }
+            #soundsGrid { columns: 1 !important; }
         }
         @media (max-width: 480px) {
             #galleryGrid { columns: 2 !important; }
+            #soundsGrid { columns: 1 !important; }
         }
 
         /* ========================================
@@ -3603,8 +3605,8 @@
                 <li><a onclick="showPage('home'); closeMenu();">Home</a></li>
                 <li><a onclick="showPage('products'); closeMenu();">Shop Our Collection</a></li>
                 <li><a onclick="showPage('gallery'); closeMenu();">Legacy Creations</a></li>
-                <li><a onclick="showPage('vip'); closeMenu();">VIP Experiences</a></li>
-                <li><a onclick="showPage('partner'); closeMenu();">Partner With Us</a></li>
+                <li><a onclick="showPage('sounds'); closeMenu();">Sounds of Legacy</a></li>
+                <li><a onclick="showPage('custom'); closeMenu();">Custom Orders</a></li>
                 <li><a onclick="window.open('https://dopeleeprezzed-oss.github.io/dopelee-form/contact.html', '_blank'); closeMenu();">Contact</a></li>
             </ul>
         </div>
@@ -3626,11 +3628,6 @@
             </div>
             <h1>Preserving What Matters Most</h1>
             <p class="tagline">Luxury • Legacy • Keepsakes</p>
-            
-            <div class="hero-cta">
-                <a href="#" onclick="showPage('products'); return false;" class="cta-primary">Shop Legacy Collection</a>
-                <a href="https://youtu.be/Fq1KurRRbVc" target="_blank" class="cta-secondary">🎵 Our Legacy Song</a>
-            </div>
         </section>
 
         <!-- FORT LEAVENWORTH BANNER - HOME PAGE -->
@@ -3663,13 +3660,13 @@
        </div>
             
             <p>
-                At Dopelee Prezzed by S™, we believe every memory deserves to be honored with elegance and care. 
-                We create luxury memorial keepsakes and custom gifts that celebrate life, legacy, and the moments that matter most. 
-                From handcrafted photo slates to premium engraved pieces, each item is timelessly crafted with love and precision.
+                At Dopelee Prezzed by S™, we believe every moment deserves to be honored with elegance and care. 
+                We specialize in custom engraving, luxury keepsakes, military recognition awards, personalized gifts, and memorial pieces. 
+                From engraved plaques and shadow boxes to handcrafted wood displays and custom jewelry, each item is crafted with love and precision.
             </p>
             <p>
-                Whether you're honoring a loved one, celebrating a milestone, or partnering with us to serve your community, 
-                we're here to help you create something meaningful that lasts forever.
+                Whether you are honoring a service member, celebrating a milestone, remembering a loved one, or creating something 
+                meaningful for your business or church, we are here to bring your vision to life. Welcome to The Legacy Lounge.
             </p>
         </section>
 
@@ -3691,30 +3688,20 @@
                     <div class="service-icon">💎</div>
                     <h3>Shop Our Collection</h3>
                     <p>
-                        Luxury memorial keepsakes for pets and loved ones. Shop our handcrafted photo slates, 
-                        wood displays, glass keepsakes, metal ornaments, and custom photo books.
+                        Custom engraved keepsakes, plaques, shadow boxes, ornaments, wood displays, 
+                        personalized gifts, and more. Every piece crafted to honor your story.
                     </p>
                     <button class="btn">Shop Now</button>
                 </div>
 
-                <div class="service-card" onclick="showPage('vip')">
+                <div class="service-card" onclick="showPage('custom')">
                     <div class="service-icon">🎁</div>
-                    <h3>VIP Experiences</h3>
+                    <h3>Custom Orders</h3>
                     <p>
-                        Custom luxury gifts for weddings, corporate events, swag favors, and special occasions. 
-                        We curate personalized gift experiences tailored to your vision and theme.
+                        Bulk engraving, corporate gifts, military awards, church orders, event favors, and more. 
+                        Whatever the occasion, we make it personal. Tell us what you need and we will bring it to life.
                     </p>
-                    <button class="btn" onclick="event.stopPropagation(); window.open('https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip', '_blank')">Request VIP Quote</button>
-                </div>
-
-                <div class="service-card" onclick="showPage('partner')">
-                    <div class="service-icon">🤝</div>
-                    <h3>Partner With Us</h3>
-                    <p>
-                        Host The Legacy Lounge™ display at your location. Earn 10% commission on every order 
-                        with zero cost, zero effort, and full support from our team.
-                    </p>
-                    <button class="btn">Learn More</button>
+                    <button class="btn">Request a Quote</button>
                 </div>
 
             </div>
@@ -3737,6 +3724,14 @@
                         <span class="footer-contact-icon">✆</span>
                         816-530-1520
                     </a>
+                    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(212,175,55,0.15);">
+                        <h4 class="footer-heading" style="margin-bottom: 8px;">Store Hours</h4>
+                        <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; line-height: 1.7; margin: 0;">
+                            Tuesday through Friday: 10 AM to 5 PM<br>
+                            Saturday: 10 AM to 3 PM
+                        </p>
+                        <a href="https://pass.aie.army.mil/steps/terms_of_use" target="_blank" style="display: inline-block; margin-top: 10px; color: #0ff0b8; font-size: 0.8rem; text-decoration: none; font-weight: 600;">Get Your Visitor Pass →</a>
+                    </div>
                 </div>
 
                 <!-- Center: Brand -->
@@ -3786,7 +3781,7 @@
             
             <h1 class="luxury-title">Shop Our Collection</h1>
             <div class="luxury-divider"></div>
-            <p class="luxury-subtitle">Handcrafted memorial keepsakes that honor your loved ones with elegance and care</p>
+            <p class="luxury-subtitle">Custom engraved keepsakes, awards, and personalized gifts crafted with elegance and care</p>
         
             <div class="luxury-delivery-notice">
                 <p><span style="font-size: 1.3rem;">⏱️</span> Please allow 2-3 weeks for delivery</p>
@@ -4623,13 +4618,12 @@ document.addEventListener('keydown', function(e) {
 
 
         <section class="partner-cta">
-            <h2>Bring The Legacy Lounge™ to Your Location</h2>
+            <h2>Need Something Custom?</h2>
             <p>
-                Host The Legacy Lounge™ display at your business and earn 10% commission on every order. 
-                Zero cost, zero effort, and full support from our team. Serve your community with 
-                meaningful keepsakes while generating passive income.
+                Bulk engraving, corporate gifts, military awards, church orders, and more. 
+                Tell us what you need and we will bring it to life.
             </p>
-            <button class="btn" onclick="showPage('partner')" style="background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d4af37); color: #000; font-weight: 700;">Become a Partner</button>
+            <button class="btn" onclick="showPage('custom')" style="background: linear-gradient(135deg, #0a95a8, #0ff0b8, #d4af37); color: #000; font-weight: 700;">Request a Quote</button>
         </section>
 
         <footer>
@@ -4716,8 +4710,11 @@ document.addEventListener('keydown', function(e) {
         </div>
     </div>
 
-    <div id="vip" class="page">
-        <section class="vip-hero">
+    <!-- ═══════════════════════════════════════════════════════════════
+         SOUNDS OF LEGACY
+    ═══════════════════════════════════════════════════════════════ -->
+    <div id="sounds" class="page">
+        <section class="page-header">
             <div class="bubble"></div>
             <div class="bubble"></div>
             <div class="bubble"></div>
@@ -4727,250 +4724,147 @@ document.addEventListener('keydown', function(e) {
             <div class="bubble"></div>
             <div class="bubble"></div>
 
-            <h1>🎁 VIP Experiences</h1>
-            <p>Not just custom. Curated. Luxury gift experiences tailored to your vision.</p>
+            <h1>Sounds of Legacy</h1>
+            <p>We turn your memories into music. Your poem, your speech, your story, your melody. We create personalized songs and audio keepsakes that live forever.</p>
         </section>
 
-        <section class="about">
-            <h2>Curated Luxury Gifts</h2>
-            <p>
-                At Dopelee Prezzed by S™, our VIP Experiences go beyond standard gifts. We curate premium, 
-                personalized keepsakes and swag favors that reflect your unique theme and vision. 
-                From weddings to corporate events, we handle every detail so your guests receive 
-                something truly meaningful and memorable.
+        <section class="about" style="max-width: 900px; margin: 0 auto; padding: 40px 20px;">
+            <p style="text-align: center; color: #b8bac0; line-height: 1.8; font-size: 1rem; margin-bottom: 30px;">
+                Every voice tells a story. Every song holds a memory. We take what matters most to you and turn it into 
+                something you can hear, feel, and keep forever. Whether it is a love letter turned into a ballad, a poem 
+                set to guitar, or a speech preserved in song, we create one of a kind audio experiences paired with 
+                custom engraved keepsakes.
             </p>
         </section>
 
-        <section class="partnership-accordion">
-            <h2>Perfect For</h2>
-
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="accordion-title-wrapper" style="flex: 1;">
-                        <h3 class="accordion-title">
-                            <span class="accordion-title-icon">💍</span>
-                            Weddings
-                        </h3>
-                    </div>
-                    <div class="accordion-toggle">▼</div>
-                </div>
-                <div class="accordion-content">
-                    <p class="accordion-text">
-                        Custom luxury gift bags for bridal parties, guests, and VIPs. 
-                        Elegant keepsakes that match your wedding theme and leave a lasting impression.
-                    </p>
-                    
-                    <div class="accordion-video-container" style="margin-top: 20px;">
-                        <div style="position: relative; padding-bottom: 100%; height: 0; overflow: hidden; max-width: 400px; margin: 0 auto; border-radius: 12px;">
-                            <iframe 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;" 
-                                src="https://www.youtube.com/embed/rq-5QnYT6nU" 
-                                title="VIP Custom Bags Video" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                referrerpolicy="strict-origin-when-cross-origin" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 25px;">
-                        <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn">Request Wedding Quote</a>
-                    </div>
-                </div>
+        <!-- SONGS MASONRY GRID -->
+        <section style="max-width: 1100px; margin: 0 auto; padding: 0 20px 40px;">
+            <div id="soundsLoading" style="text-align: center; padding: 3rem; color: #0ff0b8;">Loading songs...</div>
+            <div id="soundsGrid" style="display: none; columns: 2; column-gap: 16px;"></div>
+            <div id="soundsEmpty" style="display: none; text-align: center; padding: 3rem; color: rgba(255,255,255,0.4);">
+                <p style="font-size: 1.1rem;">New songs coming soon. Stay tuned.</p>
             </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="accordion-title-wrapper" style="flex: 1;">
-                        <h3 class="accordion-title">
-                            <span class="accordion-title-icon">🏢</span>
-                            Corporate Events
-                        </h3>
-                    </div>
-                    <div class="accordion-toggle">▼</div>
-                </div>
-                <div class="accordion-content">
-                    <p class="accordion-text">
-                        Premium branded gifts for clients, employees, and stakeholders. 
-                        Thoughtfully curated items that elevate your brand and show appreciation.
-                    </p>
-                    
-                    <div class="accordion-video-container" style="margin-top: 20px;">
-                        <div style="position: relative; padding-bottom: 100%; height: 0; overflow: hidden; max-width: 400px; margin: 0 auto; border-radius: 12px;">
-                            <iframe 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;" 
-                                src="https://www.youtube.com/embed/UqeHcVJCodo" 
-                                title="Corporate Branded Video" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                referrerpolicy="strict-origin-when-cross-origin" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 25px;">
-                        <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn">Request Corporate Quote</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="accordion-title-wrapper" style="flex: 1;">
-                        <h3 class="accordion-title">
-                            <span class="accordion-title-icon">🥂</span>
-                            Swag & Celebrations
-                        </h3>
-                    </div>
-                    <div class="accordion-toggle">▼</div>
-                </div>
-                <div class="accordion-content">
-                    <p class="accordion-text">
-                        High-end swag bags and personalized gift experiences for parties, conferences, birthdays, 
-                        anniversaries, graduations, and special occasions. We source and assemble premium items 
-                        that align with your event's aesthetic. Tell us your theme, and we'll create something extraordinary.
-                    </p>
-                    
-                    <div class="accordion-video-container" style="margin-top: 20px;">
-                        <div style="position: relative; padding-bottom: 100%; height: 0; overflow: hidden; max-width: 400px; margin: 0 auto; border-radius: 12px;">
-                            <iframe 
-                                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;" 
-                                src="https://www.youtube.com/embed/-JutRn4mrK0" 
-                                title="Party VIP Video" 
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                referrerpolicy="strict-origin-when-cross-origin" 
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                    
-                    <div style="text-align: center; margin-top: 25px;">
-                        <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn">Request Custom Quote</a>
-                    </div>
-                </div>
-            </div>
-
-        </section>
-
-        <section class="partnership-accordion" style="margin-top: 80px;">
-            <h2>How VIP Experiences Work</h2>
-
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="step-number-circle">1</div>
-                    <div class="accordion-title-wrapper">
-                        <h3 class="accordion-title">
-                            <span class="accordion-title-icon">💭</span>
-                            Share Your Vision
-                        </h3>
-                    </div>
-                    <div class="accordion-toggle">▼</div>
-                </div>
-                <div class="accordion-content">
-                    <p class="accordion-text">
-                        Tell us about your event, theme, budget, and the story you want to tell through your gifts. 
-                        The more detail you share, the better we can curate the perfect experience. We listen carefully 
-                        to your vision and preferences to ensure every detail aligns with your expectations.
-                    </p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="step-number-circle">2</div>
-                    <div class="accordion-title-wrapper">
-                        <h3 class="accordion-title">
-                            <span class="accordion-title-icon">🎨</span>
-                            We Curate Options
-                        </h3>
-                    </div>
-                    <div class="accordion-toggle">▼</div>
-                </div>
-                <div class="accordion-content">
-                    <p class="accordion-text">
-                        Our team researches and presents premium gift options tailored to your needs and aesthetic. 
-                        We source high-quality items, create mockups, and provide detailed proposals with pricing 
-                        and timelines. You'll see exactly what your guests will receive before we move forward.
-                    </p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="step-number-circle">3</div>
-                    <div class="accordion-title-wrapper">
-                        <h3 class="accordion-title">
-                            <span class="accordion-title-icon">✅</span>
-                            You Approve
-                        </h3>
-                    </div>
-                    <div class="accordion-toggle">▼</div>
-                </div>
-                <div class="accordion-content">
-                    <p class="accordion-text">
-                        Review our curated selections and approve the final items, quantities, and customization details. 
-                        We welcome your feedback and make revisions until everything is exactly how you envision it. 
-                        Once approved, we lock in your order and begin production.
-                    </p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="step-number-circle">4</div>
-                    <div class="accordion-title-wrapper">
-                        <h3 class="accordion-title">
-                            <span class="accordion-title-icon">🔧</span>
-                            We Handle Everything
-                        </h3>
-                    </div>
-                    <div class="accordion-toggle">▼</div>
-                </div>
-                <div class="accordion-content">
-                    <p class="accordion-text">
-                        From sourcing to assembly to delivery, we manage every detail so you can focus on your event. 
-                        We coordinate with vendors, oversee quality control, assemble gift bags with care, and ensure 
-                        everything arrives on time. You don't lift a finger. We do it all.
-                    </p>
-                </div>
-            </div>
-
-            <div class="accordion-item">
-                <div class="accordion-header" onclick="toggleAccordion(this)">
-                    <div class="step-number-circle">5</div>
-                    <div class="accordion-title-wrapper">
-                        <h3 class="accordion-title">
-                            <span class="accordion-title-icon">✨</span>
-                            Your Guests Are Wowed
-                        </h3>
-                    </div>
-                    <div class="accordion-toggle">▼</div>
-                </div>
-                <div class="accordion-content">
-                    <p class="accordion-text">
-                        Deliver an unforgettable experience with luxury gifts that reflect your thoughtfulness and style. 
-                        Your guests receive premium keepsakes they'll cherish, and you get the satisfaction of knowing 
-                        you gave them something truly special. That's the Dopelee difference.
-                    </p>
-                </div>
-            </div>
-
         </section>
 
         <section class="partner-cta">
-            <h2>Ready to Create Your VIP Experience?</h2>
+            <h2>Ready to Create Yours?</h2>
             <p>
-                Let's design something extraordinary together. Contact us to start planning your 
-                custom luxury gift experience today!
+                Tell us your story and we will turn it into something you can hear and hold. Poems, speeches, melodies, vocals, 
+                or anything in between. Reach out and let us know what you have in mind.
             </p>
-            <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn">Request a Custom Quote</a>
+            <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/contact.html" target="_blank" class="btn">Contact Us</a>
         </section>
 
         <footer>
-            <p>© <span class="currentYear"></span> Dopelee Prezzed by S LLC</p>
+            <p>&copy; <span class="currentYear"></span> Dopelee Prezzed by S LLC</p>
+            <p>Creating legacy pieces with love and precision</p>
+            <p style="margin-top: 15px; font-size: 0.9rem;">
+                <a href="https://tr.ee/f3FpnW" target="_blank">Policies & Terms</a>
+            </p>
+        </footer>
+    </div>
+
+    <div id="custom" class="page">
+        <section class="page-header">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+
+            <h1>Custom Orders</h1>
+            <p>Whatever the occasion, we make it personal. From one piece to one hundred, we bring your vision to life with precision and care.</p>
+        </section>
+
+        <section class="about" style="max-width: 900px; margin: 0 auto; padding: 40px 20px;">
+
+            <div style="border: 1px solid rgba(212,175,55,0.2); border-radius: 16px; padding: 30px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(26,21,8,0.6), rgba(10,10,10,0.8));">
+                <h3 style="color: #d4af37; font-size: 1.3rem; margin: 0 0 12px; font-family: 'Playfair Display', serif;">Bulk Engraving</h3>
+                <p style="color: #b8bac0; line-height: 1.8; margin: 0;">
+                    Need multiple items engraved? We handle orders of any size. Pens, knives, tumblers, Bibles, ornaments, keepsakes, and more. 
+                    Tell us what you need, the quantity, and the personalization details. We will take care of the rest.
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn" style="display: inline-block; text-decoration: none;">Request a Quote</a>
+                </div>
+            </div>
+
+            <div style="border: 1px solid rgba(15,240,184,0.2); border-radius: 16px; padding: 30px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(26,21,8,0.6), rgba(10,10,10,0.8));">
+                <h3 style="color: #0ff0b8; font-size: 1.3rem; margin: 0 0 12px; font-family: 'Playfair Display', serif;">Corporate and Business</h3>
+                <p style="color: #b8bac0; line-height: 1.8; margin: 0;">
+                    Branded gifts for your team, clients, or events. Employee recognition awards, client appreciation pieces, 
+                    company milestones, and promotional items. We work with you to create something that represents your brand and leaves a lasting impression.
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn" style="display: inline-block; text-decoration: none;">Request a Quote</a>
+                </div>
+            </div>
+
+            <div style="border: 1px solid rgba(212,175,55,0.2); border-radius: 16px; padding: 30px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(26,21,8,0.6), rgba(10,10,10,0.8));">
+                <h3 style="color: #d4af37; font-size: 1.3rem; margin: 0 0 12px; font-family: 'Playfair Display', serif;">Military and Awards</h3>
+                <p style="color: #b8bac0; line-height: 1.8; margin: 0;">
+                    Retirement plaques, shadow boxes, recognition awards, unit gifts, and custom engraved pieces for service members and their families. 
+                    We understand the weight of these moments and craft each piece with the honor they deserve.
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn" style="display: inline-block; text-decoration: none;">Request a Quote</a>
+                </div>
+            </div>
+
+            <div style="border: 1px solid rgba(15,240,184,0.2); border-radius: 16px; padding: 30px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(26,21,8,0.6), rgba(10,10,10,0.8));">
+                <h3 style="color: #0ff0b8; font-size: 1.3rem; margin: 0 0 12px; font-family: 'Playfair Display', serif;">Church and Ministry</h3>
+                <p style="color: #b8bac0; line-height: 1.8; margin: 0;">
+                    Engraved Bibles, pastoral appreciation gifts, congregation keepsakes, and ministry recognition pieces. 
+                    We serve churches of all sizes and create meaningful items that honor faith and service.
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn" style="display: inline-block; text-decoration: none;">Request a Quote</a>
+                </div>
+            </div>
+
+            <div style="border: 1px solid rgba(212,175,55,0.2); border-radius: 16px; padding: 30px; margin-bottom: 24px; background: linear-gradient(135deg, rgba(26,21,8,0.6), rgba(10,10,10,0.8));">
+                <h3 style="color: #d4af37; font-size: 1.3rem; margin: 0 0 12px; font-family: 'Playfair Display', serif;">Events and Celebrations</h3>
+                <p style="color: #b8bac0; line-height: 1.8; margin: 0;">
+                    Weddings, birthdays, retirements, graduations, and special occasions. Custom party favors, personalized gifts for guests, 
+                    and curated keepsake experiences that make your event unforgettable.
+                </p>
+                <div style="margin-top: 20px;">
+                    <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn" style="display: inline-block; text-decoration: none;">Request a Quote</a>
+                </div>
+            </div>
+
+        </section>
+
+        <section style="max-width: 900px; margin: 0 auto 40px; padding: 0 20px;">
+            <div style="border: 2px solid rgba(15,240,184,0.3); border-radius: 16px; padding: 30px; background: rgba(15,240,184,0.04); text-align: center;">
+                <h3 style="color: #0ff0b8; font-size: 1.2rem; margin: 0 0 8px; font-family: 'Playfair Display', serif;">Visit Us in Person</h3>
+                <p style="color: #b8bac0; line-height: 1.8; margin: 0 0 8px;">
+                    The Legacy Lounge is located inside the Fort Leavenworth Exchange Mall in Leavenworth, Kansas.
+                </p>
+                <p style="color: #d4af37; font-weight: 700; font-size: 1rem; margin: 0 0 8px;">
+                    Tuesday through Friday: 10:00 AM to 5:00 PM<br>
+                    Saturday: 10:00 AM to 3:00 PM
+                </p>
+                <p style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin: 0 0 20px;">
+                    Fort Leavenworth is an open access military installation. Register for a free visitor pass to shop with us.
+                </p>
+                <a href="https://pass.aie.army.mil/steps/terms_of_use" target="_blank" style="display: inline-block; padding: 12px 28px; background: rgba(15,240,184,0.12); border: 1px solid rgba(15,240,184,0.4); border-radius: 50px; color: #0ff0b8; text-decoration: none; font-weight: 700; font-size: 0.9rem;">Get Your Visitor Pass</a>
+            </div>
+        </section>
+
+        <section class="partner-cta">
+            <h2>Not Sure What You Need?</h2>
+            <p>
+                Reach out and tell us about your project. We will work with you to find the perfect solution, no matter the size or occasion.
+            </p>
+            <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=vip" target="_blank" class="btn">Contact Us</a>
+        </section>
+
+        <footer>
+            <p>&copy; <span class="currentYear"></span> Dopelee Prezzed by S LLC</p>
             <p>Creating legacy pieces with love and precision</p>
             <p style="margin-top: 15px; font-size: 0.9rem;">
                 <a href="https://tr.ee/f3FpnW" target="_blank">Policies & Terms</a>
@@ -5579,6 +5473,11 @@ document.addEventListener('keydown', function(e) {
             // Load gallery when gallery page is shown
             if (pageId === 'gallery') {
                 if (typeof loadGallery === 'function') loadGallery();
+            }
+            
+            // Load sounds when sounds page is shown
+            if (pageId === 'sounds') {
+                if (typeof loadSounds === 'function') loadSounds();
             }
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -6415,6 +6314,55 @@ document.addEventListener('keydown', function(e) {
           '</div>' : '') +
         '</div>';
       }).join('');
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // SOUNDS OF LEGACY
+    // ═══════════════════════════════════════════════════════════════
+    async function loadSounds() {
+      var grid = document.getElementById('soundsGrid');
+      var loading = document.getElementById('soundsLoading');
+      var empty = document.getElementById('soundsEmpty');
+      if (!grid) return;
+
+      try {
+        var response = await fetch(SUPABASE_CONFIG.url + '/rest/v1/sounds_library?is_active=eq.true&order=sort_order.asc,created_at.desc', {
+          headers: { 'apikey': SUPABASE_CONFIG.key, 'Authorization': 'Bearer ' + SUPABASE_CONFIG.key }
+        });
+        var songs = await response.json();
+
+        if (!songs || songs.length === 0 || songs.error) {
+          if (loading) loading.style.display = 'none';
+          if (empty) empty.style.display = 'block';
+          return;
+        }
+
+        grid.innerHTML = songs.map(function(song) {
+          // Extract YouTube ID from URL
+          var ytId = '';
+          var url = song.youtube_url || '';
+          if (url.includes('youtu.be/')) ytId = url.split('youtu.be/')[1].split('?')[0];
+          else if (url.includes('v=')) ytId = url.split('v=')[1].split('&')[0];
+
+          return '<div style="break-inside: avoid; margin-bottom: 16px; background: linear-gradient(135deg, #14110a, #0a0a0a); border: 1px solid rgba(212,175,55,0.15); border-radius: 14px; overflow: hidden;">' +
+            '<div style="position: relative; padding-bottom: 56.25%; height: 0;">' +
+              '<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/' + ytId + '" title="' + (song.title || '') + '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>' +
+            '</div>' +
+            '<div style="padding: 16px;">' +
+              '<h4 style="color: #d4af37; font-family: Playfair Display, serif; font-size: 1.05rem; margin: 0 0 4px;">' + (song.title || 'Untitled') + '</h4>' +
+              (song.honoree_name ? '<p style="color: rgba(255,255,255,0.5); font-size: 0.85rem; margin: 0 0 6px;">Created for ' + song.honoree_name + '</p>' : '') +
+              (song.description ? '<p style="color: #b8bac0; font-size: 0.85rem; line-height: 1.6; margin: 0;">' + song.description + '</p>' : '') +
+            '</div>' +
+          '</div>';
+        }).join('');
+
+        if (loading) loading.style.display = 'none';
+        grid.style.display = 'block';
+        console.log('✅ Sounds loaded: ' + songs.length + ' songs');
+      } catch (err) {
+        console.error('Sounds load error:', err);
+        if (loading) loading.innerHTML = 'Error loading songs. Please refresh.';
+      }
     }
 
     function filterGallery(category) {
