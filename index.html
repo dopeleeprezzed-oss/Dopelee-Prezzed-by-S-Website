@@ -3578,6 +3578,31 @@
         // Load when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', loadAnnouncement);
+            
+            // Load hero media from site_settings
+            document.addEventListener('DOMContentLoaded', async function() {
+              try {
+                var response = await fetch(SUPABASE_CONFIG.url + '/rest/v1/site_settings?select=key,value', {
+                  headers: { 'apikey': SUPABASE_CONFIG.key, 'Authorization': 'Bearer ' + SUPABASE_CONFIG.key }
+                });
+                var data = await response.json();
+                if (!data || !Array.isArray(data)) return;
+                
+                var settings = {};
+                data.forEach(function(row) { settings[row.key] = row.value; });
+                
+                var container = document.getElementById('aboutHeroMedia');
+                if (!container) return;
+                
+                if (settings.hero_type === 'video' && settings.hero_video) {
+                  container.innerHTML = '<iframe src="' + settings.hero_video + '" title="About Dopelee Prezzed by S" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width: 100%; aspect-ratio: 16/9; display: block;"></iframe>';
+                } else if (settings.hero_image) {
+                  container.innerHTML = '<img src="' + settings.hero_image + '" alt="The Legacy Lounge" style="width: 100%; display: block; object-fit: cover;" />';
+                }
+              } catch (err) {
+                console.warn('Could not load hero media:', err);
+              }
+            });
         } else {
             loadAnnouncement();
         }
@@ -3631,13 +3656,13 @@
         </section>
 
         <!-- FORT LEAVENWORTH BANNER - HOME PAGE -->
-        <div onclick="showPage('px')" style="cursor: pointer; background: linear-gradient(135deg, #1a1508 0%, #0d0a00 50%, #1a1508 100%); border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; padding: 22px 30px; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.background='linear-gradient(135deg, #2a2010, #1a1508, #2a2010)'" onmouseout="this.style.background='linear-gradient(135deg, #1a1508, #0d0a00, #1a1508)'">
+        <div onclick="showPage('products')" style="cursor: pointer; background: linear-gradient(135deg, #1a1508 0%, #0d0a00 50%, #1a1508 100%); border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; padding: 22px 30px; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.background='linear-gradient(135deg, #2a2010, #1a1508, #2a2010)'" onmouseout="this.style.background='linear-gradient(135deg, #1a1508, #0d0a00, #1a1508)'">
             <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #f5d76e, #0ff0b8, #f5d76e, transparent); animation: shimmerLine 3s linear infinite;"></div>
             <div style="display: flex; align-items: center; gap: 12px;">
                 <span style="font-size: 1.8rem; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));">🎖️</span>
                 <div>
-                    <p style="color: #f5d76e; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; margin: 0; text-shadow: 0 0 15px rgba(245, 215, 110, 0.5);">Shopping from Fort Leavenworth?</p>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin: 0;">Visit The Legacy Lounge™ inside the PX</p>
+                    <p style="color: #f5d76e; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; margin: 0; text-shadow: 0 0 15px rgba(245, 215, 110, 0.5);">Proudly Serving Fort Leavenworth</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin: 0;">Visit The Legacy Lounge inside the Exchange Mall</p>
                 </div>
             </div>
             <div style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d4af37, #f5d76e); color: #000; padding: 12px 28px; border-radius: 50px; font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; white-space: nowrap; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.2); animation: goldGlow 2s ease-in-out infinite;">
@@ -3649,15 +3674,8 @@
         <section class="about">
             <h2>About Us</h2>
             
-           <div class="video-container" style="max-width: 700px; margin: 0 auto 40px;">
-      <iframe src= "https://www.youtube.com/embed/BBil4qK5gck" 
-            title="YouTube video player"
-            frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-         </iframe>
-       </div>
+           <div id="aboutHeroMedia" style="max-width: 700px; margin: 0 auto 40px; border-radius: 16px; overflow: hidden; border: 2px solid rgba(212,175,55,0.3); box-shadow: 0 10px 40px rgba(212,175,55,0.2);">
+           </div>
             
             <p>
                 At Dopelee Prezzed by S™, we believe every moment deserves to be honored with elegance and care. 
@@ -3674,14 +3692,14 @@
             <h2>How We Serve You</h2>
             <div class="service-cards">
 
-                <div class="service-card" onclick="showPage('px')" style="border-color: #d4af37; background: linear-gradient(135deg, #1a1508 0%, #0a0a0a 100%);">
+                <div class="service-card" onclick="showPage('products')" style="border-color: #d4af37; background: linear-gradient(135deg, #1a1508 0%, #0a0a0a 100%);">
                     <div class="service-icon">🎖️</div>
-                    <h3 style="color: #f5d76e;">The Legacy Lounge - Fort Leavenworth Post Exchange</h3>
+                    <h3 style="color: #f5d76e;">Proudly Serving Military Families</h3>
                     <p>
-                        Proudly serving military families at the Fort Leavenworth Post Exchange. Shop luxury keepsakes, 
-                        custom recognition awards, and personalized gifts. Crafted to honor your service and legacy.
+                        Located inside the Fort Leavenworth Exchange Mall. Shop custom engraved keepsakes, 
+                        recognition awards, and personalized gifts. Crafted to honor your service and legacy.
                     </p>
-                    <button class="btn">Shop Fort Leavenworth</button>
+                    <button class="btn">Shop Now</button>
                 </div>
                 
                 <div class="service-card" onclick="showPage('products')">
@@ -6243,12 +6261,12 @@ document.addEventListener('keydown', function(e) {
         const modal = urlParams.get('modal');
         
         if (hash === 'px' || partner === 'px') {
-            showPage('px');
+            showPage('products');
         }
         
         // Auto-open recognition modal if URL param
         if (modal === 'recognition' || modal === 'awards') {
-            showPage('px');
+            showPage('products');
             setTimeout(function() { openRecognitionModal(); }, 500);
         }
     });
