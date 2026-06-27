@@ -4737,6 +4737,16 @@ document.addEventListener('keydown', function(e) {
             </p>
         </section>
 
+        <!-- PRICING -->
+        <section style="max-width: 900px; margin: 0 auto; padding: 0 20px 40px;">
+            <h2 style="text-align: center; font-family: 'Playfair Display', serif; color: #d4af37; margin-bottom: 8px;">Our Packages</h2>
+            <p style="text-align: center; color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: 30px;">Choose the experience that fits your vision.</p>
+
+            <div id="soundsPricingGrid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                <div style="text-align:center;padding:40px;color:rgba(255,255,255,0.3);">Loading pricing...</div>
+            </div>
+        </section>
+
         <!-- SONGS MASONRY GRID -->
         <section style="max-width: 1100px; margin: 0 auto; padding: 0 20px 40px;">
             <div id="soundsLoading" style="text-align: center; padding: 3rem; color: #0ff0b8;">Loading songs...</div>
@@ -5478,6 +5488,7 @@ document.addEventListener('keydown', function(e) {
             // Load sounds when sounds page is shown
             if (pageId === 'sounds') {
                 if (typeof loadSounds === 'function') loadSounds();
+                if (typeof loadSoundsPricing === 'function') loadSoundsPricing();
             }
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -6362,6 +6373,68 @@ document.addEventListener('keydown', function(e) {
       } catch (err) {
         console.error('Sounds load error:', err);
         if (loading) loading.innerHTML = 'Error loading songs. Please refresh.';
+      }
+    }
+
+    async function loadSoundsPricing() {
+      var grid = document.getElementById('soundsPricingGrid');
+      if (!grid) return;
+
+      try {
+        var response = await fetch(SUPABASE_CONFIG.url + '/rest/v1/products?product_category=eq.Sounds of Legacy&is_active=eq.true&order=price.asc', {
+          headers: { 'apikey': SUPABASE_CONFIG.key, 'Authorization': 'Bearer ' + SUPABASE_CONFIG.key }
+        });
+        var products = await response.json();
+
+        if (!products || products.length === 0 || products.error) {
+          grid.innerHTML = '';
+          return;
+        }
+
+        var integrationProduct = products.find(function(p) { return p.name === 'Song Integration'; });
+        var playlistProduct = products.find(function(p) { return p.name === 'Song Integration Playlist'; });
+        var songProduct = products.find(function(p) { return p.name === 'Legacy Song Custom'; });
+        var videoProduct = products.find(function(p) { return p.name === 'Legacy Song and Video'; });
+
+        var cards = '';
+
+        if (integrationProduct) {
+          var integrationPrice = parseFloat(integrationProduct.price).toFixed(0);
+          var playlistLine = '';
+          if (playlistProduct) {
+            playlistLine = '<div style="color: rgba(255,255,255,0.4); font-size: 0.8rem; margin-bottom: 12px;">Playlist (up to 3 songs): $' + parseFloat(playlistProduct.price).toFixed(0) + '</div>';
+          }
+          cards += '<div style="border: 1px solid rgba(212,175,55,0.2); border-radius: 16px; padding: 30px; background: linear-gradient(135deg, rgba(26,21,8,0.6), rgba(10,10,10,0.8)); text-align: center;">' +
+            '<div style="font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #0ff0b8; margin-bottom: 12px;">Song Integration</div>' +
+            '<div style="font-family: Playfair Display, serif; font-size: 2.5rem; font-weight: 900; color: #d4af37; margin-bottom: 4px;">$' + integrationPrice + '</div>' +
+            playlistLine +
+            '<p style="color: #b8bac0; font-size: 0.9rem; line-height: 1.7;">' + (integrationProduct.description || '') + '</p>' +
+          '</div>';
+        }
+
+        if (songProduct) {
+          var songPrice = parseFloat(songProduct.price).toFixed(0);
+          cards += '<div style="border: 2px solid rgba(212,175,55,0.4); border-radius: 16px; padding: 30px; background: linear-gradient(135deg, rgba(26,21,8,0.8), rgba(10,10,10,0.9)); text-align: center; box-shadow: 0 0 30px rgba(212,175,55,0.08);">' +
+            '<div style="font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #d4af37; margin-bottom: 12px;">Custom Legacy Song</div>' +
+            '<div style="font-family: Playfair Display, serif; font-size: 2.5rem; font-weight: 900; color: #d4af37; margin-bottom: 12px;">$' + songPrice + '</div>' +
+            '<p style="color: #b8bac0; font-size: 0.9rem; line-height: 1.7;">' + (songProduct.description || '') + '</p>' +
+          '</div>';
+        }
+
+        if (videoProduct) {
+          var videoPrice = parseFloat(videoProduct.price).toFixed(0);
+          cards += '<div style="border: 1px solid rgba(15,240,184,0.3); border-radius: 16px; padding: 30px; background: linear-gradient(135deg, rgba(26,21,8,0.6), rgba(10,10,10,0.8)); text-align: center;">' +
+            '<div style="font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #0ff0b8; margin-bottom: 12px;">Legacy Song + Video</div>' +
+            '<div style="font-family: Playfair Display, serif; font-size: 2.5rem; font-weight: 900; color: #0ff0b8; margin-bottom: 12px;">$' + videoPrice + '</div>' +
+            '<p style="color: #b8bac0; font-size: 0.9rem; line-height: 1.7;">' + (videoProduct.description || '') + '</p>' +
+          '</div>';
+        }
+
+        grid.innerHTML = cards || '<div style="text-align:center;color:rgba(255,255,255,0.3);">Pricing coming soon.</div>';
+
+      } catch (err) {
+        console.error('Sounds pricing error:', err);
+        grid.innerHTML = '';
       }
     }
 
