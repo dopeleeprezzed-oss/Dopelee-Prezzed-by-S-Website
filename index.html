@@ -3533,79 +3533,35 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════ -->
-    <!-- ANNOUNCEMENT BANNER — LOADED FROM SUPABASE                     -->
-    <!-- ═══════════════════════════════════════════════════════════════ -->
-    <div class="announce-bar" id="announceBanner">
-        <span id="announceMessage"></span>
-        <button class="announce-close" onclick="closeAnnouncement()">✕</button>
-    </div>
-
     <script>
     (function() {
         const SUPABASE_URL = 'https://dyehxtiozfwlexkbalvn.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5ZWh4dGlvemZ3bGV4a2JhbHZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU4NDYxMzMsImV4cCI6MjA4MTQyMjEzM30.dxd7otsV6WzD6dt41sWkYdseW94BRn0WI8MtFCqnAIs';
 
-        async function loadAnnouncement() {
-            // Don't show if user dismissed it this session
-            if (sessionStorage.getItem('announce_dismissed')) return;
-
-            try {
-                const res = await fetch(SUPABASE_URL + '/rest/v1/site_announcements?is_active=eq.true&order=updated_at.desc&limit=1', {
-                    headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
-                });
-                if (!res.ok) return;
-                const data = await res.json();
-                if (!data || data.length === 0) return;
-
-                const announcement = data[0];
-                const banner = document.getElementById('announceBanner');
-                const message = document.getElementById('announceMessage');
-
-                message.textContent = announcement.message;
-
-                // Apply style
-                banner.className = 'announce-bar active style-' + (announcement.style || 'info');
-            } catch (err) {
-                console.log('Announcement load skipped:', err);
-            }
-        }
-
-        window.closeAnnouncement = function() {
-            document.getElementById('announceBanner').classList.remove('active');
-            sessionStorage.setItem('announce_dismissed', 'true');
-        };
-
-        // Load when DOM is ready
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadAnnouncement);
-            
-            // Load hero media from site_settings
-            document.addEventListener('DOMContentLoaded', async function() {
-              try {
-                var response = await fetch(SUPABASE_CONFIG.url + '/rest/v1/site_settings?select=key,value', {
-                  headers: { 'apikey': SUPABASE_CONFIG.key, 'Authorization': 'Bearer ' + SUPABASE_CONFIG.key }
-                });
-                var data = await response.json();
-                if (!data || !Array.isArray(data)) return;
-                
-                var settings = {};
-                data.forEach(function(row) { settings[row.key] = row.value; });
-                
-                var container = document.getElementById('aboutHeroMedia');
-                if (!container) return;
-                
-                if (settings.hero_type === 'video' && settings.hero_video) {
-                  container.innerHTML = '<iframe src="' + settings.hero_video + '" title="About Dopelee Prezzed by S" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width: 100%; aspect-ratio: 16/9; display: block;"></iframe>';
-                } else if (settings.hero_image) {
-                  container.innerHTML = '<img src="' + settings.hero_image + '" alt="The Legacy Lounge" style="width: 100%; display: block; object-fit: cover;" />';
-                }
-              } catch (err) {
-                console.warn('Could not load hero media:', err);
-              }
+        // Load hero media from site_settings
+        document.addEventListener('DOMContentLoaded', async function() {
+          try {
+            var response = await fetch(SUPABASE_URL + '/rest/v1/site_settings?select=key,value', {
+              headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
             });
-        } else {
-            loadAnnouncement();
-        }
+            var data = await response.json();
+            if (!data || !Array.isArray(data)) return;
+            
+            var settings = {};
+            data.forEach(function(row) { settings[row.key] = row.value; });
+            
+            var container = document.getElementById('aboutHeroMedia');
+            if (!container) return;
+            
+            if (settings.hero_type === 'video' && settings.hero_video) {
+              container.innerHTML = '<iframe src="' + settings.hero_video + '" title="About Dopelee Prezzed by S" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="width: 100%; aspect-ratio: 16/9; display: block;"></iframe>';
+            } else if (settings.hero_image) {
+              container.innerHTML = '<img src="' + settings.hero_image + '" alt="The Legacy Lounge" style="width: 100%; display: block; object-fit: cover;" />';
+            }
+          } catch (err) {
+            console.warn('Could not load hero media:', err);
+          }
+        });
     })();
     </script>
 
@@ -3618,7 +3574,7 @@
                 </svg>
             </button>
             
-            <div class="logo-nav" onclick="showPage('home')">Dopelee Prezzed By S™</div>
+            <div class="logo-nav" onclick="showPage('home')" style="display:flex;align-items:center;"><img src="https://25zppb-bv.myshopify.com/cdn/shop/files/dopelee_prezzed_logo.png?v=1755138398&width=450" alt="Dopelee Prezzed by S" style="height:40px;border-radius:8px;"></div>
             
             <div class="hamburger" onclick="toggleMenu()">
                 <span></span>
@@ -3638,23 +3594,6 @@
     </nav>
 
     <div id="home" class="page active">
-        <section class="hero">
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            <div class="bubble"></div>
-            
-            <div class="logo-container">
-                <img src="https://25zppb-bv.myshopify.com/cdn/shop/files/dopelee_prezzed_logo.png?v=1755138398&width=450" alt="Dopelee Logo">
-            </div>
-            <h1>Preserving What Matters Most</h1>
-            <p class="tagline">Luxury • Legacy • Keepsakes</p>
-        </section>
-
         <!-- FORT LEAVENWORTH BANNER - HOME PAGE -->
         <div onclick="showPage('products')" style="cursor: pointer; background: linear-gradient(135deg, #1a1508 0%, #0d0a00 50%, #1a1508 100%); border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; padding: 22px 30px; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.background='linear-gradient(135deg, #2a2010, #1a1508, #2a2010)'" onmouseout="this.style.background='linear-gradient(135deg, #1a1508, #0d0a00, #1a1508)'">
             <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #f5d76e, #0ff0b8, #f5d76e, transparent); animation: shimmerLine 3s linear infinite;"></div>
@@ -3689,20 +3628,22 @@
         </section>
 
         <!-- AS FEATURED IN -->
-        <section style="padding:2.5rem 1.5rem;text-align:center;border-top:1px solid rgba(212,175,55,0.15);border-bottom:1px solid rgba(212,175,55,0.15);background:linear-gradient(180deg,rgba(212,175,55,0.03),transparent,rgba(212,175,55,0.03));">
-            <p style="font-size:0.68rem;color:rgba(212,175,55,0.5);letter-spacing:3px;text-transform:uppercase;font-weight:700;margin:0 0 1.25rem;">As Featured In</p>
-            <div style="display:flex;justify-content:center;align-items:center;gap:2.5rem;flex-wrap:wrap;max-width:800px;margin:0 auto;">
-                <a href="https://voyagekc.com/interview/rising-stars-meet-dopelee-prezzed-by-s-of-smithville-missouri/" target="_blank" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all 0.3s ease;">
-                    <span style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#d4af37;font-weight:700;letter-spacing:1px;">VoyageKC</span>
-                    <span style="font-size:0.78rem;color:rgba(255,255,255,0.4);font-style:italic;">Rising Stars</span>
+        <section style="padding:3rem 1.5rem;text-align:center;border-top:2px solid #d4af37;border-bottom:2px solid #d4af37;background:linear-gradient(180deg,#0d0a00,#000,#0d0a00);position:relative;">
+            <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#f5d76e,#0ff0b8,#f5d76e,transparent);animation:shimmerLine 3s linear infinite;"></div>
+            <p style="font-size:0.75rem;color:#d4af37;letter-spacing:4px;text-transform:uppercase;font-weight:700;margin:0 0 1.5rem;">As Featured In</p>
+            <div style="display:flex;justify-content:center;align-items:center;gap:3rem;flex-wrap:wrap;max-width:800px;margin:0 auto;">
+                <a href="https://voyagekc.com/interview/rising-stars-meet-dopelee-prezzed-by-s-of-smithville-missouri/" target="_blank" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:10px;transition:all 0.3s ease;padding:15px 25px;border:1px solid rgba(212,175,55,0.2);border-radius:12px;background:rgba(212,175,55,0.04);">
+                    <span style="font-family:'Playfair Display',serif;font-size:1.8rem;color:#f5d76e;font-weight:700;letter-spacing:1px;text-shadow:0 0 20px rgba(245,215,110,0.3);">VoyageKC</span>
+                    <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);font-style:italic;">Rising Stars</span>
                 </a>
-                <div style="width:1px;height:40px;background:rgba(212,175,55,0.2);"></div>
-                <a href="https://voyagekc.com/interview/hidden-gems-meet-k-smith-of-dopelee-prezzed-by-s-the-legacy-lounge" target="_blank" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:8px;transition:all 0.3s ease;">
-                    <span style="font-family:'Playfair Display',serif;font-size:1.5rem;color:#d4af37;font-weight:700;letter-spacing:1px;">VoyageKC</span>
-                    <span style="font-size:0.78rem;color:rgba(255,255,255,0.4);font-style:italic;">Hidden Gems</span>
+                <div style="width:1px;height:50px;background:linear-gradient(180deg,transparent,#d4af37,transparent);"></div>
+                <a href="https://voyagekc.com/interview/hidden-gems-meet-k-smith-of-dopelee-prezzed-by-s-the-legacy-lounge" target="_blank" style="text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:10px;transition:all 0.3s ease;padding:15px 25px;border:1px solid rgba(212,175,55,0.2);border-radius:12px;background:rgba(212,175,55,0.04);">
+                    <span style="font-family:'Playfair Display',serif;font-size:1.8rem;color:#f5d76e;font-weight:700;letter-spacing:1px;text-shadow:0 0 20px rgba(245,215,110,0.3);">VoyageKC</span>
+                    <span style="font-size:0.82rem;color:rgba(255,255,255,0.5);font-style:italic;">Hidden Gems</span>
                 </a>
             </div>
-            <p style="font-size:0.72rem;color:rgba(255,255,255,0.25);margin:1rem 0 0;">Tap to read the full features</p>
+            <p style="font-size:0.75rem;color:rgba(212,175,55,0.4);margin:1.25rem 0 0;">Tap to read the full features</p>
+            <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#f5d76e,#0ff0b8,#f5d76e,transparent);animation:shimmerLine 3s linear infinite reverse;"></div>
         </section>
 
         <section class="services">
