@@ -53,7 +53,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             position: relative;
-            padding-top: 70px;
+            padding-top: 95px;
         }
 
         /* GOLD SHIMMER FLAKES */
@@ -148,11 +148,14 @@
         .ticker {
             background: linear-gradient(90deg, #0d0a00, #1a1508, #0d0a00);
             color: #f5d76e;
-            padding: 12px 0;
+            padding: 16px 0;
             overflow: hidden;
             white-space: nowrap;
             position: relative;
             border-bottom: 2px solid #d4af37;
+            min-height: 48px;
+            display: flex;
+            align-items: center;
         }
 
         .ticker p {
@@ -160,9 +163,11 @@
             padding-left: 100%;
             animation: tickerScroll 30s linear infinite;
             font-weight: 600;
-            font-size: 0.99rem;
+            font-size: 0.88rem;
             letter-spacing: 1px;
             color: #f5d76e;
+            margin: 0;
+            line-height: 1;
         }
 
         /* PAGE TRANSITIONS */
@@ -5453,7 +5458,7 @@ document.addEventListener('keydown', function(e) {
             } else {
                 if (mainNav) mainNav.style.display = '';
                 if (mainTicker) mainTicker.style.display = '';
-                document.body.style.paddingTop = '70px';
+                document.body.style.paddingTop = '95px';
             }
             
             // Load gallery when gallery page is shown
