@@ -580,26 +580,18 @@
         }
 
         .service-icon, .use-case-icon {
-            font-size: 80px;
+            font-size: 60px;
             margin-bottom: 25px;
-            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6)) 
-                    drop-shadow(0 0 40px rgba(212, 175, 55, 0.4))
-                    drop-shadow(0 0 60px rgba(10, 149, 168, 0.3));
-            animation: emojiGlow 3s ease-in-out infinite;
+            color: #d4af37;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
         }
 
         @keyframes emojiGlow {
             0%, 100% {
-                filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6)) 
-                        drop-shadow(0 0 40px rgba(212, 175, 55, 0.4))
-                        drop-shadow(0 0 60px rgba(10, 149, 168, 0.3));
-                transform: scale(1);
+                filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.3));
             }
             50% {
-                filter: drop-shadow(0 0 30px rgba(15, 240, 184, 0.8)) 
-                        drop-shadow(0 0 60px rgba(15, 240, 184, 0.6))
-                        drop-shadow(0 0 80px rgba(10, 149, 168, 0.5));
-                transform: scale(1.05);
+                filter: drop-shadow(0 0 25px rgba(212, 175, 55, 0.5));
             }
         }
 
@@ -610,16 +602,13 @@
 
         @keyframes emojiGlowHover {
             0%, 100% {
-                filter: drop-shadow(0 0 30px rgba(15, 240, 184, 0.9)) 
-                        drop-shadow(0 0 60px rgba(15, 240, 184, 0.7))
-                        drop-shadow(0 0 90px rgba(10, 149, 168, 0.6));
-                transform: scale(1.1) rotate(0deg);
+                filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+                transform: scale(1.05);
             }
             50% {
-                filter: drop-shadow(0 0 40px rgba(15, 240, 184, 1)) 
-                        drop-shadow(0 0 80px rgba(15, 240, 184, 0.8))
-                        drop-shadow(0 0 100px rgba(10, 149, 168, 0.7));
-                transform: scale(1.15) rotate(5deg);
+                filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.7));
+                transform: scale(1.08);
+            }
             }
         }
 
@@ -3600,19 +3589,19 @@
 
     <div id="home" class="page active">
         <!-- FORT LEAVENWORTH BANNER - HOME PAGE -->
-        <div onclick="showPage('products')" style="cursor: pointer; background: linear-gradient(135deg, #1a1508 0%, #0d0a00 50%, #1a1508 100%); border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; padding: 22px 30px; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; transition: all 0.3s ease; position: relative; overflow: hidden;" onmouseover="this.style.background='linear-gradient(135deg, #2a2010, #1a1508, #2a2010)'" onmouseout="this.style.background='linear-gradient(135deg, #1a1508, #0d0a00, #1a1508)'">
+        <div style="background: linear-gradient(135deg, #1a1508 0%, #0d0a00 50%, #1a1508 100%); border-top: 2px solid #d4af37; border-bottom: 2px solid #d4af37; padding: 22px 30px; display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; position: relative; overflow: hidden;">
             <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #f5d76e, #0ff0b8, #f5d76e, transparent); animation: shimmerLine 3s linear infinite;"></div>
             <div style="display: flex; align-items: center; gap: 12px;">
-                <span style="font-size: 1.8rem; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));">🎖️</span>
+                <img src="https://dyehxtiozfwlexkbalvn.supabase.co/storage/v1/object/public/product-images/gold%20feather.png?v=2" alt="" style="height: 45px; filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));">
                 <div>
-                    <p style="color: #f5d76e; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; margin: 0; text-shadow: 0 0 15px rgba(245, 215, 110, 0.5);">Proudly Serving Fort Leavenworth</p>
-                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin: 0;">Visit The Legacy Lounge inside the Exchange Mall</p>
-                    <a href="https://pass.aie.army.mil/steps/terms_of_use" target="_blank" style="color: #0ff0b8; font-size: 0.72rem; text-decoration: none; margin-top: 4px; display: inline-block; letter-spacing: 0.5px;">Need base access? Get your visitor pass →</a>
+                    <p style="color: #f5d76e; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: 2px; margin: 0; text-shadow: 0 0 15px rgba(245, 215, 110, 0.5);">Come see the craft up close.</p>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem; margin: 0;">Walk-ins welcome at Fort Leavenworth, inside the Exchange Mall</p>
+                    <p style="color: #0ff0b8; font-size: 0.75rem; margin: 4px 0 0; letter-spacing: 0.5px;">Tue-Fri 10am-5pm | Sat 10am-3pm</p>
                 </div>
             </div>
-            <div style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d4af37, #f5d76e); color: #000; padding: 12px 28px; border-radius: 50px; font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; white-space: nowrap; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.2); animation: goldGlow 2s ease-in-out infinite;">
-                Shop Now →
-            </div>
+            <a href="https://pass.aie.army.mil/steps/terms_of_use" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #d4af37, #f5d76e); color: #000; padding: 12px 28px; border-radius: 50px; font-weight: 800; font-size: 0.9rem; letter-spacing: 1px; white-space: nowrap; box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.2); animation: goldGlow 2s ease-in-out infinite; text-decoration: none;">
+                Get Your Visitor Pass →
+            </a>
             <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #f5d76e, #0ff0b8, #f5d76e, transparent); animation: shimmerLine 3s linear infinite reverse;"></div>
         </div>
 
@@ -3654,36 +3643,35 @@
 
         <section class="services">
             <h2>How We Serve You</h2>
-            <div class="service-cards">
+            <div class="service-cards" style="max-width: 900px; margin: 0 auto; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));">
 
-                <div class="service-card" onclick="showPage('products')" style="border-color: #d4af37; background: linear-gradient(135deg, #1a1508 0%, #0a0a0a 100%);">
-                    <div class="service-icon">🎖️</div>
-                    <h3 style="color: #f5d76e;">Proudly Serving Military Families</h3>
-                    <p>
-                        Located inside the Fort Leavenworth Exchange Mall. Shop custom engraved keepsakes, 
-                        recognition awards, and personalized gifts. Crafted to honor your service and legacy.
+                <!-- SOUNDS OF LEGACY CARD -->
+                <div class="service-card" onclick="showPage('sounds')" style="background: linear-gradient(135deg, #0d0a00 0%, #1a1508 50%, #0d0a00 100%); border-color: rgba(212, 175, 55, 0.3); padding: 45px 35px;">
+                    <div style="width: 70px; height: 70px; border-radius: 50%; background: #000; border: 2px solid rgba(212, 175, 55, 0.4); display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 0 25px rgba(212, 175, 55, 0.3), 0 0 50px rgba(212, 175, 55, 0.15);">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3" fill="#d4af37" stroke="#d4af37"/><circle cx="18" cy="16" r="3" fill="#d4af37" stroke="#d4af37"/></svg>
+                    </div>
+                    <h3 style="color: #d4af37; font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; letter-spacing: 0.5px;">Some voices are too important to lose.</h3>
+                    <p style="color: rgba(255,255,255,0.6); line-height: 1.8; font-size: 0.95rem;">
+                        A voicemail. A speech. A prayer. A story only they can tell. We preserve the moments that matter most, 
+                        whether it's a custom song built from your words or a loved one's voice captured and embedded into 
+                        your keepsake forever. Scan the piece. Hear the memory.
                     </p>
-                    <button class="btn">Shop Now</button>
-                </div>
-                
-                <div class="service-card" onclick="showPage('products')">
-                    <div class="service-icon">💎</div>
-                    <h3>Shop Our Collection</h3>
-                    <p>
-                        Custom engraved keepsakes, plaques, shadow boxes, ornaments, wood displays, 
-                        personalized gifts, and more. Every piece crafted to honor your story.
-                    </p>
-                    <button class="btn">Shop Now</button>
+                    <button class="btn" style="margin-top: 10px;">Hear What We've Created</button>
                 </div>
 
-                <div class="service-card" onclick="showPage('custom')">
-                    <div class="service-icon">🎁</div>
-                    <h3>Custom Orders</h3>
-                    <p>
-                        Bulk engraving, corporate gifts, military awards, church orders, event favors, and more. 
-                        Whatever the occasion, we make it personal. Tell us what you need and we will bring it to life.
+                <!-- CUSTOM ORDERS CARD -->
+                <div class="service-card" onclick="showPage('custom')" style="background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%); border-color: rgba(212, 175, 55, 0.3); padding: 45px 35px;">
+                    <div style="width: 70px; height: 70px; border-radius: 50%; background: #000; border: 2px solid rgba(212, 175, 55, 0.4); display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; box-shadow: 0 0 25px rgba(212, 175, 55, 0.3), 0 0 50px rgba(212, 175, 55, 0.15);">
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2" fill="#d4af37" stroke="#d4af37"/></svg>
+                    </div>
+                    <h3 style="color: #d4af37; font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 600; letter-spacing: 0.5px;">If you can dream it, we can build it.</h3>
+                    <p style="color: rgba(255,255,255,0.6); line-height: 1.8; font-size: 0.95rem;">
+                        Retirement celebrations. PCS farewells. Weddings. Anniversaries. Promotions. 
+                        Instructor gifts. Church honors. The moments that mark a chapter deserve more 
+                        than something off a shelf. We create custom engraved keepsakes that honor the 
+                        occasion and the person. Tell us your vision and we will bring it to life.
                     </p>
-                    <button class="btn">Request a Quote</button>
+                    <button class="btn" style="margin-top: 10px;">Request a Quote</button>
                 </div>
 
             </div>
