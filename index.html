@@ -3438,9 +3438,9 @@
       
       <div class="modal-divider"></div>
       
-      <!-- MORE THAN A MEMORIAL -->
+      <!-- PERFECT FOR -->
       <div class="modal-section">
-        <div class="modal-section-title"><span id="modalSectionEmoji">🤎</span> <span id="modalSectionTitle">More Than A Memorial</span></div>
+        <div class="modal-section-title"><span id="modalSectionEmoji">✨</span> <span id="modalSectionTitle">Perfect For</span></div>
         <div class="use-cases-list" id="modalUseCases">
           <!-- Populated dynamically -->
         </div>
@@ -3448,8 +3448,8 @@
       
       <div class="modal-divider"></div>
       
-      <!-- MUSIC PLAYER -->
-      <div class="modal-section">
+      <!-- MUSIC PLAYER - Hidden by default, shown only when product has audio -->
+      <div class="modal-section" id="musicPlayerSection" style="display: none;">
         <div class="modal-section-title"><span>🎵</span> Listen to the Vibe</div>
         <div class="music-player">
           <div class="music-player-inner">
@@ -3489,33 +3489,33 @@
       
       <div class="modal-divider"></div>
       
-      <!-- LEGACY ARCHIVE UPGRADE -->
+      <!-- LEGACY EXPERIENCE UPGRADE -->
       <div class="modal-section">
         <div class="modal-section-title"><span>📱</span> Preserve It Beyond the Moment</div>
         <p style="font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 1rem; font-weight: 300; letter-spacing: 0.3px;">
           Every keepsake tells a story. But too often, those stories get lost, tucked away in old phones, forgotten hard drives, or voicemails you replay until they fade.
         </p>
         <p style="font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 1rem; font-weight: 300; letter-spacing: 0.3px;">
-          The Legacy Archive Upgrade transforms this reality. We take your most meaningful moments and make them part of the gift itself. With a custom QR code seamlessly integrated into your keepsake, your memories aren't hidden anymore. They're unlocked, beautifully presented, and preserved for the next generation.
+          The Legacy Experience Upgrade transforms this reality. We take your most meaningful moments and make them part of the gift itself. With a custom QR code seamlessly integrated into your keepsake, your memories are unlocked, beautifully presented, and preserved for the next generation.
         </p>
         <div style="margin: 1.5rem 0; padding: 1.2rem; background: rgba(212, 175, 55, 0.08); border-left: 3px solid #d4af37; border-radius: 8px;">
           <p style="font-size: 0.85rem; color: rgba(255,255,255,0.9); margin: 0 0 1rem 0; font-weight: 500; letter-spacing: 0.5px;">Choose Your Legacy Experience:</p>
           
           <div style="margin-bottom: 1rem;">
-            <p style="font-size: 0.82rem; color: #d4af37; margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Capsule • Starting at $45</p>
-            <p style="font-size: 0.78rem; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; font-weight: 300;">A QR-linked memory capsule where your photos, videos, or voice notes live forever. Compact, secure, and simple, yet powerful enough to bring back a voice, a smile, a moment, anytime you need it.</p>
+            <p style="font-size: 0.82rem; color: #d4af37; margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Showcase • Starting at $45</p>
+            <p style="font-size: 0.78rem; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; font-weight: 300;">A QR linked experience where your photos, videos, or voice notes live forever. Scan the keepsake. Relive the moment. Simple, powerful, and built to last.</p>
           </div>
           
           <div>
-            <p style="font-size: 0.82rem; color: #d4af37; margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Showcase • Starting at $100</p>
-            <p style="font-size: 0.78rem; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; font-weight: 300;">For stories too rich to keep in a folder. A private, custom-designed page that showcases your memories with images, video embeds, and text, beautifully laid out like a digital gallery. Expand any section for $45 each.</p>
+            <p style="font-size: 0.82rem; color: #d4af37; margin: 0 0 0.3rem 0; font-weight: 600;">Legacy Showcase Premium • Starting at $100</p>
+            <p style="font-size: 0.78rem; line-height: 1.6; color: rgba(255,255,255,0.75); margin: 0; font-weight: 300;">For stories too rich to keep in a folder. A private, custom designed page that showcases your memories with images, video, and text, beautifully laid out like a digital gallery.</p>
           </div>
         </div>
         <p style="font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-style: italic; font-weight: 300;">
-          Perfect for weddings, memorials, milestone birthdays, or corporate moments. Pass it down from one generation to the next. Design and tech integration included. Luxury presentation guaranteed.
+          Perfect for retirements, weddings, milestone birthdays, promotions, or any moment worth preserving. Pass it down from one generation to the next.
         </p>
         <button class="legacy-archive-btn" onclick="window.open('https://square.link/u/uBvKtldH', '_blank')">
-          Explore Legacy Archive Upgrade
+          Explore Legacy Experience Upgrade
         </button>
       </div>
       
@@ -3528,7 +3528,7 @@
 </div>
 
     <div class="ticker">
-        <p> Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available • Luxury Keepsakes • Meaningful Gifts • Handcrafted Memorial Pieces • VIP Experiences Available </p>
+        <p> Custom Engraving • Personalized Keepsakes • Military Awards • Original Music • The Legacy Lounge Experience • Custom Engraving • Personalized Keepsakes • Military Awards • Original Music • The Legacy Lounge Experience </p>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -4268,17 +4268,39 @@ function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl,
   const sectionTitleEl = document.getElementById('modalSectionTitle');
   const sectionEmojiEl = document.getElementById('modalSectionEmoji');
   if (sectionTitleEl) {
-    const cleanName = name.trim(); // Remove any extra spaces
+    const cleanName = name.trim();
     const sectionData = {
-      'Hand-Crafted Wood Keepsake': { title: 'Perfect For Life\'s Moments', emoji: '🌳' },
-      'Custom Slate Keepsake': { title: 'More Than A Memorial', emoji: '🤎' },
-      'Hand-Crafted Metal Ornaments': { title: 'Celebrate What Matters', emoji: '✨' },
-      'Glass Display Keepsake': { title: 'Honor Their Legacy', emoji: '💫' },
-      'Custom Photo Lookbook': { title: 'Tell Their Story', emoji: '📖' },
-      'Legacy Archive Upgrade': { title: 'Preserve Your Legacy', emoji: '🏛️' }
+      'Hand-Crafted Wood Keepsake': { title: 'Perfect For Life\'s Moments', emoji: '🌳', showLegacyUpgrade: true },
+      'Custom Slate Keepsake': { title: 'Crafted In Stone', emoji: '🪨', showLegacyUpgrade: true },
+      'Hand-Crafted Metal Ornaments': { title: 'Celebrate What Matters', emoji: '✨', showLegacyUpgrade: true },
+      'Glass Display Keepsake': { title: 'Honor Their Legacy', emoji: '💫', showLegacyUpgrade: true },
+      'Custom Photo Lookbook': { title: 'Tell Their Story', emoji: '📖', showLegacyUpgrade: true },
+      'Legacy Experience Upgrade': { title: 'Preserve Your Legacy', emoji: '🏛️', showLegacyUpgrade: false }
     };
-    const data = sectionData[cleanName] || { title: 'More Than A Memorial', emoji: '🤎' };
-    console.log('🎯 Setting section for:', cleanName, '→', data.emoji, data.title);
+    const data = sectionData[cleanName] || { title: 'Perfect For', emoji: '✨', showLegacyUpgrade: false };
+    
+    // Products that qualify for Legacy Experience Upgrade (keepsakes and memorial items)
+    const isKeepsake = cleanName.toLowerCase().includes('keepsake') || 
+                       cleanName.toLowerCase().includes('slate') || 
+                       cleanName.toLowerCase().includes('ornament') || 
+                       cleanName.toLowerCase().includes('glass display') || 
+                       cleanName.toLowerCase().includes('lookbook') ||
+                       cleanName.toLowerCase().includes('photo book') ||
+                       data.showLegacyUpgrade === true;
+    
+    // Show or hide Legacy Experience Upgrade section
+    const legacyUpgradeSection = document.querySelector('.legacy-archive-btn')?.closest('.modal-section');
+    if (legacyUpgradeSection) {
+      legacyUpgradeSection.style.display = isKeepsake ? 'block' : 'none';
+    }
+    
+    // Show or hide the divider before Legacy Experience section
+    const dividers = document.querySelectorAll('.modal-divider');
+    if (dividers.length >= 3) {
+      dividers[dividers.length - 1].style.display = isKeepsake ? 'block' : 'none';
+    }
+    
+    console.log('🎯 Setting section for:', cleanName, '→', data.emoji, data.title, '| Legacy Upgrade:', isKeepsake);
     sectionTitleEl.textContent = data.title;
     if (sectionEmojiEl) sectionEmojiEl.textContent = data.emoji;
   }
