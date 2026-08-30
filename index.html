@@ -3490,7 +3490,8 @@
       <div class="modal-divider"></div>
       
       <!-- LEGACY EXPERIENCE UPGRADE -->
-      <div class="modal-section">
+      <div class="modal-divider" id="legacyUpgradeDivider"></div>
+      <div class="modal-section" id="legacyUpgradeSection">
         <div class="modal-section-title"><span>📱</span> Preserve It Beyond the Moment</div>
         <p style="font-size: 0.9rem; line-height: 1.8; color: rgba(255,255,255,0.85); margin-bottom: 1rem; font-weight: 300; letter-spacing: 0.3px;">
           Every keepsake tells a story. But too often, those stories get lost, tucked away in old phones, forgotten hard drives, or voicemails you replay until they fade.
@@ -4289,16 +4290,10 @@ function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl,
                        data.showLegacyUpgrade === true;
     
     // Show or hide Legacy Experience Upgrade section
-    const legacyUpgradeSection = document.querySelector('.legacy-archive-btn')?.closest('.modal-section');
-    if (legacyUpgradeSection) {
-      legacyUpgradeSection.style.display = isKeepsake ? 'block' : 'none';
-    }
-    
-    // Show or hide the divider before Legacy Experience section
-    const dividers = document.querySelectorAll('.modal-divider');
-    if (dividers.length >= 3) {
-      dividers[dividers.length - 1].style.display = isKeepsake ? 'block' : 'none';
-    }
+    var legacySection = document.getElementById('legacyUpgradeSection');
+    var legacyDivider = document.getElementById('legacyUpgradeDivider');
+    if (legacySection) legacySection.style.display = isKeepsake ? 'block' : 'none';
+    if (legacyDivider) legacyDivider.style.display = isKeepsake ? 'block' : 'none';
     
     console.log('🎯 Setting section for:', cleanName, '→', data.emoji, data.title, '| Legacy Upgrade:', isKeepsake);
     sectionTitleEl.textContent = data.title;
@@ -5954,8 +5949,6 @@ document.addEventListener('keydown', function(e) {
     
     // Optional: Open product modal from carousel
     function openProductModal(productId, name, desc, price, link, musicUrl, useCases) {
-      // For now, just open the product modal like video overlay does
-      // You can customize this later
       const modal = document.getElementById('videoModal');
       if (modal) {
         document.getElementById('modalProductName').textContent = name;
@@ -5967,6 +5960,28 @@ document.addEventListener('keydown', function(e) {
         useCasesContainer.innerHTML = useCasesArray.map(uc => 
           `<span class="use-case-tag">${uc.trim()}</span>`
         ).join('');
+        
+        // Smart section visibility based on product type
+        var cleanName = name.trim().toLowerCase();
+        var isKeepsake = cleanName.includes('keepsake') || 
+                         cleanName.includes('slate') || 
+                         cleanName.includes('ornament') || 
+                         cleanName.includes('glass display') || 
+                         cleanName.includes('lookbook') ||
+                         cleanName.includes('photo book');
+        
+        var legacySection = document.getElementById('legacyUpgradeSection');
+        var legacyDivider = document.getElementById('legacyUpgradeDivider');
+        if (legacySection) legacySection.style.display = isKeepsake ? 'block' : 'none';
+        if (legacyDivider) legacyDivider.style.display = isKeepsake ? 'block' : 'none';
+        
+        // Set section title
+        var sectionTitleEl = document.getElementById('modalSectionTitle');
+        var sectionEmojiEl = document.getElementById('modalSectionEmoji');
+        if (sectionTitleEl) {
+          sectionTitleEl.textContent = isKeepsake ? 'Honor Their Legacy' : 'Perfect For';
+          if (sectionEmojiEl) sectionEmojiEl.textContent = isKeepsake ? '💫' : '✨';
+        }
         
         // Set music if available
         const musicSection = document.getElementById('musicSection');
