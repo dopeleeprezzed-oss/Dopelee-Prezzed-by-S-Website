@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 <meta name="googlebot" content="noindex, nofollow">
 <meta http-equiv="X-Robots-Tag" content="noindex, nofollow">
-<title>Legacy Shadow Box Portal-Kent</title>
+<title>Legacy Shadow Box Portal — Kent</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -739,31 +739,8 @@
               <th style="text-align:right;">Your Pay</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>11 × 14</td>
-              <td class="rate-pay">$27.75</td>
-            </tr>
-            <tr>
-              <td>16 × 20</td>
-              <td class="rate-pay">$32.00</td>
-            </tr>
-            <tr>
-            <td>20 × 24</td>
-             <td class="rate-pay">$35.00</td>
-            </tr>
-            <tr>
-              <td>22 × 28</td>
-              <td class="rate-pay">$36.50</td>
-            </tr>
-            <tr>
-              <td>24 × 36</td>
-              <td class="rate-pay">$41.00</td>
-            </tr>
-            <tr>
-              <td>32 × 40 (Jacket)</td>
-              <td class="rate-pay">$45.50</td>
-            </tr>
+          <tbody id="payRatesTableBody">
+            <tr><td colspan="2" style="text-align:center;color:rgba(255,255,255,0.4);">Loading rates...</td></tr>
           </tbody>
         </table>
       </div>
@@ -803,30 +780,40 @@
   const ACCESS_CODE = 'kent2025';
   const KENT_EMAIL = 'wmkdavis63@gmail.com';
 
-  // Pay rate lookup by box size
-  const PAY_RATES = {
-    '11x14':   27.75,
-    '11 x 14': 27.75,
-    '11×14':   27.75,
-    '16x20':   32.00,
-    '16 x 20': 32.00,
-    '16×20':   32.00,
-    '20x24':   35.00,
-    '20 x 24': 35.00,
-    '20×24':   35.00,
-    '20 × 24': 35.00,
-    '22x28':   36.50,
-    '22 x 28': 36.50,
-    '22×28':   36.50,
-    '24x36':   41.00,
-    '24 x 36': 41.00,
-    '24×36':   41.00,
-    '30x40':   45.50,
-    '30 x 40': 45.50,
-    '32x40':   45.50,
-    '32 x 40': 45.50,
-    '32×40':   45.50,
-  };
+  // Pay rate lookup by box size — loaded from Supabase
+  let PAY_RATES = {};
+
+  async function loadPayRates() {
+    try {
+      var response = await fetch(SUPABASE_URL + '/rest/v1/kent_pay_rates?is_active=eq.true&select=box_size,pay_amount', {
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY }
+      });
+      var rates = await response.json();
+      if (Array.isArray(rates)) {
+        PAY_RATES = {};
+        rates.forEach(function(r) {
+          var size = r.box_size;
+          var amount = parseFloat(r.pay_amount);
+          PAY_RATES[size] = amount;
+          PAY_RATES[size.replace('x', ' x ')] = amount;
+          PAY_RATES[size.replace('x', '×')] = amount;
+          PAY_RATES[size.replace('x', ' × ')] = amount;
+        });
+        console.log('✅ Pay rates loaded from Supabase:', PAY_RATES);
+        renderPayRatesTable(rates);
+      }
+    } catch (err) {
+      console.error('Could not load pay rates:', err);
+    }
+  }
+
+  function renderPayRatesTable(rates) {
+    var tbody = document.getElementById('payRatesTableBody');
+    if (!tbody) return;
+    tbody.innerHTML = rates.map(function(r) {
+      return '<tr><td>' + r.box_size.replace('x', ' × ') + '</td><td class="rate-pay">$' + parseFloat(r.pay_amount).toFixed(2) + '</td></tr>';
+    }).join('');
+  }
 
   function getPayForOrder(order) {
     const sizeRaw = (order.box_size || '').toLowerCase().replace(/\s+/g,'').replace('(jacket)','').trim();
@@ -940,6 +927,7 @@
   if (sessionStorage.getItem('kentAuth') === 'true') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('portalScreen').style.display = 'block';
+    await loadPayRates();
     loadOrders();
   }
 
