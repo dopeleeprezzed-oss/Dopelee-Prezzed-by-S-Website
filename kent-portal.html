@@ -910,7 +910,7 @@
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('portalScreen').style.display = 'block';
       sessionStorage.setItem('kentAuth', 'true');
-      loadOrders();
+      loadPayRates().then(function() { loadOrders(); });
     } else {
       document.getElementById('loginError').style.display = 'block';
     }
@@ -927,8 +927,7 @@
   if (sessionStorage.getItem('kentAuth') === 'true') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('portalScreen').style.display = 'block';
-    await loadPayRates();
-    loadOrders();
+    loadPayRates().then(function() { loadOrders(); });
   }
 
   async function loadOrders() {
