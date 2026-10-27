@@ -3661,7 +3661,10 @@
             <div class="service-cards" style="max-width: 1100px; margin: 0 auto; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
 
                 <!-- EXPRESS SERVICE CARD -->
-                <div class="service-card" style="background: #000; border-color: rgba(15, 240, 184, 0.3); padding: 0; overflow: hidden; cursor: default; display: flex; flex-direction: column;">
+                <div class="service-card" style="background: #000; border-color: rgba(15, 240, 184, 0.3); padding: 0; overflow: hidden; cursor: default; display: flex; flex-direction: column; position: relative;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; background: linear-gradient(135deg, rgba(212,175,55,0.95), rgba(180,140,20,0.95)); padding: 10px 16px; text-align: center; z-index: 2;">
+                        <p style="margin: 0; color: #000; font-size: 0.8rem; font-weight: 700; letter-spacing: 1px;">Express service ending October 31st. Returning January 2027.</p>
+                    </div>
                     <img src="https://dyehxtiozfwlexkbalvn.supabase.co/storage/v1/object/public/product-images/Need%20a%20gift%20today%20.png" alt="Need a gift today? 2 hour express engraving service available in store" style="width: 100%; display: block; flex: 1;">
                     <div style="padding: 20px 35px 30px; text-align: center;">
                         <button class="btn" style="margin-top: 0;">📍 Available In Store Only</button>
@@ -4749,10 +4752,10 @@ document.addEventListener('keydown', function(e) {
         <section class="partner-cta">
             <h2>Ready to Create Yours?</h2>
             <p>
-                Tell us your story and we will turn it into something you can hear and hold. Poems, speeches, melodies, vocals, 
-                or anything in between. Reach out and let us know what you have in mind.
+                Tell us your story and we will turn it into something you can hear and hold. Poems, speeches, melodies, vocals,
+                or anything in between. Fill out our form and we will take it from there.
             </p>
-            <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/contact.html" target="_blank" class="btn">Contact Us</a>
+            <a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=sounds" target="_blank" class="btn">Start Your Song</a>
         </section>
 
         <footer>
@@ -6459,6 +6462,7 @@ document.addEventListener('keydown', function(e) {
             '<div style="font-family: Playfair Display, serif; font-size: 2.5rem; font-weight: 900; color: #d4af37; margin-bottom: 4px;">$' + integrationPrice + '</div>' +
             playlistLine +
             '<p style="color: #b8bac0; font-size: 0.9rem; line-height: 1.7;">' + (integrationProduct.description || '') + '</p>' +
+            '<a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=sounds" target="_blank" class="btn" style="display: inline-block; text-decoration: none; margin-top: 16px;">Get Started</a>' +
           '</div>';
         }
 
@@ -6468,6 +6472,7 @@ document.addEventListener('keydown', function(e) {
             '<div style="font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #d4af37; margin-bottom: 12px;">Custom Legacy Song</div>' +
             '<div style="font-family: Playfair Display, serif; font-size: 2.5rem; font-weight: 900; color: #d4af37; margin-bottom: 12px;">$' + songPrice + '</div>' +
             '<p style="color: #b8bac0; font-size: 0.9rem; line-height: 1.7;">' + (songProduct.description || '') + '</p>' +
+            '<a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=sounds" target="_blank" class="btn" style="display: inline-block; text-decoration: none; margin-top: 16px;">Get Started</a>' +
           '</div>';
         }
 
@@ -6477,6 +6482,7 @@ document.addEventListener('keydown', function(e) {
             '<div style="font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #0ff0b8; margin-bottom: 12px;">Legacy Song + Video</div>' +
             '<div style="font-family: Playfair Display, serif; font-size: 2.5rem; font-weight: 900; color: #0ff0b8; margin-bottom: 12px;">$' + videoPrice + '</div>' +
             '<p style="color: #b8bac0; font-size: 0.9rem; line-height: 1.7;">' + (videoProduct.description || '') + '</p>' +
+            '<a href="https://dopeleeprezzed-oss.github.io/dopelee-form/?project=sounds" target="_blank" class="btn" style="display: inline-block; text-decoration: none; margin-top: 16px;">Get Started</a>' +
           '</div>';
         }
 
