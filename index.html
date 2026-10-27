@@ -153,22 +153,38 @@
         .ticker {
             background: linear-gradient(90deg, #0d0a00, #1a1508, #0d0a00);
             color: #f5d76e;
-            padding: 16px 0;
-            overflow: hidden;
-            white-space: nowrap;
+            padding: 14px 0;
             position: relative;
             border-bottom: 2px solid #d4af37;
-            min-height: 48px;
-            display: flex;
-            align-items: center;
         }
 
-        .ticker p {
+        .ticker .ticker-headline {
+            display: block;
+            white-space: normal;
+            overflow: visible;
+            padding: 0 20px 10px;
+            animation: none;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 1.5px;
+            line-height: 1.4;
+            text-align: center;
+            margin: 0;
+        }
+
+        .ticker-scroll-wrap {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker p:not(.ticker-headline) {
             display: inline-block;
             padding-left: 100%;
             animation: tickerScroll 30s linear infinite;
             font-weight: 600;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
             letter-spacing: 1px;
             color: #f5d76e;
             margin: 0;
@@ -2167,8 +2183,14 @@
             .use-case-grid { grid-template-columns: 1fr; }
             .page-header h1 { font-size: 2rem; }
             
-            .ticker p {
+            .ticker p:not(.ticker-headline) {
                 font-size: 0.85rem;
+            }
+
+            .ticker .ticker-headline {
+                font-size: 1.05rem;
+                padding: 0 16px 8px;
+                letter-spacing: 1px;
             }
 
             .luxury-title {
@@ -3528,7 +3550,10 @@
 </div>
 
     <div class="ticker">
-        <p> Custom Engraving • Personalized Keepsakes • Military Awards • Original Music • The Legacy Lounge Experience • Custom Engraving • Personalized Keepsakes • Military Awards • Original Music • The Legacy Lounge Experience </p>
+        <p class="ticker-headline">We turn your stories into something you can hold, hear, and keep forever.</p>
+        <div class="ticker-scroll-wrap">
+            <p> Custom Engraving • Original Songs • Personalized Keepsakes • Handcrafted Gifts for Every Occasion • Custom Engraving • Original Songs • Personalized Keepsakes • Handcrafted Gifts for Every Occasion </p>
+        </div>
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════════ -->
