@@ -3537,13 +3537,13 @@
           </div>
         </div>
         <p style="font-size: 0.82rem; line-height: 1.6; color: rgba(255,255,255,0.5); margin-bottom: 0; font-style: italic; font-weight: 300;">
-          Select your experience at checkout or ask us in store.
+          Select your experience when you request a quote or ask us in store.
         </p>
       </div>
       
       <!-- CTA BUTTON -->
       <a href="#" id="modalShopBtn" target="_blank" class="modal-cta-btn">
-        <span>🤎</span> START YOUR JOURNII
+        <span>🤎</span> REQUEST A QUOTE
       </a>
     </div>
   </div>
@@ -4157,7 +4157,7 @@ const SmartRecommendations = {
                 if (!window.pxProductsData) window.pxProductsData = {};
                 window.pxProductsData[product.id] = {
                     imageUrl: product.image_url, name: product.name, description: product.description || '',
-                    price: product.price, shopLink: product.square_link, musicUrl: product.music_url || '',
+                    price: product.price, shopLink: 'https://dopeleeprezzed-oss.github.io/dopelee-form/quote.html?product=' + encodeURIComponent(product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')), musicUrl: product.music_url || '',
                     useCases: useCases, productId: product.id, productImages: product.product_images || []
                 };
 
