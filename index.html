@@ -3468,9 +3468,10 @@
     <div class="modal-info-side">
       <h2 class="modal-product-name" id="modalProductName"></h2>
       <p class="modal-product-price" id="modalProductPrice"></p>
-      
+      <div id="modalAvailabilityBadge" style="margin-top: 8px;"></div>
+
       <div class="modal-divider"></div>
-      
+
       <!-- PERFECT FOR -->
       <div class="modal-section">
         <div class="modal-section-title"><span id="modalSectionEmoji">✨</span> <span id="modalSectionTitle">Perfect For</span></div>
@@ -4169,7 +4170,8 @@ const SmartRecommendations = {
                 window.pxProductsData[product.id] = {
                     imageUrl: product.image_url, name: product.name, description: product.description || '',
                     price: product.price, shopLink: 'https://dopeleeprezzed-oss.github.io/dopelee-form/quote.html?product=' + encodeURIComponent(product.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')), musicUrl: product.music_url || '',
-                    useCases: useCases, productId: product.id, productImages: product.product_images || []
+                    useCases: useCases, productId: product.id, productImages: product.product_images || [],
+                    availability: product.availability || 'both'
                 };
 
                 card.innerHTML = `
@@ -4192,7 +4194,7 @@ const SmartRecommendations = {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const p = window.pxProductsData[this.getAttribute('data-product-id')];
-                    if (p) openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages);
+                    if (p) openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages, p.availability);
                 });
             });
 
@@ -4259,7 +4261,7 @@ function filterProducts(gridId, category, btn, tabContainerId) {
     grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl, useCases, productId, productImages = []) {
+function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl, useCases, productId, productImages = [], availability = 'both') {
   console.log('🎬 Opening modal');
   console.log('🎨 Product Images:', productImages);
   
@@ -4282,6 +4284,18 @@ function openVideoModal(youtubeId, name, description, price, shopLink, musicUrl,
   if (productNameEl) productNameEl.textContent = name;
   if (productPriceEl) productPriceEl.textContent = price;
   if (shopBtnEl) shopBtnEl.href = shopLink;
+
+  // Availability badge
+  const availBadge = document.getElementById('modalAvailabilityBadge');
+  if (availBadge) {
+    if (availability === 'in_store') {
+      availBadge.innerHTML = '<span style="display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.3); color: #d4af37;">📍 In Store Pickup Only</span>';
+    } else if (availability === 'shipping') {
+      availBadge.innerHTML = '<span style="display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; background: rgba(15,240,184,0.1); border: 1px solid rgba(15,240,184,0.3); color: #0ff0b8;">🚚 Ships Nationwide</span>';
+    } else {
+      availBadge.innerHTML = '<span style="display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px; background: rgba(15,240,184,0.1); border: 1px solid rgba(15,240,184,0.3); color: #0ff0b8;">📍 In Store Pickup &nbsp;•&nbsp; 🚚 Ships Nationwide</span>';
+    }
+  }
   
   // 🎯 Set per-product section title AND emoji
   const sectionTitleEl = document.getElementById('modalSectionTitle');
@@ -6100,9 +6114,10 @@ document.addEventListener('keydown', function(e) {
                 window.pxProductsData[product.id] = {
                     imageUrl: product.image_url, name: product.name, description: product.description || '',
                     price: displayPrice, shopLink: orderLink, musicUrl: product.music_url || '',
-                    useCases: useCases, productId: product.id, productImages: product.product_images || []
+                    useCases: useCases, productId: product.id, productImages: product.product_images || [],
+                    availability: product.availability || 'both'
                 };
-                
+
                 const card = document.createElement('div');
                 card.className = 'px-product-card';
                 card.setAttribute('data-category', product.product_category || '');
@@ -6125,7 +6140,7 @@ document.addEventListener('keydown', function(e) {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation();
                     const p = window.pxProductsData[this.getAttribute('data-product-id')];
-                    if (p) openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages);
+                    if (p) openVideoModal(p.imageUrl, p.name, p.description, p.price, p.shopLink, p.musicUrl, p.useCases, p.productId, p.productImages, p.availability);
                 });
             });
 
